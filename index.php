@@ -23,7 +23,6 @@
   </head>
 
   <body>
-
     <!-- Import Variables and SQL Querys-->
     <?php include ('./variables/connection_secrets.php') ?>
     <?php include('./variables/sql_querys.php') ?>
@@ -52,7 +51,6 @@
         }
       }
       */
-      
     ?>
 
   <!-- Navigation -->
@@ -94,7 +92,7 @@
     <div class="carousel-inner" >
 
       <!-- 1. Slide --> 
-      <div class="carousel-item active" style="background-image: url(./images/The-Mandalorian2.jpg)"> 
+      <div class="carousel-item active" style="background-image: url(./images/slider-images/The-Mandalorian-Slider.jpg)"> 
         <div class="carousel-caption ">
           <h2 class="display-4">The Mandalorian</h2>
           <p class="lead">This is the Story of Mando and Baby Yoda.</p>
@@ -102,7 +100,7 @@
       </div>
       
       <!-- 2. Slide --> 
-      <div class="carousel-item" style="background-image: url(./images/Avengers-Endgame.jpg)">
+      <div class="carousel-item" style="background-image: url(./images/slider-images/Avengers-Endgame-Slider.jpg)">
         <div class="carousel-caption ">
           <h2 class="display-4">Avengers Endgame</h2>
           <p class="lead">Follow the Avengers in the fight against Thanos.</p>
@@ -110,7 +108,7 @@
       </div>
       
       <!-- 3. Slide --> 
-      <div class="carousel-item" style="background-image: url(./images/Pirates-of-the-Carribbean.jpg)">
+      <div class="carousel-item" style="background-image: url(./images/slider-images/Pirates-of-the-Carribbean-Slider.jpg)">
         <div class="carousel-caption ">
           <h2 class="display-4">Fluch der Karibik</h2>
           <p class="lead">Caption Jack Sparrow's new Adventure.</p>
@@ -145,10 +143,10 @@
           <!-- Team Member 1 -->
           <div class="col-xl-3 col-md-6 mb-4">
             <div class="card border-0 shadow">
-              <img src="https://source.unsplash.com/TMgQMXoglsM/500x350" class="card-img-top" alt="First Card">
+              <img src="./images/slider-images/Pirates-of-the-Carribbean-slider.jpg" class="card-img-top" alt="First Card">
               <div class="card-body text-center">
-                <h5 class="card-title mb-0">Team Member</h5>
-                <div class="card-text text-black-50">Web Developer</div>
+                <h5 class="card-title mb-0">Fluch der Karibik</h5>
+                <div class="card-text text-black-50">Das heue Abendteuer des Captain Jack Sparrow</div>
                 </div>
             </div>
           </div>
@@ -156,7 +154,7 @@
           <!-- Team Member 2 -->
           <div class="col-xl-3 col-md-6 mb-4">
             <div class="card border-0 shadow">
-              <img src="https://source.unsplash.com/9UVmlIb0wJU/500x350" class="card-img-top" alt="...">
+              <img src="./images/slider-images/The-Mandalorian-Slider.jpg" class="card-img-top" alt="...">
               <div class="card-body text-center">
                 <h5 class="card-title mb-0">Team Member</h5>
                 <div class="card-text text-black-50">Web Developer</div>

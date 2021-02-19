@@ -14,3 +14,8 @@
     -o-background-size: cover;
     background-size: cover;
   }
+  
+  .card-img-top {
+    height: 1500px;
+    object-fit: cover;
+}
