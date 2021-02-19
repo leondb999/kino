@@ -121,10 +121,10 @@
     <div class="collapse navbar-collapse" id="collapsibleNavbar">
       <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href="#"> Kinoprogramm </a>
+        <a class="nav-link" href="/kino/kinoprogramm.php"> Kinoprogramm </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#"> Über uns </a>
+        <a class="nav-link" href="/kino/about.php"> Über uns </a>
       </li>
       </ul>
     
