@@ -72,11 +72,21 @@
           echo "<br>".$film['Name']." ".$film['Image_Slider_Path'];
         }  
         
-        
+        $sql_3_films = "Select * from kinoticketing.film ";
+        $result_3_films = mysqli_query($con,  $sql_3_films);
 
         //echo "<br>".$result_first_three_films['Name']."<br>".$result_first_three_films['Image_Slider_Path'];
     ?>
-
+  <!-- Cards Section  with PHP -->
+  <section class="py-2 m-10">
+    <div class="container">
+    <h1 class="display-4">Kinoprogramm</h1>
+    <p class="lead">Take a look at our Kinoprogramm!</p>
+      <div class="row">
+        
+      </div>
+    </div>        
+  </section>
   <div class="container">
           <div class="row">
 
@@ -193,59 +203,30 @@
     <!-- ------------------------------------------------------------- -->
     
     
-    <!-- Page Content -->
+    <!-- Film Cards Hard Coded-->
+
     <section class="py-2 m-10">
-      <div class="container">
-        <h1 class="display-4">Kinoprogramm</h1>
-        <p class="lead">Take a look at our Kinoprogramm!</p>
-        <div class="row">
-          <!-- Team Member 1 -->
-          <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-0 shadow">
-              <img src="./images/slider-images/Pirates-of-the-Carribbean-slider.jpg" class="card-img-top" alt="First Card">
-              <div class="card-body text-center">
-                <h5 class="card-title mb-0">Fluch der Karibik</h5>
-                <div class="card-text text-black-50">Das heue Abendteuer des Captain Jack Sparrow</div>
-                </div>
+        <div class="container">
+            <h1 class="display-4">Kinoprogramm</h1>
+            <p class="lead">Take a look at our Kinoprogramm!</p>
+            <div class="row">
+                <?php 
+                   
+                    while($film = mysqli_fetch_array($result_3_films))
+                    {?>
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-0 shadow">
+                                <img src="<?php echo $film['Image_Slider_Path']?>" class="card-img-top" alt="First Card">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title mb-0">"<?php echo $film['Name']?>"</h5>
+                                    <div class="card-text text-black-50">"<?php echo $film['Short_Description']?>"</div>
+                                </div>
+                            </div>
+                        </div>    
+                <?php } ?>
             </div>
-          </div>
-          <!-- -->
-          <!-- Team Member 2 -->
-          <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-0 shadow">
-              <img src="./images/slider-images/The-Mandalorian-Slider.jpg" class="card-img-top" alt="...">
-              <div class="card-body text-center">
-                <h5 class="card-title mb-0">Team Member</h5>
-                <div class="card-text text-black-50">Web Developer</div>
-              </div>
-            </div>
-          </div>
-          <!-- -->
-          <!-- Team Member 3 -->
-          <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-0 shadow">
-              <img src="https://source.unsplash.com/sNut2MqSmds/500x350" class="card-img-top" alt="...">
-              <div class="card-body text-center">
-                <h5 class="card-title mb-0">Team Member</h5>
-                <div class="card-text text-black-50">Web Developer</div>
-              </div>
-            </div>
-          </div>
-          <!-- -->
-          <!-- Team Member 4 -->
-          <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-0 shadow">
-              <img src="https://source.unsplash.com/ZI6p3i9SbVU/500x350" class="card-img-top" alt="...">
-              <div class="card-body text-center">
-                <h5 class="card-title mb-0">Team Member</h5>
-                <div class="card-text text-black-50">Web Developer</div>
-              </div>
-            </div>
-          </div>
-          <!-- -->
-        </div>
-      </div>
-    </section>
+        </section>
+    <!-- Film Cards with PHP
 
 
 
