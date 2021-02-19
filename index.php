@@ -54,8 +54,8 @@
       */
       
     ?>
-    <!-- Navigation -->
 
+  <!-- Navigation -->
   <nav class="navbar navbar-expand-md bg-dark navbar-dark">
     <a class="navbar-brand" href="/kino/index.php"> DHBW-Kino Mannheim </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -82,7 +82,7 @@
     </div>  
   </nav>
 
-<!-- Slider -->
+  <!-- Slider -->
   <div id="top-film-carousel" class="carousel slide " data-ride="carousel" data-interval ="2000">
     <!-- Navigations Striche -->
     <ol class="carousel-indicators">
@@ -90,7 +90,7 @@
       <li data-target="#top-film-carousel" data-slide-to="1"></li>
       <li data-target="#top-film-carousel" data-slide-to="2"></li>      
     </ol>
-    
+
     <div class="carousel-inner" >
 
       <!-- 1. Slide --> 
@@ -119,7 +119,7 @@
 
     </div>
   
-  <!-- Vor & Zurück Pfeile --> 
+    <!-- Vor & Zurück Pfeile --> 
     <!-- Rechter- Pfeil -->
     <a class="carousel-control-prev"href="#top-film-carousel" role="button" data-slide="prev">
       <!-- Icon des rechten Pfeils -->
@@ -138,10 +138,56 @@
     
     <!-- Page Content -->
     <section class="py-2 m-10">
-    <div class="container">
-      <h1 class="display-4">Film Portfolio</h1>
-      <p class="lead">The background images for the slider are set directly in the HTML using inline CSS. The images in this snippet are from <a href="https://unsplash.com">Unsplash</a>, taken by <a href="https://unsplash.com/@joannakosinska">Joanna Kosinska</a>!</p>
-    </div>
+      <div class="container">
+        <h1 class="display-4">Kinoprogramm</h1>
+        <p class="lead">Take a look at our Kinoprogramm!</p>
+        <div class="row">
+          <!-- Team Member 1 -->
+          <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-0 shadow">
+              <img src="https://source.unsplash.com/TMgQMXoglsM/500x350" class="card-img-top" alt="First Card">
+              <div class="card-body text-center">
+                <h5 class="card-title mb-0">Team Member</h5>
+                <div class="card-text text-black-50">Web Developer</div>
+                </div>
+            </div>
+          </div>
+          <!-- -->
+          <!-- Team Member 2 -->
+          <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-0 shadow">
+              <img src="https://source.unsplash.com/9UVmlIb0wJU/500x350" class="card-img-top" alt="...">
+              <div class="card-body text-center">
+                <h5 class="card-title mb-0">Team Member</h5>
+                <div class="card-text text-black-50">Web Developer</div>
+              </div>
+            </div>
+          </div>
+          <!-- -->
+          <!-- Team Member 3 -->
+          <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-0 shadow">
+              <img src="https://source.unsplash.com/sNut2MqSmds/500x350" class="card-img-top" alt="...">
+              <div class="card-body text-center">
+                <h5 class="card-title mb-0">Team Member</h5>
+                <div class="card-text text-black-50">Web Developer</div>
+              </div>
+            </div>
+          </div>
+          <!-- -->
+          <!-- Team Member 4 -->
+          <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-0 shadow">
+              <img src="https://source.unsplash.com/ZI6p3i9SbVU/500x350" class="card-img-top" alt="...">
+              <div class="card-body text-center">
+                <h5 class="card-title mb-0">Team Member</h5>
+                <div class="card-text text-black-50">Web Developer</div>
+              </div>
+            </div>
+          </div>
+          <!-- -->
+        </div>
+      </div>
     </section>
 
 
