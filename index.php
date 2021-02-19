@@ -45,21 +45,38 @@
         //SQL Mandalorian
         $sql_mandalorian =  "Select * from kinoticketing.film Where Name = 'The Mandalorian'";
         $result_mandalorian = mysqli_fetch_assoc(mysqli_query($con,  $sql_mandalorian));
-        echo "<br>".$result_mandalorian['Name']."<br>".$result_mandalorian['Image_Slider_Path'];
+       // echo "<br>".$result_mandalorian['Name']."<br>".$result_mandalorian['Image_Slider_Path'];
 
         //SQL Fluch der Karibik
         $sql_fluch_der_karibik =  "Select * from kinoticketing.film Where Name = 'Fluch der Karibik'";
         $result_fluch_der_karibik = mysqli_fetch_assoc(mysqli_query($con,  $sql_fluch_der_karibik));
-        echo "<br>".$result_fluch_der_karibik['Name']."<br>".$result_fluch_der_karibik['Image_Slider_Path'];
+        //echo "<br>".$result_fluch_der_karibik['Name']."<br>".$result_fluch_der_karibik['Image_Slider_Path'];
 
 
         //SQL Avengers Endgame
         $sql_avengers =  "Select * from kinoticketing.film Where Name = 'Avengers Endgame'";
         $result_avengers = mysqli_fetch_assoc(mysqli_query($con,  $sql_avengers));
-        echo "<br>".$result_avengers['Name']."<br>".$result_avengers['Image_Slider_Path'];
+        //echo "<br>".$result_avengers['Name']."<br>".$result_avengers['Image_Slider_Path'];
 
       // -----------------------------------------------------------------------------------
+
+      // SQL for Kinoprogramm (get die ersten 4 Filme in der DB)
+        
+        $sql_first_three_films = "Select * from kinoticketing.film ";
+        $result_first_three_films = mysqli_query($con,  $sql_first_three_films);
+        $three_films = array();
+        while($film = mysqli_fetch_array($result_first_three_films)){
+          $three_films[] = $film;
+        }
+        foreach($three_films as $film ){
+          echo "<br>".$film['Name']." ".$film['Image_Slider_Path'];
+        }  
+        
+        
+
+        //echo "<br>".$result_first_three_films['Name']."<br>".$result_first_three_films['Image_Slider_Path'];
     ?>
+
   <div class="container">
           <div class="row">
 
