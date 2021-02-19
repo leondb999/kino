@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html>
   <head>
-  
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <Title >Kinoticketing</Title>
+    <script src= "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.min.js!"></script>
+    <link rel="stylesheet" type="text/css" href=" https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src= "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <Title >Kino</Title>
   </head>
 
   <body>
@@ -47,43 +45,95 @@
 
     <div id="site-content">
       <header class="site-header">
-        <div class="container">
+        <!--<div class="container"> -->
           <!-- logo -->
           <!-- nav -->
-					<nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">
-              <img src="/logo/Kino.svg" width="30" height="30" class="d-inline-block align-top" alt="">
-              
-            </a>
-            <!-- aria-controls verwendet wenn etwas dass nur auf eine ID verweißt zusammengeklappt werden soll  --> 
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#kino-navbar" aria-controls="kino-navbar" aria-expanded="true" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="kino-navbar">
-              <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                <li class="nav-item active">
-                  <a class="nav-link" href="#">Film List <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Login </a>
-                </li>
-
-              </ul>
-              <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-              </form>
+          <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>                        
+                </button>
+                <a class="navbar-brand" href="#">DHBW-Kino Mannheim</a>
+              </div>
+              <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                  <li class="active"><a href="#">Home</a></li>
+                  <li><a href="#">Kinoprogramm</a></li>
+                  <li><a href="#">Über uns</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                  <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                  <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                  <li><a href="#"><span class="glyphicon glyphicon-shopping-cart"></span> Warenkorb</a></li>
+                </ul>
+              </div>
             </div>
           </nav>
+  
          
-        </div>
+        <!--</div> container -->
       </header>
+
+      <div id="top-film-carousel" class="carousel slide " data-ride="carousel" data-interval ="2000">
+              <div class="carousel-inner">
+                <!-- 1. Slide --> 
+                <div class="carousel-item active">
+                  <!-- img-fluid -->
+                  <img class="d-block w-100" src="./images/Herr-der-Ringe.jpg"alt="First slide">
+                </div>
+                <!-- 2. Slide --> 
+             
+                 <div class="carousel-item ">
+                  <img class="d-block w-100" src="./images/Star-Wars-Battlefront.png"alt="First slide">
+                </div>
+              
+                <!-- 3. Slide --> 
+              <!--
+                <div class="carousel-item "> 
+                  <img class="d-block img-fluid" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22800%22%20height%3D%22400%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20800%20400%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_177b9b3eb79%20text%20%7B%20fill%3A%23555%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A40pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_177b9b3eb79%22%3E%3Crect%20width%3D%22800%22%20height%3D%22400%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22285.9140625%22%20y%3D%22217.7%22%3EFirst%20slide%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" alt="First slide">
+                </div>
+              -->
+              </div>
+            </div>
+      <!-- 
+       
+        images/Herr-der-Ringe.jpg
+    -->
       <main class="main-content">
+        <div class="container "> <!-- container-fluid--> 
+        <!-- Slider / Carousel --> 
+      
+          <div class="row">
+            <div id="top-film-carousel" class="carousel slide " data-ride="carousel" data-interval ="2000">
+              <div class="carousel-inner">
+                <!-- 1. Slide --> 
+                <div class="carousel-item active">
+                  <!-- img-fluid -->
+                  <img class="d-block w-100" src="./images/Herr-der-Ringe.jpg"alt="First slide">
+                </div>
+                <!-- 2. Slide --> 
+             
+                 <div class="carousel-item ">
+                  <img class="d-block w-100" src="./images/Star-Wars-Battlefront.png"alt="First slide">
+                </div>
+              
+                <!-- 3. Slide --> 
+              <!--
+                <div class="carousel-item "> 
+                  <img class="d-block img-fluid" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22800%22%20height%3D%22400%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20800%20400%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_177b9b3eb79%20text%20%7B%20fill%3A%23555%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A40pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_177b9b3eb79%22%3E%3Crect%20width%3D%22800%22%20height%3D%22400%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22285.9140625%22%20y%3D%22217.7%22%3EFirst%20slide%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" alt="First slide">
+                </div>
+              -->
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="container">
           <div class="row">
           <!--Table div -->
-            <div class = "col-sm-12">
+            <div class = "col-lg-12">
               <table class="table table-boardered table-lm table-dark">
 
                 <thead>
