@@ -36,7 +36,7 @@
 </nav>
   
 <div class="container">
-  <h3>Hier kommt der Slider hin!</h3>
+  <h3>Hier kommt der Slider hin! HALLO!</h3>
 </div>
 
 </body>
