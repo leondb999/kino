@@ -44,7 +44,7 @@
 </html> -->
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <title>Bootstrap Example</title>
   <meta charset="utf-8">
