@@ -50,6 +50,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -57,25 +58,26 @@
 <body>
 
 <nav class="navbar navbar-expand-md bg-dark navbar-dark">
-  <a class="navbar-brand" href="/kino/index.php">DHBW-Kino Mannheim</a>
+  <a class="navbar-brand" href="/kino/index.php"> DHBW-Kino Mannheim </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="collapsibleNavbar">
-    <ul class="navbar-nav">
+    <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href="#">Kinoprogramm</a>
+        <a class="nav-link" href="#"> Kinoprogramm </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Über uns</a>
+        <a class="nav-link" href="#"> Über uns </a>
       </li>
     </ul>
-    <ul class="nav navbar-nav">
+
+    <ul class="nav navbar-nav ml-auto">
       <li class="nav-item">
-        <a class="nav-link" href="#"><button class="navbar-toggler" type="button"><span class="glyphicon glyphicon-log-in"></span></button></a>
+        <a class="nav-link" href="#"><i class="fas fa-user"></i> Login </a>
       </li>    
       <li class="nav-item">
-        <a class="nav-link" href="#"><span class="glyphicon glyphicon-shopping-cart"></span> Warenkorb</a>
+        <a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i> Warenkorb </a>
       </li>  
     </ul>
   </div>  
@@ -83,10 +85,7 @@
 <br>
 
 <div class="container">
-  <h3>Collapsible Navbar</h3>
-  <p>In this example, the navigation bar is hidden on small screens and replaced by a button in the top right corner (try to re-size this window).</p>
-  <p>Only when the button is clicked, the navigation bar will be displayed.</p>
-  <p>Tip: You can also remove the .navbar-expand-md class to ALWAYS hide navbar links and display the toggler button.</p>
+  <h3>Hier kommt der Slider hin !</h3>
 </div>
 
 </body>
