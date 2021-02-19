@@ -45,35 +45,75 @@
 
 
 
+    <div id="site-content">
+      <header class="site-header">
+        <div class="container">
+          <!-- logo -->
+          <!-- nav -->
+					<nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">
+              <img src="/logo/Kino.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+              
+            </a>
+            <!-- aria-controls verwendet wenn etwas dass nur auf eine ID verweißt zusammengeklappt werden soll  --> 
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#kino-navbar" aria-controls="kino-navbar" aria-expanded="true" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
 
-    <!--Container-->
-    <div class="container">
-      <div class="row">
-      <!--Table div -->
-        <div class = "col-sm-12">
-          <table class="table table-boardered table-lm table-dark">
+            <div class="collapse navbar-collapse" id="kino-navbar">
+              <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item active">
+                  <a class="nav-link" href="#">Film List <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Login </a>
+                </li>
 
-            <thead>
-              <tr>
-                  <th scope="col">ID</th>
-                  <th scope="col">Name</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              <?php while( $film = mysqli_fetch_assoc($result) ) { ?> 
-                  <tr> 
-                    <td><?php echo $film ['ID']; ?></td>
-                    <td><?php echo $film ['Name']; ?></td>
-                  </tr>
-              <?php } ?>
-            </tbody>
-          </table>
+              </ul>
+              <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+              </form>
+            </div>
+          </nav>
+         
         </div>
-        <!-- Upload Image Div -->
-       
-      </div>
+      </header>
+      <main class="main-content">
+        <div class="container">
+          <div class="row">
+          <!--Table div -->
+            <div class = "col-sm-12">
+              <table class="table table-boardered table-lm table-dark">
 
+                <thead>
+                  <tr>
+                      <th scope="col">ID</th>
+                      <th scope="col">Name</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <?php while( $film = mysqli_fetch_assoc($result) ) { ?> 
+                      <tr> 
+                        <td><?php echo $film ['ID']; ?></td>
+                        <td><?php echo $film ['Name']; ?></td>
+                      </tr>
+                  <?php } ?>
+                </tbody>
+              </table>
+            </div>
+            <!-- Upload Image Div -->
+          
+          </div>
+
+
+        </div>
+      </main>
+      <footer class="site-footer">
+
+      </footer>
+      <!--Container-->
 
     </div>
   </body>
