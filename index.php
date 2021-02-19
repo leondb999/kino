@@ -38,22 +38,64 @@
       if ($con){
           echo "Connected successfully to ".$servername." with User: ".$username;
       }
+      // all films
+      $result_all_films = mysqli_query($con, "Select * from kinoticketing.film");
+      //SQL for sliders -----------------------------------------------------------------
+      
+        //SQL Mandalorian
+        $sql_mandalorian =  "Select * from kinoticketing.film Where Name = 'The Mandalorian'";
+        $result_mandalorian = mysqli_fetch_assoc(mysqli_query($con,  $sql_mandalorian));
+        echo "<br>".$result_mandalorian['Name']."<br>".$result_mandalorian['Image_Slider_Path'];
 
-      $get_film = "Select * from kinoticketing.film";
-      $result = mysqli_query($con, $get_film);
+        //SQL Fluch der Karibik
+        $sql_fluch_der_karibik =  "Select * from kinoticketing.film Where Name = 'Fluch der Karibik'";
+        $result_fluch_der_karibik = mysqli_fetch_assoc(mysqli_query($con,  $sql_fluch_der_karibik));
+        echo "<br>".$result_fluch_der_karibik['Name']."<br>".$result_fluch_der_karibik['Image_Slider_Path'];
 
-/*
-      # Check if result greater then 0
-      if (mysqli_num_rows($result) > 0){
-        # Display all Rows form DB
-        while($rowData = mysqli_fetch_assoc($result)){
-          echo '<br>'.$rowData["ID"].", ".$rowData["Name"];
-        }
-      }
-      */
+
+        //SQL Avengers Endgame
+        $sql_avengers =  "Select * from kinoticketing.film Where Name = 'Avengers Endgame'";
+        $result_avengers = mysqli_fetch_assoc(mysqli_query($con,  $sql_avengers));
+        echo "<br>".$result_avengers['Name']."<br>".$result_avengers['Image_Slider_Path'];
+
+      // -----------------------------------------------------------------------------------
     ?>
+  <div class="container">
+          <div class="row">
 
-  <!-- Navigation -->
+            <div class = "col-lg-12">
+              <table class="table table-boardered table-lm table-dark">
+
+                <thead>
+                  <tr>
+                      <th scope="col">ID</th>
+                      <th scope="col">Name</th>
+                      <th scope="col">Image Path</th>
+
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <?php while( $film = mysqli_fetch_assoc($result_all_films) ) { ?> 
+                      <tr> 
+                        <td><?php echo $film ['ID']; ?></td>
+                        <td><?php echo $film ['Name']; ?></td>
+                        <td><?php echo $film ['Image_Slider_Path']; ?></td>
+ 
+                      </tr>
+                  <?php } ?>
+                </tbody>
+              </table>
+            </div>
+            <!-- Upload Image Div -->
+          
+          </div>
+
+
+        </div>
+  
+  
+        <!-- Navigation -->
   <nav class="navbar navbar-expand-md bg-dark navbar-dark">
     <a class="navbar-brand" href="/kino/index.php"> DHBW-Kino Mannheim </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -92,26 +134,26 @@
     <div class="carousel-inner" >
 
       <!-- 1. Slide --> 
-      <div class="carousel-item active" style="background-image: url(./images/slider-images/The-Mandalorian-Slider.jpg)"> 
+      <div class="carousel-item active" style="background-image: url(<?php echo $result_mandalorian['Image_Slider_Path'] ?>)"> 
         <div class="carousel-caption ">
-          <h2 class="display-4">The Mandalorian</h2>
-          <p class="lead">This is the Story of Mando and Baby Yoda.</p>
+          <h2 class="display-4"><?php echo $result_mandalorian['Name'] ?></h2>
+          <p class="lead"><?php echo $result_mandalorian['Short_Description'] ?></p>
         </div>
       </div>
-      
+
       <!-- 2. Slide --> 
-      <div class="carousel-item" style="background-image: url(./images/slider-images/Avengers-Endgame-Slider.jpg)">
+      <div class="carousel-item" style="background-image: url(<?php echo $result_avengers['Image_Slider_Path'] ?>)">
         <div class="carousel-caption ">
-          <h2 class="display-4">Avengers Endgame</h2>
-          <p class="lead">Follow the Avengers in the fight against Thanos.</p>
+          <h2 class="display-4"><?php echo $result_avengers['Name'] ?></h2>
+          <p class="lead"><?php echo $result_avengers['Short_Description'] ?></p>
         </div>
       </div>
       
       <!-- 3. Slide --> 
-      <div class="carousel-item" style="background-image: url(./images/slider-images/Pirates-of-the-Carribbean-Slider.jpg)">
+      <div class="carousel-item" style="background-image: url( <?php echo $result_fluch_der_karibik['Image_Slider_Path'] ?>)">
         <div class="carousel-caption ">
-          <h2 class="display-4">Fluch der Karibik</h2>
-          <p class="lead">Caption Jack Sparrow's new Adventure.</p>
+          <h2 class="display-4"><?php echo $result_fluch_der_karibik['Name'] ?></h2>
+          <p class="lead"><?php echo $result_fluch_der_karibik['Short_Description'] ?></p>
         </div>
       </div>
 
