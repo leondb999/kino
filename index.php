@@ -5,15 +5,20 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
- <!-- Wichtige Externe Scripte -->
+
+  <!-- leon -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+  <!-- nicolas navbar-->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-    <Title >Kino</Title>
-
-
+  <link rel ="stylesheet"type="text/css" href="style.css">
     <Title >Kino</Title>
   </head>
 
@@ -49,118 +54,97 @@
       */
       
     ?>
-  <!-- Image Upload -->
+    <!-- Navigation -->
 
+  <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+    <a class="navbar-brand" href="/kino/index.php"> DHBW-Kino Mannheim </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+      <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="#"> Kinoprogramm </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#"> Über uns </a>
+      </li>
+      </ul>
+    
+      <ul class="nav navbar-nav ml-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="#"><i class="fas fa-user"></i> Login </a>
+      </li>    
+      <li class="nav-item">
+        <a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i> Warenkorb </a>
+      </li>  
+      </ul>
+    </div>  
+  </nav>
 
+<!-- Slider -->
+  <div id="top-film-carousel" class="carousel slide " data-ride="carousel" data-interval ="2000">
+    <!-- Navigations Striche -->
+    <ol class="carousel-indicators">
+      <li data-target="#top-film-carousel" data-slide-to="0" class="active"></li>
+      <li data-target="#top-film-carousel" data-slide-to="1"></li>
+      <li data-target="#top-film-carousel" data-slide-to="2"></li>      
+    </ol>
+    
+    <div class="carousel-inner" >
 
-    <div id="site-content">
-      <header class="site-header">
-        <!--<div class="container"> -->
-          <!-- logo -->
-          <!-- nav -->
-          <nav class="navbar navbar-inverse">
-            <div class="container-fluid">
-              <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>                        
-                </button>
-                <a class="navbar-brand" href="#">DHBW-Kino Mannheim</a>
-              </div>
-              <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav">
-                  <li class="active"><a href="#">Home</a></li>
-                  <li><a href="#">Kinoprogramm</a></li>
-                  <li><a href="#">Über uns</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                  <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-                  <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-                  <li><a href="#"><span class="glyphicon glyphicon-shopping-cart"></span> Warenkorb</a></li>
-                </ul>
-              </div>
-            </div>
-          </nav>
-  
-         
-        <!--</div> container -->
-      </header>
-
-      <div id="top-film-carousel" class="carousel slide " data-ride="carousel" data-interval ="1000">
-              <div class="carousel-inner">
-                <div class="carousel-item active">
-                  <img class="d-block w-100" src="./images/Herr-der-Ringe.jpg"alt="First slide">
-                </div>
-                 <div class="carousel-item ">
-                  <img class="d-block w-100" src="./images/Star-Wars-Battlefront.png"alt="First slide">
-                </div>
-              </div>
-            </div>
-
-      <main class="main-content">
-        <div class="container "> <!-- container-fluid--> 
-        <!-- Slider / Carousel --> 
+      <!-- 1. Slide --> 
+      <div class="carousel-item active" style="background-image: url(./images/The-Mandalorian2.jpg)"> 
+        <div class="carousel-caption ">
+          <h2 class="display-4">The Mandalorian</h2>
+          <p class="lead">This is the Story of Mando and Baby Yoda.</p>
+        </div>
+      </div>
       
-          <div class="row">
-            <div id="top-film-carousel" class="carousel slide " data-ride="carousel" data-interval ="2000">
-              <div class="carousel-inner">
-                <!-- 1. Slide --> 
-                <div class="carousel-item active">
-                  <!-- img-fluid -->
-                  <img class="d-block w-100" src="./images/Herr-der-Ringe.jpg"alt="First slide">
-                </div>
-                <!-- 2. Slide --> 
-             
-                 <div class="carousel-item ">
-                  <img class="d-block w-100" src="./images/Star-Wars-Battlefront.png"alt="First slide">
-                </div>
-              
-                <!-- 3. Slide --> 
-              <!--
-                <div class="carousel-item "> 
-                  <img class="d-block img-fluid" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22800%22%20height%3D%22400%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20800%20400%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_177b9b3eb79%20text%20%7B%20fill%3A%23555%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A40pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_177b9b3eb79%22%3E%3Crect%20width%3D%22800%22%20height%3D%22400%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22285.9140625%22%20y%3D%22217.7%22%3EFirst%20slide%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" alt="First slide">
-                </div>
-              -->
-              </div>
-            </div>
-          </div>
+      <!-- 2. Slide --> 
+      <div class="carousel-item" style="background-image: url(./images/Avengers-Endgame.jpg)">
+        <div class="carousel-caption ">
+          <h2 class="display-4">Avengers Endgame</h2>
+          <p class="lead">Follow the Avengers in the fight against Thanos.</p>
         </div>
-        <div class="container">
-          <div class="row">
-          <!--Table div -->
-            <div class = "col-lg-12">
-              <table class="table table-boardered table-lm table-dark">
-
-                <thead>
-                  <tr>
-                      <th scope="col">ID</th>
-                      <th scope="col">Name</th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  <?php while( $film = mysqli_fetch_assoc($result) ) { ?> 
-                      <tr> 
-                        <td><?php echo $film ['ID']; ?></td>
-                        <td><?php echo $film ['Name']; ?></td>
-                      </tr>
-                  <?php } ?>
-                </tbody>
-              </table>
-            </div>
-            <!-- Upload Image Div -->
-          
-          </div>
-
-
+      </div>
+      
+      <!-- 3. Slide --> 
+      <div class="carousel-item" style="background-image: url(./images/Pirates-of-the-Carribbean.jpg)">
+        <div class="carousel-caption ">
+          <h2 class="display-4">Fluch der Karibik</h2>
+          <p class="lead">Caption Jack Sparrow's new Adventure.</p>
         </div>
-      </main>
-      <footer class="site-footer">
-
-      </footer>
-      <!--Container-->
+      </div>
 
     </div>
+  
+  <!-- Vor & Zurück Pfeile --> 
+    <!-- Rechter- Pfeil -->
+    <a class="carousel-control-prev"href="#top-film-carousel" role="button" data-slide="prev">
+      <!-- Icon des rechten Pfeils -->
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    
+    <!-- Linker Pfeil -->
+    <a class="carousel-control-next" href="#top-film-carousel" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+    <!-- ------------------------------------------------------------- -->
+    
+    
+    <!-- Page Content -->
+    <section class="py-2 m-10">
+    <div class="container">
+      <h1 class="display-4">Film Portfolio</h1>
+      <p class="lead">The background images for the slider are set directly in the HTML using inline CSS. The images in this snippet are from <a href="https://unsplash.com">Unsplash</a>, taken by <a href="https://unsplash.com/@joannakosinska">Joanna Kosinska</a>!</p>
+    </div>
+    </section>
+
+
+
   </body>
 </html>
