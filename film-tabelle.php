@@ -26,7 +26,18 @@
         }
       }
       */
-      
+
+    // display film data with foreach-loop 
+      $sql_first_three_films = "Select * from kinoticketing.film ";
+      $result_first_three_films = mysqli_query($con,  $sql_first_three_films);
+      $three_films = array();
+      while($film = mysqli_fetch_array($result_first_three_films)){
+        $three_films[] = $film;
+      }
+      foreach($three_films as $film ){
+        echo "<br>".$film['Name']." ".$film['Image_Slider_Path'];
+      }  
+    //echo "<br>".$result_first_three_films['Name']."<br>".$result_first_three_films['Image_Slider_Path'];
     ?>
 
 <div class="container">

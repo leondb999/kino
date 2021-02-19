@@ -1,23 +1,24 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-    <!-- leon -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-    <!-- nicolas navbar-->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <!-- leon -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+  <!-- nicolas navbar-->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-    <link rel ="stylesheet"type="text/css" href="style.css">
+  <link rel ="stylesheet"type="text/css" href="style.css">
     <Title >Kino</Title>
   </head>
 
@@ -25,8 +26,6 @@
     <!-- Import Variables and SQL Querys-->
     <?php include ('./variables/connection_secrets.php') ?>
     <?php include('./variables/sql_querys.php') ?>
-    <?php include('./functions/slider-functions.php') ?>
-    
 
     <!-- Connect to MySQL DB-->
     <?php
@@ -65,14 +64,6 @@
 
       // -----------------------------------------------------------------------------------
     ?>
-
-    <!-- ------------------------------------------------------------------------------------------------------------------ -->
-    <!-- ----------------------------------------------------- PHP Slider functions------------------------------------------------------------- -->
-    
-
-
-    <!-- ------------------------------------------------------------------------------------------------------------------ -->
-
 
   <!-- Cards Section  with PHP -->
   <section class="py-2 m-10">
@@ -145,37 +136,10 @@
     </div>  
   </nav>
 
-                    	
+  <!-- Slider -->
+  
     <!-- ------------------------------------------------------------- -->
-    <!-- ################################################################################## --> 
-    <!-- PHP HTML Slider (functions integrated) --> 
-    <div id="top-film-carousel" class="carousel slide" data-ride="carousel"  data-interval ="1000">
-        
-        <!-- Navigations Striche -->
-        <ol class="carousel-indicators">
-            <?php echo make_slide_indicators($connect); ?>
-        </ol>
-        <!-- The Slides -->
-        <div class="carousel-inner">
-        <?php echo make_slides($connect); ?>
-        </div>
-
-        <!-- Vor & Zurück Pfeile --> 
-        <!-- Rechter- Pfeil -->
-        <a class="carousel-control-prev" href="#top-film-carousel" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        
-        </a>
-        <!-- Linker Pfeil -->
-        <a class="carousel-control-next" href="#top-film-carousel" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
-
-      </div>
-      </div>
-<!-- ################################################################################## --> 
+    
     
     <!-- Film Cards Hard Coded-->
 
