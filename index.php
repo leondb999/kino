@@ -42,7 +42,7 @@
       //SQL to get all films
         $result_all_films = mysqli_query($con, "Select * from kinoticketing.film");
       // SQL get Kinoprogramm erste 4 Filme in DB 
-        $sql_4_films = "Select * from kinoticketing.film ";
+        $sql_4_films = "Select * from kinoticketing.film WHERE ID>15";
         $result_4_films = mysqli_query($con,  $sql_4_films);
       
       //SQL for sliders -----------------------------------------------------------------

@@ -5,7 +5,7 @@
     //get all films from DB
     function make_query($connect)
     {
-    $query = "Select * From kinoticketing.film Limit 3";
+    $query = "Select * From kinoticketing.film Limit 5";
     $result = mysqli_query($connect, $query);
     return $result;
     }
