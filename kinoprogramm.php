@@ -11,6 +11,26 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
+  <?php include ('./variables/connection_secrets.php') ?>
+  <?php include('./variables/sql_querys.php') ?>
+  <?php include('./functions/slider-functions.php') ?>
+
+
+  <?php
+
+//connect to 
+$con = mysqli_connect($servername, $username, $password);
+if (!$con) {
+    die("Connection failed: " . mysqli_connect_error());
+  } 
+if ($con){
+    echo "Connected successfully to ".$servername." with User: ".$username;
+}
+//SQL to get all films
+  $result_all_films = mysqli_query($con, "Select * from kinoticketing.film");
+  $sql_4_films = "Select * from kinoticketing.film ";
+  $result_4_films = mysqli_query($con,  $sql_4_films);
+?>
 
 <nav class="navbar navbar-expand-md bg-dark navbar-dark">
   <a class="navbar-brand" href="/kino/index.php"> DHBW-Kino Mannheim </a>
@@ -40,47 +60,26 @@
 
 <br>
 
-<div class="container">
-    <div class="row">
-        <div class="col-xl-6" style="margin-bottom: 3em">
-            <div class="card" style="width: 30rem;">
-                <a href="#"><img src="./images/Star_Wars_Episode_3.jpg" class="card-img-top"></a>
-                <div class="card-body">
-                    <a href="#"><h5 class="card-title">Star Wars </h5></a>
-                    <p class="card-text">Es war einmal in einer weit entfernten Galaxie, als Kylo Ren seinen Vater Han Solo umgebracht hat...</p>
-                </div>
+<section class="py-2 m-10">
+        <div class="container">
+            <h1 class="display-4">Kinoprogramm</h1>
+            <p class="lead">Take a look at our Kinoprogramm!</p>
+            <div class="row">
+                <?php                    
+                    while($film = mysqli_fetch_array($result_4_films))
+                    {?>
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-0 shadow">
+                                <img src="<?php echo $film['Image_Slider_Path']?>" class="card-img-top" alt="First Card">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title mb-0">"<?php echo $film['Name']?>"</h5>
+                                    <div class="card-text text-black-50">"<?php echo $film['Short_Description']?>"</div>
+                                </div>
+                            </div>
+                        </div>    
+                <?php } ?>
             </div>
-        </div>
-        <div class="col-xl-6" style="margin-bottom: 3em">
-            <div class="card" style="width: 30rem;">
-                <a href="#"><img src="./images/The-Mandalorian2.jpg" class="card-img-top"></a>
-                <div class="card-body">
-                    <a href="#"><h5 class="card-title">The Mandalorian </h5></a>
-                    <p class="card-text">Keine Ahnung kenne ich nicht, ist nur ein Test...</p>
-                </div>
-            </div>    
-        </div>
-        
-        <div class="col-xl-6" style="margin-bottom: 3em">
-            <div class="card" style="width: 30rem;">
-                <a href="#"><img src="./images/The-Mandalorian2.jpg" class="card-img-top"></a>
-                <div class="card-body">
-                    <a href="#"><h5 class="card-title">The Mandalorian </h5></a>
-                    <p class="card-text">Keine Ahnung kenne ich nicht, ist nur ein Test...</p>
-                </div>
-            </div>    
-        </div>
-        <div class="col-xl-6" style="margin-bottom: 3em">
-            <div class="card" style="width: 30rem;">
-                <a href="#"><img src="./images/Star_Wars_Episode_3.jpg" class="card-img-top"></a>
-                <div class="card-body">
-                    <a href="#"><h5 class="card-title">Star Wars </h5></a>
-                    <p class="card-text">Es war einmal in einer weit entfernten Galaxie, als Kylo Ren seinen Vater Han Solo umgebracht hat...</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+        </section>
 
 </body>
 </html>
