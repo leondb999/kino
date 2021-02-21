@@ -177,8 +177,8 @@
       </div>
 <!-- ################################################################################## --> 
     
-    <!-- Film Cards Hard Coded-->
 
+    <!-- Film Cards with PHP -->
     <section class="py-2 m-10">
         <div class="container">
             <h1 class="display-4">Kinoprogramm</h1>
@@ -199,7 +199,7 @@
                 <?php } ?>
             </div>
         </section>
-    <!-- Film Cards with PHP
+
 
 
 

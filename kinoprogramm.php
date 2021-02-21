@@ -72,7 +72,7 @@ if ($con){
                             <div class="card border-0 shadow">
                                 <img src="<?php echo $film['Image_Slider_Path']?>" class="card-img-top" alt="First Card">
                                 <div class="card-body text-center">
-                                    <h5 class="card-title mb-0">"<?php echo $film['Name']?>"</h5>
+                                    <h5 class="card-title mb-0"><a href="./film.php?ID=<?php echo $film['ID'] ?>">"<?php echo $film['Name']?>"</a></h5>
                                     <div class="card-text text-black-50">"<?php echo $film['Short_Description']?>"</div>
                                 </div>
                             </div>
