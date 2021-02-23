@@ -33,7 +33,7 @@
 <?php include('./variables/sql_querys.php') ?>
 <?php include('./functions/slider-functions.php') ?>
 
-<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
   <a class="navbar-brand" href="/kino/index.php"> DHBW-Kino Mannheim </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
     <span class="navbar-toggler-icon"></span>
@@ -75,6 +75,7 @@
   if ($con){
       //echo "Connected successfully to ".$servername." with User: ".$username;
   }
+  mysqli_set_charset($con,"utf8");
   $result_all_films = mysqli_query($con, "Select * from kinoticketing.film");
   $sql_film_id = "Select * from kinoticketing.film where ID=".$id_film;
   $result_film_id= mysqli_query($con,  $sql_film_id);
