@@ -7,5 +7,6 @@
       if ($con){
           echo "Connected successfully to ".$servername." with User: ".$username;
       }
+      mysqli_set_charset($con,"utf8");
 
 ?>

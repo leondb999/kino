@@ -69,3 +69,48 @@
 
 
         </div>
+
+          
+  <!-- Cards Section  with PHP
+  <section class="py-2 m-10">
+    <div class="container">
+    <h1 class="display-4">Kinoprogramm</h1>
+    <p class="lead">Take a look at our Kinoprogramm!</p>
+      <div class="row">
+        
+      </div>
+    </div>        
+  </section>
+  <div class="container">
+          <div class="row">
+
+            <div class = "col-lg-12">
+              <table class="table table-boardered table-lm table-dark">
+
+                <thead>
+                  <tr>
+                      <th scope="col">ID</th>
+                      <th scope="col">Name</th>
+                      <th scope="col">Image Path</th>
+
+                  </tr>
+                </thead>
+
+                <tbody>
+                <?php while( $film = mysqli_fetch_assoc($result_all_films) ) { ?> 
+                      <tr> 
+                        <td><?php echo $film ['ID']; ?></td>
+                        <td><?php echo $film ['Name']; ?></td>
+                        <td><?php echo $film ['Image_Slider_Path']; ?></td>
+                      </tr>
+                  <?php } ?>
+                </tbody>
+              </table>
+            </div>
+            <!-- Upload Image Div
+          
+          </div>
+
+
+        </div>
+  -->
