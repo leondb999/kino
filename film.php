@@ -60,20 +60,20 @@
 </nav>
 
 
-<?php 
+<?php
   // get ID from URL
   //https://www.geeksforgeeks.org/how-to-get-parameters-from-a-url-string-in-php/#:~:text=The%20parameters%20from%20a%20URL,a%20URL%20by%20parsing%20it.
   $url = $_SERVER['REQUEST_URI'];
   $url_components = parse_url($url); 
   parse_str($url_components['query'], $params);  
   $id_film = $params['ID'];
-  echo "film ID:  ".$id_film."<br>";
+  //echo "film ID:  ".$id_film."<br>";
   $con = mysqli_connect($servername, $username, $password);
   if (!$con) {
       die("Connection failed: " . mysqli_connect_error());
     } 
   if ($con){
-      echo "Connected successfully to ".$servername." with User: ".$username;
+      //echo "Connected successfully to ".$servername." with User: ".$username;
   }
   $result_all_films = mysqli_query($con, "Select * from kinoticketing.film");
   $sql_film_id = "Select * from kinoticketing.film where ID=".$id_film;
@@ -87,15 +87,17 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-xl">
-   
-    <img src="<?php echo $film["Image_Slider_Path"] ?>">
-    </div>
-    <div class="col-xl">
-        <h2><?php $film['Name'] ?> </h2>
-        <br>
-        <p><?php echo $film["Short_Description"] ?></p>
-    </div>
+  <div class="col-xl">
+    <img src="<?php echo $film["Image_Slider_Path"] ?>" class="img-fluid" alt="Responsive image">
+  </div>
+  </div>
+  <div class="row">
+  <div class="col-xl">
+    <br>
+    <h2><?php echo $film["Name"] ?> </h2>
+    <br>
+    <p><?php echo $film["Long_Description"] ?></p>
+  </div>
   </div>
   <br>
   <br>
@@ -114,6 +116,7 @@
     </div>
   </div>
 </div>
-        -->
+<br>
+<br>
 </body>
 </html>

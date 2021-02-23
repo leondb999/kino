@@ -17,20 +17,19 @@
 
 
   <?php
-
-//connect to 
-$con = mysqli_connect($servername, $username, $password);
-if (!$con) {
-    die("Connection failed: " . mysqli_connect_error());
-  } 
-if ($con){
-    echo "Connected successfully to ".$servername." with User: ".$username;
-}
-//SQL to get all films
-  $result_all_films = mysqli_query($con, "Select * from kinoticketing.film");
-  $sql_4_films = "Select * from kinoticketing.film ";
-  $result_4_films = mysqli_query($con,  $sql_4_films);
-?>
+    //connect to 
+    $con = mysqli_connect($servername, $username, $password);
+    if (!$con) {
+        die("Connection failed: " . mysqli_connect_error());
+      } 
+    if ($con){
+        //echo "Connected successfully to ".$servername." with User: ".$username;
+    }
+    //SQL to get all films
+      $result_all_films = mysqli_query($con, "Select * from kinoticketing.film");
+      $sql_4_films = "Select * from kinoticketing.film ";
+      $result_4_films = mysqli_query($con,  $sql_4_films);
+  ?>
 
 <nav class="navbar navbar-expand-md bg-dark navbar-dark">
   <a class="navbar-brand" href="/kino/index.php"> DHBW-Kino Mannheim </a>
@@ -63,14 +62,14 @@ if ($con){
 <section class="py-2 m-10">
         <div class="container">
             <h1 class="display-4">Kinoprogramm</h1>
-            <p class="lead">Take a look at our Kinoprogramm!</p>
+            <p class="lead"> Kinoprogramm!</p>
             <div class="row">
                 <?php                    
                     while($film = mysqli_fetch_array($result_4_films))
                     {?>
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-0 shadow">
-                                <img src="<?php echo $film['Image_Slider_Path']?>" class="card-img-top" alt="First Card">
+                                <a href="./film.php?ID=<?php echo $film['ID'] ?>"><img src="<?php echo $film['Image_Slider_Path']?>" class="card-img-top" alt="First Card"></a>
                                 <div class="card-body text-center">
                                     <h5 class="card-title mb-0"><a href="./film.php?ID=<?php echo $film['ID'] ?>">"<?php echo $film['Name']?>"</a></h5>
                                     <div class="card-text text-black-50">"<?php echo $film['Short_Description']?>"</div>

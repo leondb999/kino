@@ -30,14 +30,13 @@
 
     <!-- Connect to MySQL DB-->
     <?php
-
       //connect to 
       $con = mysqli_connect($servername, $username, $password);
       if (!$con) {
           die("Connection failed: " . mysqli_connect_error());
         } 
       if ($con){
-          echo "Connected successfully to ".$servername." with User: ".$username;
+          //echo "Connected successfully to ".$servername." with User: ".$username;
       }
       //SQL to get all films
         $result_all_films = mysqli_query($con, "Select * from kinoticketing.film");
@@ -62,7 +61,7 @@
         $sql_avengers =  "Select * from kinoticketing.film Where Name = 'Avengers Endgame'";
         $result_avengers = mysqli_fetch_assoc(mysqli_query($con,  $sql_avengers));
         //echo "<br>".$result_avengers['Name']."<br>".$result_avengers['Image_Slider_Path'];
-
+        
       // -----------------------------------------------------------------------------------
     ?>
 
@@ -74,7 +73,8 @@
     <!-- ------------------------------------------------------------------------------------------------------------------ -->
 
 
-  <!-- Cards Section  with PHP -->
+  
+  <!-- Cards Section  with PHP
   <section class="py-2 m-10">
     <div class="container">
     <h1 class="display-4">Kinoprogramm</h1>
@@ -110,14 +110,14 @@
                 </tbody>
               </table>
             </div>
-            <!-- Upload Image Div -->
+            <!-- Upload Image Div
           
           </div>
 
 
         </div>
   
-  
+-->
         <!-- Navigation -->
   <nav class="navbar navbar-expand-md bg-dark navbar-dark">
     <a class="navbar-brand" href="/kino/index.php"> DHBW-Kino Mannheim </a>
