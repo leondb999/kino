@@ -1,79 +1,53 @@
-<!DOCTYPE HTML>
-
-<html>
-
-    <head>
-        <title>Registration</title>
-
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-        <!-- nicolas navbar-->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-        <link rel ="stylesheet"type="text/css" href="style.css">
-    </head>
-
-    <body> 
-        <?php include ('./functions/database_config.php') ?>
-        <?php
-            $op = $_POST['op'] ?? "";
-            $firstname = $_POST['Firstname']  ?? "";
-            $email = $_POST['email']  ?? "";
-            $phone = $_POST['phone']  ?? "";
-            $pass = $_POST['pass1']  ?? "";
-
-            if ($op=="save")
-            {
-                // echo "$name - $email - $phone - $pass";
-
-                $sql = "Insert INTO kinoticketing.users (Firstname) VALUES ('$firstname')";
-                mysqli_query($con,$sql);
-
-                if (mysqli_error($con))  echo "ySQL Error: " . mysqli_error($con);
-                else  {
-                    ?>
-                        <div class="container p-3">
-                                    <div class="panel panel-primary">
-                                        <div class="panel-heading">Success!</div>
-                                        <div class="panel-body">Your registration was successful.</div>
-                                    </div>
-                        </div>
-                    <?php
-                    //echo "Success!";
-                }
-                //exit;
-            }
-        ?>
-    <header>
-        <?php include('./functions/navbar.php') ?>
-    </header>
-    <div class="container p-3">
-
-    <div class="panel panel-default">
-    <div class="panel-heading">Registration form</div>
-    <div class="panel-body">
-
-        <form method=POST action=register.php>
-
-            <div class="form-group">
-                <label>Firstname:</label>
-                <input type="text" class="form-control" name="Firstname" required/>
-            </div>
-            <div class="form-group">
-                <label>Confirm</label>
-                <input type="submit" class="btn btn-primary" value="Save data" />
-            </div>
-            <input type="hidden" name="op" value="save" />
-        </form>
-    </div>
-    </div>
-    </div>
-
-    </body>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Account erstellen</title>
+  </head>
+  <body>
+    <?php
+    if(isset($_POST["submit"])){
+      require("mysql.php");
+      $stmt = $mysql->prepare("Select * FROM users WHERE Username = :user"); //Username überprüfen
+      $stmt->bindParam(":user", $_POST["username"]);
+      $stmt->execute();
+      $count = $stmt->rowCount();
+      if($count == 0){
+        //Username ist frei
+        $stmt = $mysql->prepare("Select * FROM users WHERE EMail = :email"); //Username überprüfen
+        $stmt->bindParam(":email", $_POST["email"]);
+        $stmt->execute();
+        $count = $stmt->rowCount();
+        if($count == 0){
+          if($_POST["pw"] == $_POST["pw2"]){
+            //User anlegen
+            $stmt = $mysql->prepare("Insert INTO users (Username, Passwort, EMail) VALUES (:user, :pw, :email)");
+            $stmt->bindParam(":user", $_POST["username"]);
+            $hash = password_hash($_POST["pw"], PASSWORD_BCRYPT);
+            $stmt->bindParam(":pw", $hash);
+            $stmt->bindParam(":email", $_POST["email"]);
+            $stmt->execute();
+            echo "Dein Account wurde angelegt";
+          } else {
+            echo "Die Passwörter stimmen nicht überein";
+          }
+        } else {
+          echo "Email bereits vergeben";
+        }
+      } else {
+        echo "Der Username ist bereits vergeben";
+      }
+    }
+     ?>
+    <h1>Account erstellen</h1>
+    <form action="register.php" method="post">
+      <input type="text" name="username" placeholder="Username" required><br>
+      <input type="text" name="email" placeholder="Email" required><br>
+      <input type="password" name="pw" placeholder="Passwort" required><br>
+      <input type="password" name="pw2" placeholder="Passwort wiederholen" required><br>
+      <button type="submit" name="submit">Erstellen</button>
+    </form>
+    <br>
+    <a href="login.php">Hast du bereits einen Account?</a>
+  </body>
 </html>

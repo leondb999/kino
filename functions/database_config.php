@@ -1,4 +1,4 @@
-<?php include ('./variables/connection_secrets.php') ?>
+<?php include ('../variables/connection_secrets.php') ?>
 <?php
       $con = mysqli_connect($servername, $username, $password);
       if (!$con) {

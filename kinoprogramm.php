@@ -39,7 +39,7 @@
     <!-- Navigation -->
     <?php include('./functions/navbar.php') ?>
   </header>
-  
+
   <main class="container" role="main" style="padding-top: 56px;">
     <section class="py-2 m-10">
       <div class="container">
@@ -49,7 +49,7 @@
           <?php                    
             while($film = mysqli_fetch_array($result_4_films))
             {?>
-            <div class="col-xl-3 col-md-6 mb-4">
+            <div class="col-xl-4 col-md-6 mb-4">
               <div class="card border-0 shadow">
                 <a href="./film.php?ID=<?php echo $film['ID'] ?>"><img src="<?php echo $film['Image_Slider_Path']?>" class="card-img-top" alt="First Card"></a>
                 <div class="card-body text-center">
