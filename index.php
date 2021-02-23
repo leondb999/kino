@@ -57,7 +57,7 @@
         $result_fluch_der_karibik = mysqli_fetch_assoc(mysqli_query($con,  $sql_fluch_der_karibik));
         //echo "<br>".$result_fluch_der_karibik['Name']."<br>".$result_fluch_der_karibik['Image_Slider_Path'];
 
-
+   
         //SQL Avengers Endgame
         $sql_avengers =  "Select * from kinoticketing.film Where Name = 'Avengers Endgame'";
         $result_avengers = mysqli_fetch_assoc(mysqli_query($con,  $sql_avengers));
