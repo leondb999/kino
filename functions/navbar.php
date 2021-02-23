@@ -15,14 +15,19 @@
     </ul>
     
     <ul class="nav navbar-nav ml-auto">
-      <li class="nav-item">
+      
         <?php if(!isset($_SESSION['username'])): ?>
+        <li class="nav-item">
           <a class="nav-link" href="/kino/login.php"><i class="fas fa-user"></i> Login </a>
+        </li>
           <?php else: ?>
+          <li class="nav-item">
             <a class="nav-link" href="/kino/logout.php"><i class="fas fa-user"></i> Logout </a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="/kino/profil.php"><i class="fas fa-user"></i> Profil </a>
-          <?php endif; ?>
-      </li>    
+          </li> 
+          <?php endif; ?>   
       <li>
         <a class="nav-link" href="/kino/geheim.php"><i class="fas fa-shopping-cart"></i> Geheim </a>
       </li>

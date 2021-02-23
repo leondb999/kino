@@ -1,4 +1,6 @@
 <?php session_start(); ?>
+<!DOCTYPE html>
+<html>
 <head>
   <Title >Profil</Title>
   <meta charset="utf-8">
@@ -16,8 +18,14 @@
   <link rel ="stylesheet"type="text/css" href="style.css"> 
   
 </head>
+<body>
 <header>
     <?php include('./functions/navbar.php') ?>
   </header>
-
-  <h1>User Profil </h1>
+<main role="main" style="padding-top: 56px; padding-bottom: 30px">
+    <div class="container">
+      <h1>User Profil </h1>
+    </div>
+</main>
+</body>
+</html>
