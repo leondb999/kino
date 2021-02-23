@@ -25,144 +25,48 @@
   <?php include ('./variables/connection_secrets.php') ?>
   <?php include('./variables/sql_querys.php') ?>
   <?php include('./functions/slider-functions.php') ?>
-    
+  <?php include('./functions/database_config.php') ?>
+
+
   <!-- Connect to MySQL DB-->
   <?php
     //connect to 
-    $con = mysqli_connect($servername, $username, $password);
-    if (!$con) {
-      die("Connection failed: " . mysqli_connect_error());
-    } 
-    if ($con){
-      //echo "Connected successfully to ".$servername." with User: ".$username;
-    }
-    //SQL to get all films
-    mysqli_set_charset($con,"utf8");
     $result_all_films = mysqli_query($con, "Select * from kinoticketing.film");
     // SQL get Kinoprogramm erste 4 Filme in DB 
     $sql_4_films = "Select * from kinoticketing.film WHERE ID>15";
     $result_4_films = mysqli_query($con,  $sql_4_films);
-    
-    //SQL for sliders -----------------------------------------------------------------
-      
-    //SQL Mandalorian
-    $sql_mandalorian =  "Select * from kinoticketing.film Where Name = 'The Mandalorian'";
-    $result_mandalorian = mysqli_fetch_assoc(mysqli_query($con,  $sql_mandalorian));
-    // echo "<br>".$result_mandalorian['Name']."<br>".$result_mandalorian['Image_Slider_Path'];
-
-    //SQL Fluch der Karibik
-    $sql_fluch_der_karibik =  "Select * from kinoticketing.film Where Name = 'Fluch der Karibik'";
-    $result_fluch_der_karibik = mysqli_fetch_assoc(mysqli_query($con,  $sql_fluch_der_karibik));
-      //echo "<br>".$result_fluch_der_karibik['Name']."<br>".$result_fluch_der_karibik['Image_Slider_Path'];
-
-    //SQL Avengers Endgame
-    $sql_avengers =  "Select * from kinoticketing.film Where Name = 'Avengers Endgame'";
-    $result_avengers = mysqli_fetch_assoc(mysqli_query($con,  $sql_avengers));
-      //echo "<br>".$result_avengers['Name']."<br>".$result_avengers['Image_Slider_Path'];
   ?>
-  
-  <!-- Cards Section  with PHP
-  <section class="py-2 m-10">
-    <div class="container">
-    <h1 class="display-4">Kinoprogramm</h1>
-    <p class="lead">Take a look at our Kinoprogramm!</p>
-      <div class="row">
-        
-      </div>
-    </div>        
-  </section>
-  <div class="container">
-          <div class="row">
 
-            <div class = "col-lg-12">
-              <table class="table table-boardered table-lm table-dark">
-
-                <thead>
-                  <tr>
-                      <th scope="col">ID</th>
-                      <th scope="col">Name</th>
-                      <th scope="col">Image Path</th>
-
-                  </tr>
-                </thead>
-
-                <tbody>
-                  <?php while( $film = mysqli_fetch_assoc($result_all_films) ) { ?> 
-                      <tr> 
-                        <td><?php echo $film ['ID']; ?></td>
-                        <td><?php echo $film ['Name']; ?></td>
-                        <td><?php echo $film ['Image_Slider_Path']; ?></td>
-                      </tr>
-                  <?php } ?>
-                </tbody>
-              </table>
-            </div>
-            <!-- Upload Image Div
-          
-          </div>
-
-
-        </div>
-  -->
-  
+<header>
   <!-- Navigation -->
-  <header>
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-      <a class="navbar-brand" href="/kino/index.php"> DHBW-Kino Mannheim </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="collapsibleNavbar">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="/kino/kinoprogramm.php"> Kinoprogramm </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/kino/about.php"> Über uns </a>
-          </li>
-        </ul>
-        <ul class="nav navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="#"><i class="fas fa-user"></i> Login </a>
-          </li>    
-          <li class="nav-item">
-            <a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i> Warenkorb </a>
-          </li>  
-        </ul>
-      </div>  
-    </nav>
-  </header>
-                    	
-    <!-- ------------------------------------------------------------- -->
-    <!-- ################################################################################## --> 
-    <!-- PHP HTML Slider (functions integrated) --> 
-  <main role="main" style="padding-top: 56px;">
-    <div id="top-film-carousel" class="carousel slide" data-ride="carousel"  data-interval ="1000">
+  <?php include('./functions/navbar.php') ?>
+</header>                    	
+
+  <!-- Slider --> 
+  <main role="main" >
+    <div id="top-film-carousel" class="carousel slide" data-ride="carousel"  data-interval ="1000" style="margin-top: 0px" >
         
         <!-- Navigations Striche -->
         <ol class="carousel-indicators">
             <?php echo make_slide_indicators($connect); ?>
         </ol>
         <!-- The Slides -->
-        <div class="carousel-inner">
-        <?php echo make_slides($connect); ?>
-        </div>
+        <div class="carousel-inner"><?php echo make_slides($connect); ?></div>
 
         <!-- Vor & Zurück Pfeile --> 
         <!-- Rechter- Pfeil -->
         <a class="carousel-control-prev" href="#top-film-carousel" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="sr-only">Previous</span>
-        
         </a>
+
         <!-- Linker Pfeil -->
         <a class="carousel-control-next" href="#top-film-carousel" data-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="sr-only">Next</span>
         </a>
+    </div>
 
-      </div>
-      </div>
 <!-- ################################################################################## --> 
     
 
