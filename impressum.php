@@ -1,11 +1,4 @@
-<?php
-session_start();
-
-if(!isset($_SESSION["username"])){
-
-} else {
-    //echo "<a href='logout.php'>Abmelden</a>";
-}?>
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html>
 <head>

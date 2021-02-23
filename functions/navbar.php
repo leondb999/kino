@@ -20,7 +20,7 @@
           <a class="nav-link" href="/kino/login.php"><i class="fas fa-user"></i> Login </a>
           <?php else: ?>
             <a class="nav-link" href="/kino/logout.php"><i class="fas fa-user"></i> Logout </a>
-           
+            <a class="nav-link" href="/kino/profil.php"><i class="fas fa-user"></i> Profil </a>
           <?php endif; ?>
       </li>    
       <li>
