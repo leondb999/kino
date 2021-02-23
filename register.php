@@ -19,7 +19,7 @@
         <link rel ="stylesheet"type="text/css" href="style.css">
     </head>
 
-    <body>
+    <body> 
         <?php include ('./database_config.php') ?>
         <?php
             $op = $_POST['op'] ?? "";
@@ -50,7 +50,9 @@
                 //exit;
             }
         ?>
-
+    <header>
+        <?php include('./functions/navbar.php') ?>
+    </header>
     <div class="container p-3">
 
     <div class="panel panel-default">

@@ -107,7 +107,7 @@
                 </tbody>
               </table>
             </div>
-            <!-- Upload Image Div
+             Upload Image Div 
           
           </div>
 

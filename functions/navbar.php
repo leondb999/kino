@@ -17,7 +17,7 @@ $navbar = ' "<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
 
   <ul class="nav navbar-nav ml-auto">
     <li class="nav-item">
-      <a class="nav-link" href="#"><i class="fas fa-user"></i> Login </a>
+      <a class="nav-link" href="/kino/register.php"><i class="fas fa-user"></i> Login </a>
     </li>    
     <li class="nav-item">
       <a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i> Warenkorb </a>
