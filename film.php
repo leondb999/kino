@@ -73,6 +73,13 @@
             <iframe class="responsive-iframe" width="700" height="395" src="<?php echo $film["Trailer"] ?>"></iframe>
         </div>
       </div>
+      <br>
+      <br>
+      <div class="row">
+        <div class="col-xl">
+          <a href="/kino/ticket_picking.php?ID=<?php echo $film['ID'] ?>" style="color: black"><h3>Klicke hier um Tickets zu kaufen</h3></a>
+        </div>
+      </div>
     </div>
   </main>
 
