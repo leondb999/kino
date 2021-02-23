@@ -43,8 +43,8 @@
 </header>                    	
 
   <!-- Slider --> 
-  <main role="main" >
-    <div id="top-film-carousel" class="carousel slide" data-ride="carousel"  data-interval ="1000" style="margin-top: 0px" >
+  <main role="main" style="padding-top: 0px">
+    <div id="top-film-carousel" class="carousel slide" data-ride="carousel"  data-interval ="1000">
         
         <!-- Navigations Striche -->
         <ol class="carousel-indicators">

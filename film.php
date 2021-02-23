@@ -19,65 +19,65 @@
 </head>
 <body>
 
-<?php include ('./variables/connection_secrets.php') ?>
-<?php include('./variables/sql_querys.php') ?>
-<?php include('./functions/database_config.php') ?>
-<?php
-  // get ID from URL
-  //https://www.geeksforgeeks.org/how-to-get-parameters-from-a-url-string-in-php/#:~:text=The%20parameters%20from%20a%20URL,a%20URL%20by%20parsing%20it.
-  $url = $_SERVER['REQUEST_URI'];
-  $url_components = parse_url($url); 
-  parse_str($url_components['query'], $params);  
-  $id_film = $params['ID'];
+  <?php include ('./variables/connection_secrets.php') ?>
+  <?php include('./variables/sql_querys.php') ?>
+  <?php include('./functions/database_config.php') ?>
+  <?php
+    // get ID from URL
+    //https://www.geeksforgeeks.org/how-to-get-parameters-from-a-url-string-in-php/#:~:text=The%20parameters%20from%20a%20URL,a%20URL%20by%20parsing%20it.
+    $url = $_SERVER['REQUEST_URI'];
+    $url_components = parse_url($url); 
+    parse_str($url_components['query'], $params);  
+    $id_film = $params['ID'];
 
-  mysqli_set_charset($con,"utf8");
-  $result_all_films = mysqli_query($con, "Select * from kinoticketing.film");
-  $sql_film_id = "Select * from kinoticketing.film where ID=".$id_film;
-  $result_film_id= mysqli_query($con,  $sql_film_id);
-  $film = mysqli_fetch_assoc($result_film_id);
-?>
+    mysqli_set_charset($con,"utf8");
+    $result_all_films = mysqli_query($con, "Select * from kinoticketing.film");
+    $sql_film_id = "Select * from kinoticketing.film where ID=".$id_film;
+    $result_film_id= mysqli_query($con,  $sql_film_id);
+    $film = mysqli_fetch_assoc($result_film_id);
+  ?>
 
-<header>
-  <?php include('./functions/navbar.php') ?>
-</header>
+  <header>
+    <?php include('./functions/navbar.php') ?>
+  </header>
 
-
-
-
-<br>
-
-<div class="container">
-  <div class="row">
-  <div class="col-xl">
-    <img src="<?php echo $film["Image_Slider_Path"] ?>" class="img-fluid" alt="Responsive image">
-  </div>
-  </div>
-  <div class="row">
-  <div class="col-xl">
-    <br>
-    <h2><?php echo $film["Name"] ?> </h2>
-    <br>
-    <p><?php echo $film["Long_Description"] ?></p>
-  </div>
-  </div>
-  <br>
-  <br>
-  <div class="row">
-    <div class="col-xl">
-        <h4> Filmdetails </h4>
+  <main class="container" role="main" style="padding-top: 56px;">
+    <div class="container">
+      <div class="row">
+      <div class="col-xl">
+        <img src="<?php echo $film["Image_Slider_Path"] ?>" class="img-fluid" alt="Responsive image">
+      </div>
+      </div>
+      <div class="row">
+      <div class="col-xl">
         <br>
-        <p>Hauptdarsteller: <?php echo $film["Hauptdarsteller"] ?></p>
-        <p>Regisseur: <?php echo $film["Regisseur"] ?></p>
-        <p>Altersfreigabe: <?php echo $film["FSK"] ?></p>
-        <p>Dauer: <?php echo $film["Dauer"] ?> min</p>
-        <p>Veröffentlichung: <?php echo $film["Jahr"] ?></p>
+        <h2><?php echo $film["Name"] ?> </h2>
+        <br>
+        <p><?php echo $film["Long_Description"] ?></p>
+      </div>
+      </div>
+      <br>
+      <br>
+      <div class="row">
+        <div class="col-xl">
+            <h4> Filmdetails </h4>
+            <br>
+            <p>Hauptdarsteller: <?php echo $film["Hauptdarsteller"] ?></p>
+            <p>Regisseur: <?php echo $film["Regisseur"] ?></p>
+            <p>Altersfreigabe: <?php echo $film["FSK"] ?></p>
+            <p>Dauer: <?php echo $film["Dauer"] ?> min</p>
+            <p>Veröffentlichung: <?php echo $film["Jahr"] ?></p>
+        </div>
+        <div class="col-xl">
+            <iframe class="responsive-iframe" width="700" height="395" src="<?php echo $film["Trailer"] ?>"></iframe>
+        </div>
+      </div>
     </div>
-    <div class="col-xl">
-        <iframe class="responsive-iframe" width="700" height="395" src="<?php echo $film["Trailer"] ?>"></iframe>
-    </div>
-  </div>
-</div>
-<br>
-<br>
+  </main>
+
+  <footer>
+
+  </footer>
+  
 </body>
 </html>

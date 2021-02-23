@@ -39,7 +39,6 @@
     <?php include('./functions/navbar.php') ?>
   </header>
   <main class="container" role="main" style="padding-top: 56px;">
-    <br>
     <section class="py-2 m-10">
       <div class="container">
         <h1 class="display-4">Kinoprogramm</h1>
