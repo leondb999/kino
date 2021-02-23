@@ -36,8 +36,10 @@
   ?>
 
   <header>
+    <!-- Navigation -->
     <?php include('./functions/navbar.php') ?>
   </header>
+  
   <main class="container" role="main" style="padding-top: 56px;">
     <br>
     <section class="py-2 m-10">
