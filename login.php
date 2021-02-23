@@ -3,8 +3,16 @@
   <head>
     <meta charset="utf-8">
     <title>Login</title>
+
+
   </head>
   <body>
+      
+  <header>
+
+<?php include('./functions/navbar.php') ?> 
+</header>    
+
     <?php
     if(isset($_POST["submit"])){
       require("mysql.php");
@@ -18,7 +26,11 @@
         if(password_verify($_POST["pw"], $row["Passwort"])){
           session_start();
           $_SESSION["username"] = $row["Username"];
-          header("Location: kinoprogramm.php");
+          //-----------------------------------------------
+        // Navigate to secret Side
+          header("Location: index.php");
+        
+          //-------------------
         } else {
           echo "Der Login ist fehlgeschlagen";
         }
@@ -26,6 +38,7 @@
         echo "Der Login ist fehlgeschlagen";
       }
     }
+
      ?>
     <h1>Anmelden</h1>
     <form action="login.php" method="post">
