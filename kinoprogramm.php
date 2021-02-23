@@ -9,77 +9,86 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+  <script src="../../assets/js/vendor/popper.min.js"></script>
+  <script src="../../dist/js/bootstrap.min.js"></script>
 </head>
 <body>
   <?php include ('./variables/connection_secrets.php') ?>
   <?php include('./variables/sql_querys.php') ?>
   <?php include('./functions/slider-functions.php') ?>
 
-
   <?php
+    //connect to 
+    $con = mysqli_connect($servername, $username, $password);
+    if (!$con) {
+        die("Connection failed: " . mysqli_connect_error());
+      } 
+    if ($con){
+        //echo "Connected successfully to ".$servername." with User: ".$username;
+    }
+    //SQL to get all films
+      mysqli_set_charset($con,"utf8");
+      $result_all_films = mysqli_query($con, "Select * from kinoticketing.film");
+      $sql_4_films = "Select * from kinoticketing.film ";
+      $result_4_films = mysqli_query($con,  $sql_4_films);
+  ?>
 
-//connect to 
-$con = mysqli_connect($servername, $username, $password);
-if (!$con) {
-    die("Connection failed: " . mysqli_connect_error());
-  } 
-if ($con){
-    echo "Connected successfully to ".$servername." with User: ".$username;
-}
-//SQL to get all films
-  $result_all_films = mysqli_query($con, "Select * from kinoticketing.film");
-  $sql_4_films = "Select * from kinoticketing.film ";
-  $result_4_films = mysqli_query($con,  $sql_4_films);
-?>
-
-<nav class="navbar navbar-expand-md bg-dark navbar-dark">
-  <a class="navbar-brand" href="/kino/index.php"> DHBW-Kino Mannheim </a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="collapsibleNavbar">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="/kino/kinoprogramm.php"> Kinoprogramm </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/kino/about.php"> Über uns </a>
-      </li>
-    </ul>
-
-    <ul class="nav navbar-nav ml-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="#"><i class="fas fa-user"></i> Login </a>
-      </li>    
-      <li class="nav-item">
-        <a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i> Warenkorb </a>
-      </li>  
-    </ul>
-  </div>  
-</nav>
-
-<br>
-
-<section class="py-2 m-10">
-        <div class="container">
-            <h1 class="display-4">Kinoprogramm</h1>
-            <p class="lead">Take a look at our Kinoprogramm!</p>
-            <div class="row">
-                <?php                    
-                    while($film = mysqli_fetch_array($result_4_films))
-                    {?>
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-0 shadow">
-                                <img src="<?php echo $film['Image_Slider_Path']?>" class="card-img-top" alt="First Card">
-                                <div class="card-body text-center">
-                                    <h5 class="card-title mb-0"><a href="./film.php?ID=<?php echo $film['ID'] ?>">"<?php echo $film['Name']?>"</a></h5>
-                                    <div class="card-text text-black-50">"<?php echo $film['Short_Description']?>"</div>
-                                </div>
-                            </div>
-                        </div>    
-                <?php } ?>
-            </div>
-        </section>
-
+  <header>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <a class="navbar-brand" href="/kino/index.php"> DHBW-Kino Mannheim </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/kino/kinoprogramm.php"> Kinoprogramm </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/kino/about.php"> Über uns </a>
+          </li>
+        </ul>
+        <ul class="nav navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#"><i class="fas fa-user"></i> Login </a>
+          </li>    
+          <li class="nav-item">
+            <a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i> Warenkorb </a>
+          </li>  
+        </ul>
+      </div>  
+    </nav>
+  </header>
+  <main class="container" role="main" style="padding-top: 56px;">
+    <br>
+    <section class="py-2 m-10">
+      <div class="container">
+        <h1 class="display-4">Kinoprogramm</h1>
+        <p class="lead"> Kinoprogramm!</p>
+        <div class="row">
+          <?php                    
+            while($film = mysqli_fetch_array($result_4_films))
+            {?>
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-0 shadow">
+                <a href="./film.php?ID=<?php echo $film['ID'] ?>"><img src="<?php echo $film['Image_Slider_Path']?>" class="card-img-top" alt="First Card"></a>
+                <div class="card-body text-center">
+                  <h5 class="card-title mb-0"><a href="./film.php?ID=<?php echo $film['ID'] ?>">"<?php echo $film['Name']?>"</a></h5>
+                  <div class="card-text text-black-50">"<?php echo $film['Short_Description']?>"</div>
+                  </div>
+                </div>
+              </div>    
+          <?php } ?>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="footer">
+    <div class="container">
+      <span class="text-muted">Place sticky footer content here.</span>
+    </div>
+  </footer>
 </body>
 </html>
