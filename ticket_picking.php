@@ -41,7 +41,7 @@
     <?php include('./functions/navbar.php') ?>
   </header>
 
-  <main role="main" style="padding-top: 30px; padding-bottom: 30px">
+  <main role="main" style="padding-top: 40px; padding-bottom: 30px">
   <div class="container">
     <h1 class="display-4">Ticketauswahl:</h1>
     <h3><?php echo $film["Name"] ?></h3>
