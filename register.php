@@ -20,7 +20,7 @@
     </head>
 
     <body> 
-        <?php include ('./database_config.php') ?>
+        <?php include ('./functions/database_config.php') ?>
         <?php
             $op = $_POST['op'] ?? "";
             $firstname = $_POST['Firstname']  ?? "";
