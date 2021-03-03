@@ -16,7 +16,7 @@
     
     <ul class="nav navbar-nav ml-auto">
       
-        <?php if(!isset($_SESSION['username'])): ?>
+        <?php if(!isset($_SESSION['username']) || !isset($_COOKIE['username_cookie'])): ?>
         <li class="nav-item">
           <a class="nav-link" href="/kino/login.php"><i class="fas fa-user"></i> Login </a>
         </li>

@@ -16,6 +16,8 @@
     <?php
     if(isset($_POST["submit"])){
       require("mysql.php");
+      
+      
       $stmt = $mysql->prepare("Select * From users  Where Username = :user"); //Username überprüfen
       $stmt->bindParam(":user", $_POST["username"]);
       $stmt->execute();
@@ -26,6 +28,8 @@
         if(password_verify($_POST["pw"], $row["Passwort"])){
           session_start();
           $_SESSION["username"] = $row["Username"];
+          // --------  Cookie Set --------
+          setcookie("username_cookie", $row["Username"]);
           //-----------------------------------------------
         // Navigate to secret Side
           header("Location: index.php");
@@ -40,6 +44,8 @@
     }
 
      ?>
+
+
     <h1>Anmelden</h1>
     <form action="login.php" method="post">
       <input type="text" name="username" placeholder="Username" required><br>
@@ -49,5 +55,6 @@
     <br>
     <a href="register.php">Noch keinen Account?</a><br>
     <a href="passwordreset.php">Hast du dein Passwor vergessen?</a>
+   
   </body>
 </html>

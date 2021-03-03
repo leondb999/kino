@@ -7,6 +7,12 @@ if(!isset($_SESSION["username"])){
     echo "<a href='logout.php'>Abmelden</a>";
 }
  ?>
+ <?php 
+  if(!isset($_COOKIE["username_cookie"])){
+    header("Location: login.php");
+    exit;
+  } 
+?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
