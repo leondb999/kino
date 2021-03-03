@@ -1,23 +1,11 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html>
 <head>
   <?php include ('./variables/connection_secrets.php') ?>
   <?php include('./variables/sql_querys.php') ?>
   <?php include('./functions/database_config.php') ?>
-  <?php
-    // get ID from URL
-    //https://www.geeksforgeeks.org/how-to-get-parameters-from-a-url-string-in-php/#:~:text=The%20parameters%20from%20a%20URL,a%20URL%20by%20parsing%20it.
-    $url = $_SERVER['REQUEST_URI'];
-    $url_components = parse_url($url); 
-    parse_str($url_components['query'], $params);  
-    $id_film = $params['ID'];
 
-    mysqli_set_charset($con,"utf8");
-    $result_all_films = mysqli_query($con, "Select * from kinoticketing.film");
-    $sql_film_id = "Select * from kinoticketing.film where ID=".$id_film;
-    $result_film_id= mysqli_query($con,  $sql_film_id);
-    $film = mysqli_fetch_assoc($result_film_id);
-  ?>
   <title>Tickets</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -40,12 +28,64 @@
   <header>
     <?php include('./functions/navbar.php') ?>
   </header>
-
   <main role="main" style="padding-top: 40px; padding-bottom: 30px">
+  <?php
+    // get Film Data by url parameter 
+        $url = $_SERVER['REQUEST_URI'];
+        $url_components = parse_url($url); 
+        parse_str($url_components['query'], $params);  
+        $id_film = $params['ID'];
+    
+        mysqli_set_charset($con,"utf8");
+        $sql_film_id = "Select * from kinoticketing.film where ID=".$id_film;
+        $result_film_id= mysqli_query($con,  $sql_film_id);
+        $film = mysqli_fetch_assoc($result_film_id);
+    ?>
+    <?php 
+        // get Data from Person by Username that is stored in cookie
+        include('./functions/get_user_data_cookie.php') 
+        // returns userdata as user_cookie
+    ?>
+    <?php
+        // Füge Daten Film_ID und User_ID in Tabelle user_schaut_film ein
+        if(isset($_POST["add_Warenkorb"])){
+            
+            require("mysql.php");
+            //film ID und Name
+            $f_ID = $film['ID'];
+            $f_Name = $film['Name'];
+            // logged in User ID und Name
+            $u_ID = $user_cookie['ID'];
+            $u_Username =  $user_cookie['Username'];
+
+            $sql_add_warenkorb = "Insert Into kinoticketing.user_schaut_film (Film_ID, User_ID, Film_Name, User_Name) VALUES('$f_ID', '$u_ID', '$f_Name', '$u_Username')";
+            if (mysqli_query($con, $sql_add_warenkorb)) {
+                $message = '<div class="alert alert-success" role="alert">Success</div>';
+            } else {
+                echo "Error: " . $sql_add_warenkorb . "<br>" . mysqli_error($con);
+            }
+           
+            header("Location: ./film.php?ID=$f_ID");
+
+            //header("Location: kinoprogramm.php");
+        }
+     ?>
+
   <div class="container">
     <h1 class="display-4">Ticketauswahl:</h1>
-    <h3><?php echo $film["Name"] ?></h3>
     <br>
+    <form action="" method="post"> <!-- action ="ticket_picking.php" -->
+        <button type="submit" name="add_Warenkorb">Add to Warenkorb</button>
+    </form>
+    <div>
+        <?php echo "Film_ID: ".$film['ID'] ?>
+        <?php echo "Film_Name: ".$film['Name'] ?>
+        <br>
+        <?php echo "User_ID: ".$user_cookie['ID'] ?>
+        <?php echo "User_Name: ".$user_cookie['Username']; ?>
+    </div>
+
+    <!--
     <div class="row gx-5">
         <div class="col-sm-2">
             <a href="#" style="color: black"><div class="p-3 border bg-success text-center">A1</div></a>
@@ -177,7 +217,7 @@
     <br>
     <br>
     <br>
-
+-->
   </main>
 
   <footer class="py-3 bg-dark" style="color: grey">
