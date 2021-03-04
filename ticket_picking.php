@@ -1,4 +1,4 @@
-<!--<?php session_start(); ?>-->
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -98,7 +98,7 @@
             
             <h1 class="display-4">Ticketauswahl:</h1>
             <br>
-            <form action="" method="post">  action ="ticket_picking.php" 
+            <form action="" method="post">  <!--action ="ticket_picking.php"  -->
                 <button type="submit" name="add_Warenkorb">Add to Warenkorb</button>
             </form>
             <div>  
