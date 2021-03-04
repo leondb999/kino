@@ -51,7 +51,7 @@
         </header>
         <?php
                 // get Film Data by url parameter 
-                
+                /*
                     $url = $_SERVER['REQUEST_URI'];
                     $url_components = parse_url($url); 
                     parse_str($url_components['query'], $params);  
@@ -61,7 +61,7 @@
                     $sql_film_id = "Select * from kinoticketing.film where ID=".$id_film;
                     $result_film_id= mysqli_query($con,  $sql_film_id);
                     $film = mysqli_fetch_assoc($result_film_id);
-                    
+                    */
                 ?>
                 <?php 
                     // get Data from Person by Username that is stored in cookie
@@ -70,7 +70,7 @@
                 ?>
                 <?php
                     // Füge Daten Film_ID und User_ID in Tabelle user_schaut_film ein
-                    
+                    /*
                     if(isset($_POST["add_Warenkorb"])){
                         
                         require("mysql.php");
@@ -92,7 +92,7 @@
 
                         //header("Location: kinoprogramm.php");
                        
-                    } 
+                    } */
                 ?>
         <main role="main" style="padding-top: 40px; padding-bottom: 30px"> 
             
@@ -102,12 +102,12 @@
                 <button type="submit" name="add_Warenkorb">Add to Warenkorb</button>
             </form>
             <div>  
-                             
+                <!--              
                 <?php echo "Film_ID: ".$film['ID'] ?>
                 <?php echo "Film_Name: ".$film['Name'] ?>
                 <br>
                 <?php echo "User_ID: ".$user_cookie['ID'] ?>
-                <?php echo "User_Name: ".$user_cookie['Username']; ?>         
+                <?php echo "User_Name: ".$user_cookie['Username']; ?>  -->          
             </div> 
         <div class="container">
             <div class="content">

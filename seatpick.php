@@ -9,11 +9,11 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" ></script> <!--integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"  crossorigin="anonymous"-->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" ></script> <!-- integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous" -->
         
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -43,14 +43,14 @@
                 margin-top: 20px;
             }
         </style>
+       
     </head>
     <body>
         <header>
-           <!-- <?php include('./functions/navbar.php') ?>-->
+          <!-- <?php //include('./functions/navbar.php') ?>-->
         </header>
-        <main role="main" style="padding-top: 40px; padding-bottom: 30px">
-            <!--
-            <?php
+         <!--
+         <?php
                 // get Film Data by url parameter 
                     $url = $_SERVER['REQUEST_URI'];
                     $url_components = parse_url($url); 
@@ -91,21 +91,24 @@
                         //header("Location: kinoprogramm.php");
                     }
                 ?>-->
-                
-                <h1 class="display-4">Ticketauswahl:</h1>
+        <!--<main role="main" style="padding-top: 40px; padding-bottom: 30px"> -->
+            <!-- 
+        <h1 class="display-4">Ticketauswahl:</h1>
                 <br>
                 <form action="" method="post">  action ="ticket_picking.php" 
                     <button type="submit" name="add_Warenkorb">Add to Warenkorb</button>
                 </form>
                 <div>
-                    <!--
+                   
                 <?php echo "Film_ID: ".$film['ID'] ?>
                     <?php echo "Film_Name: ".$film['Name'] ?>
                     <br>
                     <?php echo "User_ID: ".$user_cookie['ID'] ?>
                     <?php echo "User_Name: ".$user_cookie['Username']; ?>
-                    -->
-                </div>
+               
+                </div>  -->
+                
+              <h1>hello </h1>
             
 
 
@@ -119,110 +122,22 @@
                             <button type="button" class="btn-primary" onclick="getSelectedSeats()">Get Seats</button>
                             <div>
                                 <h3>Bestellungs Data</h3>
+                               
                                 <p id="selected-seats"></p>
-                                <p id="selected-seats-items"></p>
                                 
                             </div>
                         </div>
                     </div>
                 </div>
 
-               
+                </main>
 
 
     <footer class="py-3 bg-dark" style="color: grey">
         <?php include('./functions/footer.php') ?>
     </footer>
-
-
-  <script type="text/javascript" src="seatchart.js"></script>
-  <script>
-      // API Referenz des Seatpickers https://seatchart.js.org/api.html#Seatchart
-    console.log(document.getElementById("map-container"));
-    var options = {
-        // Reserved and disabled seats are indexed
-        // from left to right by starting from 0.
-        // Given the seatmap as a 2D array and an index [R, C]
-        // the following values can obtained as follow:
-        // I = columns * R + C
-        map: {
-            id: 'map-container',
-            rows: 9,
-            columns: 9,
-            // e.g. Reserved Seat [Row: 1, Col: 2] = 7 * 1 + 2 = 9
-            reserved: {
-                seats: [1, 2, 3, 5, 6, 7, 9, 10, 11, 12, 14, 15, 16, 17, 18, 19, 20, 21],
-            },
-            disabled: {
-                seats: [0, 8],
-                rows: [4],
-                columns: [4]
-            }
-        },
-        types: [
-            // hier kann man die Preisklassen festlegen
-            // bei dem Typ darf kein Leerzeichen dazwischen sein 
-            { type: "regular", backgroundColor: "#006c80", price: 10 },//, selected: [23, 24] },
-            { type: "reduced", backgroundColor: "#287233", price: 7.5} //, selected: [25, 26] }
-            //{ type: "VIP", backgroundColor: "#FFA500", price: 20},
-        ],
-        cart: {
-            id: 'cart-container',
-            width: 280,
-            height: 250,
-            currency: '€',
-        },
-        legend: {
-            id: 'legend-container',
-        },
-        assets: {
-            path: "./assets",
-        }
-    };
-
-    var sc = new Seatchart(options);
-   console.log("hello", sc.getCart());
-    //https://jsc.mm-lamp.com/
-</script>                  
-    <script>
-        function getSelectedSeats(){
-            var seats_json = sc.getCart();
-            /*document.getElementById('selected-seats').innerHTML = seats_json + ", Total Price" + sc.getTotal(); 
-            document.getElementById('selected-seats-items').innerHTML = "regular seats: "+  sc.getCart()["regular"] + "<br>" + "reduced seats: " + sc.getCart()["reduced"] + "<br> Total Price: " + sc.getTotal() + options.cart["currency"] ;
-            console.log("keys: "+ Object.keys(sc.getCart()));
-            console.log("reduced: " + sc.getCart()["reduced"]);
-                typeof
-                - options.types --> object
-                - typof options.types[0] --> object
-            */
-
-            console.log("Kathegorie: options.types[i]: " + options.types[0].type);
-            console.log("Elemente der Kathegorie 'regular:'" + sc.getCart()[options.types[0].type])
-            //get kathegorien
-            var seat_data ="";
-            var all_selected_seats =[];
-
-            for(var i = 0; i < options.types.length; i++){
-                // Sitzkategorie z.B. regular oder reduced
-                var seat_type =  options.types[i].type;
-                console.log("options.types["+i+"]: " + seat_type);    
-
-                seat_data += seat_type + " seats: " + sc.getCart()[seat_type] + "// Price pro Sitz: " +sc.getPrice(seat_type)+ "<br>";
-                
-                Array.prototype.push.apply(all_selected_seats, sc.getCart()[seat_type])
-            }
-            console.log("all_seats: " +   all_selected_seats);
-            console.log("length all_seats: " + all_selected_seats.length);
-  
-            seat_data += "Total Price: " + sc.getTotal() + options.cart["currency"] ;
-          
-            document.getElementById('selected-seats-items').innerHTML = seat_data + "<br> All seats: " + all_selected_seats + "   Length All seats: " + all_selected_seats.length;
-            
-            
-
-         
-           
-        }
-    </script>
+    <script type="text/javascript" src="seatchart.js"></script>
+    <script type="text/javascript" src="seatpicker-layout.js"></script>                 
+    <script type="text/javascript" src="seatpicker-bestellungsdata.js"></script>
     </body>
 </html>
