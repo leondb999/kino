@@ -1,4 +1,12 @@
 <?php session_start(); ?>
+<?php
+
+// prüft, ob ein Cookie verfügbar ist, wenn das nicht der Fall ist wird man automatisch zur Login Page geleitet
+if(!isset($_COOKIE["username_cookie"])){
+  header("Location: login.php");
+  exit;
+} 
+?>
 <!DOCTYPE html>
 <html>
     <head>
