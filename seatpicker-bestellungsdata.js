@@ -1,4 +1,5 @@
 function getSelectedSeats(){
+    // API Referenz: https://seatchart.js.org/api.html#SeatchartonChange
     var seats_json = sc.getCart();
     /*document.getElementById('selected-seats').innerHTML = seats_json + ", Total Price" + sc.getTotal(); 
     document.getElementById('selected-seats-items').innerHTML = "regular seats: "+  sc.getCart()["regular"] + "<br>" + "reduced seats: " + sc.getCart()["reduced"] + "<br> Total Price: " + sc.getTotal() + options.cart["currency"] ;
@@ -30,4 +31,11 @@ function getSelectedSeats(){
     seat_data += "Total Price: " + sc.getTotal() + options.cart["currency"] ;
     
     document.getElementById('selected-seats').innerHTML = seat_data + "<br> All seats: " + all_selected_seats + "   Length All seats: " + all_selected_seats.length;
+   console.log("Reserved: " + options.map.reserved.seats);
+}
+
+function disableSeat(){
+   var s = sc.getCart["regular"];
+   console.log(s);
+   
 }

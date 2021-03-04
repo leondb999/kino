@@ -124,6 +124,7 @@ if(!isset($_COOKIE["username_cookie"])){
                     <div id="cart-container"></div>
                     <div id="legend-container"></div>
                     <button type="button" class="btn-primary" onclick="getSelectedSeats()">Get Seats</button>
+                    <button type="button" class="btn-primary" onclick="disableSeat()">Disable Seat</button>
                     <div>
                         <h3>Bestellungs Data</h3>
                         
