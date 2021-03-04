@@ -84,8 +84,13 @@
                 </div>
                
             <div id="map-container">test</div>
-            <div id="legend-container"></div>
-            <div id="shoppingCart-container"></div>
+
+
+            <div class="right">
+                <div id="cart-container"></div>
+                <div id="legend-container"></div>
+            </div>
+            </div>
         </main>
 
     <footer class="py-3 bg-dark" style="color: grey">
