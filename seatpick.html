@@ -1,9 +1,9 @@
-<?php session_start(); ?>
+<!--<?php session_start(); ?>-->
 <!DOCTYPE html>
 <html>
     <head>
 
-        <?php include('./functions/database_config.php') ?>
+        <!--<?php include('./functions/database_config.php') ?>-->
 
         <title>Tickets</title>
         <meta charset="utf-8">
@@ -46,9 +46,10 @@
     </head>
     <body>
         <header>
-            <?php include('./functions/navbar.php') ?>
+           <!-- <?php include('./functions/navbar.php') ?>-->
         </header>
         <main role="main" style="padding-top: 40px; padding-bottom: 30px">
+            <!--
             <?php
                 // get Film Data by url parameter 
                     $url = $_SERVER['REQUEST_URI'];
@@ -89,7 +90,7 @@
 
                         //header("Location: kinoprogramm.php");
                     }
-                ?>
+                ?>-->
                 
                 <h1 class="display-4">Ticketauswahl:</h1>
                 <br>
@@ -97,11 +98,13 @@
                     <button type="submit" name="add_Warenkorb">Add to Warenkorb</button>
                 </form>
                 <div>
+                    <!--
                 <?php echo "Film_ID: ".$film['ID'] ?>
                     <?php echo "Film_Name: ".$film['Name'] ?>
                     <br>
                     <?php echo "User_ID: ".$user_cookie['ID'] ?>
                     <?php echo "User_Name: ".$user_cookie['Username']; ?>
+                    -->
                 </div>
             
 
@@ -117,6 +120,8 @@
                             <div>
                                 <p>display seats</p>
                                 <p id="selected-seats"></p>
+                                <p id="selected-seats-items"></p>
+                                
                             </div>
                         </div>
                     </div>
@@ -132,6 +137,7 @@
 
   <script type="text/javascript" src="seatchart.js"></script>
   <script>
+      // API Referenz des Seatpickers https://seatchart.js.org/api.html#Seatchart
     console.log(document.getElementById("map-container"));
     var options = {
         // Reserved and disabled seats are indexed
@@ -154,14 +160,17 @@
             }
         },
         types: [
-            { type: "regular", backgroundColor: "#006c80", price: 10, selected: [23, 24] },
-            { type: "reduced", backgroundColor: "#287233", price: 7.5, selected: [25, 26] }
+            // hier kann man die Preisklassen festlegen
+            // bei dem Typ darf kein Leerzeichen dazwischen sein 
+            { type: "regular", backgroundColor: "#006c80", price: 10 },//, selected: [23, 24] },
+            { type: "reduced", backgroundColor: "#287233", price: 7.5} //, selected: [25, 26] }
+            //{ type: "VIP", backgroundColor: "#FFA500", price: 20},
         ],
         cart: {
             id: 'cart-container',
             width: 280,
             height: 250,
-            currency: '£',
+            currency: '€',
         },
         legend: {
             id: 'legend-container',
@@ -172,14 +181,45 @@
     };
 
     var sc = new Seatchart(options);
-   
+   console.log("hello", sc.getCart());
     //https://jsc.mm-lamp.com/
 </script>                  
     <script>
         function getSelectedSeats(){
-            document.getElementById('selected-seats').innerHTML = sc.getCart();
-               
+            var seats_json = sc.getCart();
+            document.getElementById('selected-seats').innerHTML = seats_json + ", Total Price" + sc.getTotal(); 
+            document.getElementById('selected-seats-items').innerHTML = "regular seats: "+  sc.getCart()["regular"] + "<br>" + "reduced seats: " + sc.getCart()["reduced"] + "<br> Total Price: " + sc.getTotal() + options.cart["currency"] ;
+            console.log("keys: "+ Object.keys(sc.getCart()));
+            console.log("reduced: " + sc.getCart()["reduced"]);
+            /*
+                typeof
+                - options.types --> object
+                - typof options.types[0] --> object
+
+            */
+            console.log("typof options.types[0]: " + options.types[0].type);
+            console.log("typof options.types[0]: " + typeof options.types[0]);
+            console.log("Length: " + options.types.length);
+            //get kathegorien
+            var seat_data ="";
+            for(var i = 0; i < options.types.length; i++){
+                console.log("options.types["+i+"]: " + options.types[i].type);
+                seat_data += options.types[i].type + " seats: " + sc.getCart()[options.types[i].type] + "<br>";
+            }
+            seat_data += "Total Price: " + sc.getTotal() + options.cart["currency"] ;
+          
+            document.getElementById('selected-seats-items').innerHTML = seat_data;
             
+            
+            
+            /*
+            for(var i = 0; i < )
+            for(x in options.types){
+                console.log("types: " + x);
+            }
+            */
+         
+           
         }
     </script>
     </body>
