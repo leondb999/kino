@@ -20,7 +20,29 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
         <link rel ="stylesheet"type="text/css" href="style.css"> 
         <link rel="stylesheet" href="seatchart.css">
+        <style>
+            .content {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                margin-top: 40px;
+            }
 
+            .right {
+                display: flex;
+                flex-direction: column;
+                margin-left: 80px;
+            }
+
+            #map-container {
+                display: flex;
+                align-items: center;
+            }
+
+            #legend-container {
+                margin-top: 20px;
+            }
+        </style>
     </head>
     <body>
         <header>
@@ -68,30 +90,35 @@
                         //header("Location: kinoprogramm.php");
                     }
                 ?>
-
-            <div class="container">
+                
                 <h1 class="display-4">Ticketauswahl:</h1>
                 <br>
-                <form action="" method="post"> <!-- action ="ticket_picking.php" -->
+                <form action="" method="post">  action ="ticket_picking.php" 
                     <button type="submit" name="add_Warenkorb">Add to Warenkorb</button>
                 </form>
                 <div>
-                    <?php echo "Film_ID: ".$film['ID'] ?>
+                <?php echo "Film_ID: ".$film['ID'] ?>
                     <?php echo "Film_Name: ".$film['Name'] ?>
                     <br>
                     <?php echo "User_ID: ".$user_cookie['ID'] ?>
                     <?php echo "User_Name: ".$user_cookie['Username']; ?>
                 </div>
+            
+
+
+
+                <div class="container">
+                    <div class="content">
+                        <div id="map-container"></div>
+                        <div class="right">
+                            <div id="cart-container"></div>
+                            <div id="legend-container"></div>
+                        </div>
+                    </div>
+                </div>
+
                
-            <div id="map-container">test</div>
 
-
-            <div class="right">
-                <div id="cart-container"></div>
-                <div id="legend-container"></div>
-            </div>
-            </div>
-        </main>
 
     <footer class="py-3 bg-dark" style="color: grey">
         <?php include('./functions/footer.php') ?>
