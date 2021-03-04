@@ -32,10 +32,16 @@ function getSelectedSeats(){
     
     document.getElementById('selected-seats').innerHTML = seat_data + "<br> All seats: " + all_selected_seats + "   Length All seats: " + all_selected_seats.length;
    console.log("Reserved: " + options.map.reserved.seats);
+   console.log("Item in all_elements: " +  all_selected_seats.keys());
+   for (x of  all_selected_seats){
+       console.log("y: " + x);
+   }
 }
 
 function disableSeat(){
-   var s = sc.getCart["regular"];
-   console.log(s);
+   var seat_arr = [];
+   Array.prototype.push.apply(seat_arr,sc.getCart['regular']);
+   console.log(sc.selectSeats());
+   //console.log(s);
    
 }
