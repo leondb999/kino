@@ -10,25 +10,19 @@
     if ($con){
         echo "Connected successfully to ".$servername." with User: ".$username."<br>";
     }
-    // get seats and film ID from AJAX
-
-
+    
+    // hole die reserved_seats und die film_ID von AJAX
     $reserved_seats=$_POST['reserved_seats'];
     $film_ID = $_POST['film_id'];
     
-    // prüfe, ob es bereits einen Eintrag für den Film gibt
-    $sql_get_seats_by_filmID = "Select * From kinoticketing.seat_picking Where Film_ID= $film_ID";
+    // hole den Film Namen
+    $sql_get_film = "Select * From kinoticketing.film Where ID =".$film_ID;
+    $film_n=  mysqli_fetch_assoc(mysqli_query($con, $sql_get_film));
+    $film_name = $film_n['Name'];
+    echo "Film Name: ". $film_name."<br>";
 
-    
-    //insert data
-    //$sql="Insert INTO kinoticketing.seat_picking (reserved_seats) VALUES ('$reserved_seats')";
-    
-    
-    
-    //$film = mysqli_fetch_assoc($result_get_seats_by_filmID);
- 
-    
-   
+    // hole Sitz Buchungsdaten für eine Film_ID aus seat_picking
+    $sql_get_seats_by_filmID = "Select * From kinoticketing.seat_picking Where Film_ID= $film_ID";
     $film_seats =  mysqli_fetch_assoc(mysqli_query($con, $sql_get_seats_by_filmID)); // $film_seats ist ein Array mit den Keys "Film_ID", "reserved_seats", "Film_Name" usw | Stand 05.03.2021
     
     // prüfe, ob ein seat selected wurde, wenn kein Sitz ausgewählt wurde ist Stringlänge gleich  0
@@ -60,7 +54,7 @@
 
             echo "<p> keine Sitze bisher bei Film ".$film_ID." gebucht</p><br>";
             // füge die ausgewählten Sitze mit Film_ID in DB ein
-            $sql_insert_seats="Insert INTO kinoticketing.seat_picking (reserved_seats, Film_ID) VALUES ('$reserved_seats', '$film_ID')";
+            $sql_insert_seats="Insert INTO kinoticketing.seat_picking (reserved_seats, Film_ID, Film_Name) VALUES ('$reserved_seats', '$film_ID', '$film_name')";
             // wenn die Daten erfolgreich eingefügt wurden    
             if ($con->query($sql_insert_seats) === TRUE) {
                 echo "data inserted - FilmID:".$film_ID.", Seats:".$reserved_seats;

@@ -102,19 +102,7 @@ if(!isset($_COOKIE["username_cookie"])){
                 
             } 
         ?>
-        <?php 
-            // get reserved seats from db
-            /// !!! hier könnte man mit AJAX 
-            $f_ID_seat = $film['ID'];
-            $result_user_data = mysqli_query($con, "Select reserved_seats From kinoticketing.seat_picking Where Film_ID = '$f_ID_seat'");
-            while($r_seats = mysqli_fetch_array($result_user_data)){
-                $r_seats_str = $r_seats['reserved_seats'];
-            }
-            $reserved_seats_db_arr = explode(',',$r_seats_str);
-            
-          // $reserved_seats_db_str = "1, 2, 3, 5,7";           
-          // $reserved_seats_db_arr = explode(',',$reserved_seats_db_str);              
-        ?>
+
        
         <main role="main" style="padding-top: 40px; padding-bottom: 30px"> 
             
@@ -157,6 +145,31 @@ if(!isset($_COOKIE["username_cookie"])){
             <?php include('./functions/footer.php') ?>
         </footer>
         <script type="text/javascript" src="seatchart.js"></script>
+        <?php 
+            // get reserved seats from db
+            /// !!! hier könnte man mit AJAX 
+            $f_ID_seat = $film['ID'];
+            $result_user_data = mysqli_fetch_array(mysqli_query($con, "Select reserved_seats From kinoticketing.seat_picking Where Film_ID = '$f_ID_seat'"));
+           
+            
+            if(isset($result_user_data)){
+                echo "variable is definded";
+                $r_seats_str = $result_user_data['reserved_seats'];
+              
+            }
+            if(!isset($result_user_data)){
+                echo "variable is undefined";
+            }
+            $reserved_seats_db_arr = explode(',',$r_seats_str);
+           // $r_seats_str = $result_user_data['reserved_seats'];
+            //while($r_seats = mysqli_fetch_array($result_user_data)){
+               // $r_seats_str = $r_seats['reserved_seats'];
+            //}
+          
+            
+          // $reserved_seats_db_str = "1, 2, 3, 5,7";           
+          // $reserved_seats_db_arr = explode(',',$reserved_seats_db_str);              
+        ?>
         <script>
             
             // API Referenz des Seatpickers https://seatchart.js.org/api.html#Seatchart
