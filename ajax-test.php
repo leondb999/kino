@@ -31,5 +31,29 @@
             });
         });
     </script>
+    <script>
+    /*
+            //sc will contain a reference to the map
+      var sc = $('#sc-container').seatCharts({
+        //... 
+      });
+
+      setInterval(function() {
+        $.ajax({
+          type     : 'get',
+          url      : '/bookings/get/100',
+          dataType : 'json',
+          success  : function(response) {
+            //iterate through all bookings for our event 
+            $.each(response.bookings, function(index, booking) {
+              //find seat by id and set its status to unavailable
+              sc.status(booking.seat_id, 'unavailable');
+            });
+          }
+        });
+      }, 10000); //every 10 seconds
+      */
+    </script>
+
 </body>
 </html>

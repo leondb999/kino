@@ -105,12 +105,13 @@ if(!isset($_COOKIE["username_cookie"])){
         <?php 
             // get reserved seats from db
             /// !!! hier könnte man mit AJAX 
-            $f_ID_seat = 6;
+            $f_ID_seat = $film['ID'];
             $result_user_data = mysqli_query($con, "Select reserved_seats From kinoticketing.seat_picking Where Film_ID = '$f_ID_seat'");
             while($r_seats = mysqli_fetch_array($result_user_data)){
-              $r_seats_str = $r_seats['reserved_seats'];
+                $r_seats_str = $r_seats['reserved_seats'];
             }
             $reserved_seats_db_arr = explode(',',$r_seats_str);
+            
           // $reserved_seats_db_str = "1, 2, 3, 5,7";           
           // $reserved_seats_db_arr = explode(',',$reserved_seats_db_str);              
         ?>
@@ -204,8 +205,8 @@ if(!isset($_COOKIE["username_cookie"])){
             };
 
             var sc = new Seatchart(options);
-            var arr = [3];
-            Array.Prototype.push.apply([options.map.reserved.seats], arr);
+            
+           
             console.log("hello", sc.getCart());
             //https://jsc.mm-lamp.com/
 
@@ -236,11 +237,26 @@ if(!isset($_COOKIE["username_cookie"])){
             // insert data via AJAX
             </script>
             <script>
-            var x = getSelectedSeats();
-           console.log("typ of getSelectedSeats(): " +  typeof x);
+           
+            // get dynamic variables from url in js
+            // Referenz stackoverflow: https://stackoverflow.com/questions/19491336/how-to-get-url-parameter-using-jquery-or-plain-javascript
+            $.urlParam = function(name){
+                var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+                if (results==null) {
+                return null;
+                }
+                return decodeURI(results[1]) || 0;
+            }
+           
+            console.log("Film ID (URL Parameter): " + $.urlParam('ID'));
+
+            
+            
             $(document).ready(function(){
-                $("#seats_to_db_id").click(function(){                                      
-                    var r_seats= getSelectedSeats();//$("#name").val();
+                $("#seats_to_db_id").click(function(){   
+                                                                       
+                    var r_seats= getSelectedSeats();
+                    var f_id = $.urlParam('ID');
                     console.log("getSelectedSeats: " + getSelectedSeats());
                     //var email=$("#email").val();
                     $.ajax({
@@ -248,19 +264,16 @@ if(!isset($_COOKIE["username_cookie"])){
                         method:'POST',
                         data:{
                             reserved_seats:r_seats,
-                            //email:email
+                            film_id : f_id
                         },
                     success:function(data){
                         //alert(data);
                         $('#msg').html(data);
-                        window.location.reload();
+                        //window.location.reload();
                     }
                     });
                 });
             });
             </script>
-
-
-
     </body>
 </html>
