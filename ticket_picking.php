@@ -55,7 +55,7 @@ if(!isset($_COOKIE["username_cookie"])){
     </head>
     <body>
         <header>
-        <!--  <?php include('./functions/navbar.php') ?>-->
+        <?php include('./functions/navbar.php') ?>
         </header>
         <?php
                 // get Film Data by url parameter 
@@ -70,38 +70,38 @@ if(!isset($_COOKIE["username_cookie"])){
                     $result_film_id= mysqli_query($con,  $sql_film_id);
                     $film = mysqli_fetch_assoc($result_film_id);
                     
-                ?>
-                <?php 
-                    // get Data from Person by Username that is stored in cookie
-                    include('./functions/get_user_data_cookie.php') 
-                    // returns userdata as user_cookie
-                ?>
-                <?php
-                    // Füge Daten Film_ID und User_ID in Tabelle user_schaut_film ein
-                    
-                    if(isset($_POST["add_Warenkorb"])){
-                        
-                        require("mysql.php");
-                        //film ID und Name
-                        $f_ID = $film['ID'];
-                        $f_Name = $film['Name'];
-                        // logged in User ID und Name
-                        $u_ID = $user_cookie['ID'];
-                        $u_Username =  $user_cookie['Username'];
+        ?>
+        <?php 
+            // get Data from Person by Username that is stored in cookie
+            include('./functions/get_user_data_cookie.php') 
+            // returns userdata as user_cookie
+        ?>
+        <?php
+            // Füge Daten Film_ID und User_ID in Tabelle user_schaut_film ein
+            
+            if(isset($_POST["add_Warenkorb"])){
+                
+                require("mysql.php");
+                //film ID und Name
+                $f_ID = $film['ID'];
+                $f_Name = $film['Name'];
+                // logged in User ID und Name
+                $u_ID = $user_cookie['ID'];
+                $u_Username =  $user_cookie['Username'];
 
-                        $sql_add_warenkorb = "Insert Into kinoticketing.user_schaut_film (Film_ID, User_ID, Film_Name, User_Name) VALUES('$f_ID', '$u_ID', '$f_Name', '$u_Username')";
-                        if (mysqli_query($con, $sql_add_warenkorb)) {
-                            $message = '<div class="alert alert-success" role="alert">Success</div>';
-                        } else {
-                            echo "Error: " . $sql_add_warenkorb . "<br>" . mysqli_error($con);
-                        }
-                    
-                        header("Location: ./film.php?ID=$f_ID");
+                $sql_add_warenkorb = "Insert Into kinoticketing.user_schaut_film (Film_ID, User_ID, Film_Name, User_Name) VALUES('$f_ID', '$u_ID', '$f_Name', '$u_Username')";
+                if (mysqli_query($con, $sql_add_warenkorb)) {
+                    $message = '<div class="alert alert-success" role="alert">Success</div>';
+                } else {
+                    echo "Error: " . $sql_add_warenkorb . "<br>" . mysqli_error($con);
+                }
+            
+                //header("Location: ./film.php?ID=$f_ID");
 
-                        //header("Location: kinoprogramm.php");
-                       
-                    } 
-                ?>
+                //header("Location: kinoprogramm.php");
+                
+            } 
+        ?>
         <?php 
             // get reserved seats from db
             $f_ID_seat = 6;
@@ -114,6 +114,7 @@ if(!isset($_COOKIE["username_cookie"])){
           // $reserved_seats_db_arr = explode(',',$reserved_seats_db_str);   
            
         ?>
+       
         <main role="main" style="padding-top: 40px; padding-bottom: 30px"> 
             
             <h1 class="display-4">Ticketauswahl:</h1>
@@ -129,13 +130,44 @@ if(!isset($_COOKIE["username_cookie"])){
                 <?php echo "User_ID: ".$user_cookie['ID'] ?>
                 <?php echo "User_Name: ".$user_cookie['Username']; ?>         
             </div> 
+            <?php 
+
+                function get_all_selected_seats(){
+                    print_r ("<script type=text/JavaScript> getSelectedSeats(); </script>"); 
+                }
+            //push selected seat index to DB
+                
+           
+                
+            
+
+                 
+            //}
+                /*
+                 if(isset($_POST["seats_to_db"])){
+                $f_ID = $film['ID'];
+               
+                $sql_add_warenkorb = "Insert Into kinoticketing.user_schaut_film (Film_ID, User_ID, Film_Name, User_Name) VALUES('$f_ID', '$u_ID', '$f_Name', '$u_Username')";
+                if (mysqli_query($con, $sql_add_warenkorb)) {
+                    $message = '<div class="alert alert-success" role="alert">Success</div>';
+                } else {
+                    echo "Error: " . $sql_add_warenkorb . "<br>" . mysqli_error($con);
+                }
+            }
+            echo "<script> loadxml(); </script>"; */
+          
+
+        ?>
         <div class="container">
             <div class="content">
                 <div id="map-container"></div>
                 <div class="right">
                     <div id="cart-container"></div>
                     <div id="legend-container"></div>
-                    <button type="button" class="btn-primary" onclick="getSelectedSeats()">Get Seats</button>
+                       <!-- <form action="" method="post">  -->
+                            <button type="submit" class="btn-primary" name= "seats_to_db" onclick="getSelectedSeats()">Push Seats to DB</button>
+                       <!-- </form>-->
+                    <button type="submit" class="btn-primary" name="get_selected_seats" onclick="getSelectedSeats()">Get Seats</button>
                     <button type="button" class="btn-primary" onclick="disableSeat()">Disable Seat</button>
                     <div>
                         <h3>Bestellungs Data</h3>
@@ -207,16 +239,40 @@ if(!isset($_COOKIE["username_cookie"])){
 
         </script>
         <!--<script type="text/javascript" src="seatpicker-layout.js"></script>     -->            
-        <script type="text/javascript" src="seatpicker-bestellungsdata-1.js"></script>
+        <!--<script type="text/javascript" src="seatpicker-bestellungsdata-1.js"></script>-->
+        <script>
+           function getSelectedSeats(){
+               
+                var seats_json = sc.getCart();
+                var seat_data ="";
+                var all_selected_seats =[];
+
+                for(var i = 0; i < options.types.length; i++){
+                    var seat_type =  options.types[i].type;
+                    seat_data += seat_type + " seats: " + sc.getCart()[seat_type] + "// Price pro Sitz: " +sc.getPrice(seat_type)+ "<br>";
+                    Array.prototype.push.apply(all_selected_seats, sc.getCart()[seat_type]);               
+                }
+                //console.log("all_seats: " +   all_selected_seats);
+                //console.log("length all_seats: " + all_selected_seats.length);
+               
+                seat_data += "Total Price: " + sc.getTotal() + options.cart["currency"] ;
+                document.getElementById('selected-seats').innerHTML = seat_data + "<br> All seats: " + all_selected_seats ;//+ "   Length All seats: " + all_selected_seats.length;
+              return all_selected_seats;
+            }
+
+        </script>
         <script>   
             function disableSeat(){
-            var s = sc.get(62);
-            console.log("seat 62: " + s);
-            console.log("typ: " + s.type);    
-            options.map.reserved.seats.push(s);
-            console.log("new typ: " + s.type);        
-            //console.log(s);            
+                var s = sc.get(62);
+                console.log("seat 62: " + s);
+                /*
+                console.log("typ: " + s.type);    
+                options.map.reserved.seats.push(s);
+                console.log("new typ: " + s.type);        
+                */
+                //console.log(s);            
             }
-    </script>
+        </script>
+
     </body>
 </html>
