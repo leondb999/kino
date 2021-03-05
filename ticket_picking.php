@@ -1,6 +1,5 @@
 <?php session_start(); ?>
 <?php
-
 // prüft, ob ein Cookie verfügbar ist, wenn das nicht der Fall ist wird man automatisch zur Login Page geleitet
 if(!isset($_COOKIE["username_cookie"])){
   header("Location: login.php");
@@ -19,6 +18,7 @@ if(!isset($_COOKIE["username_cookie"])){
 
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" ></script> <!--integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"  crossorigin="anonymous"-->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" ></script> <!-- integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous" -->
@@ -55,7 +55,7 @@ if(!isset($_COOKIE["username_cookie"])){
     </head>
     <body>
         <header>
-        <?php include('./functions/navbar.php') ?>
+            <?php include('./functions/navbar.php') ?>
         </header>
         <?php
                 // get Film Data by url parameter 
@@ -104,6 +104,7 @@ if(!isset($_COOKIE["username_cookie"])){
         ?>
         <?php 
             // get reserved seats from db
+            /// !!! hier könnte man mit AJAX 
             $f_ID_seat = 6;
             $result_user_data = mysqli_query($con, "Select reserved_seats From kinoticketing.seat_picking Where Film_ID = '$f_ID_seat'");
             while($r_seats = mysqli_fetch_array($result_user_data)){
@@ -111,8 +112,7 @@ if(!isset($_COOKIE["username_cookie"])){
             }
             $reserved_seats_db_arr = explode(',',$r_seats_str);
           // $reserved_seats_db_str = "1, 2, 3, 5,7";           
-          // $reserved_seats_db_arr = explode(',',$reserved_seats_db_str);   
-           
+          // $reserved_seats_db_arr = explode(',',$reserved_seats_db_str);              
         ?>
        
         <main role="main" style="padding-top: 40px; padding-bottom: 30px"> 
@@ -130,50 +130,22 @@ if(!isset($_COOKIE["username_cookie"])){
                 <?php echo "User_ID: ".$user_cookie['ID'] ?>
                 <?php echo "User_Name: ".$user_cookie['Username']; ?>         
             </div> 
-            <?php 
-
-                function get_all_selected_seats(){
-                    print_r ("<script type=text/JavaScript> getSelectedSeats(); </script>"); 
-                }
-            //push selected seat index to DB
-                
-           
-                
             
-
-                 
-            //}
-                /*
-                 if(isset($_POST["seats_to_db"])){
-                $f_ID = $film['ID'];
-               
-                $sql_add_warenkorb = "Insert Into kinoticketing.user_schaut_film (Film_ID, User_ID, Film_Name, User_Name) VALUES('$f_ID', '$u_ID', '$f_Name', '$u_Username')";
-                if (mysqli_query($con, $sql_add_warenkorb)) {
-                    $message = '<div class="alert alert-success" role="alert">Success</div>';
-                } else {
-                    echo "Error: " . $sql_add_warenkorb . "<br>" . mysqli_error($con);
-                }
-            }
-            echo "<script> loadxml(); </script>"; */
-          
-
-        ?>
         <div class="container">
+            <p id="msg">Message: </p>
+            <p id="all_seats_html"> </p>
             <div class="content">
                 <div id="map-container"></div>
                 <div class="right">
                     <div id="cart-container"></div>
                     <div id="legend-container"></div>
                        <!-- <form action="" method="post">  -->
-                            <button type="submit" class="btn-primary" name= "seats_to_db" onclick="getSelectedSeats()">Push Seats to DB</button>
+                        <button type="submit" class="btn-primary" name= "seats_to_db" id="seats_to_db_id" >Push Seats to DB</button>
                        <!-- </form>-->
-                    <button type="submit" class="btn-primary" name="get_selected_seats" onclick="getSelectedSeats()">Get Seats</button>
-                    <button type="button" class="btn-primary" onclick="disableSeat()">Disable Seat</button>
+                        <button type="submit" class="btn-primary" name="get_selected_seats" onclick="getSelectedSeats()">Get Seats</button>                   
                     <div>
-                        <h3>Bestellungs Data</h3>
-                        
-                        <p id="selected-seats"></p>
-                        
+                        <h3>Bestellungs Data</h3>                        
+                        <p id="selected-seats"></p>                        
                     </div>
                 </div>
             </div>
@@ -257,22 +229,38 @@ if(!isset($_COOKIE["username_cookie"])){
                
                 seat_data += "Total Price: " + sc.getTotal() + options.cart["currency"] ;
                 document.getElementById('selected-seats').innerHTML = seat_data + "<br> All seats: " + all_selected_seats ;//+ "   Length All seats: " + all_selected_seats.length;
-              return all_selected_seats;
+                
+                return all_selected_seats.toString();
             }
+//-------------------------------------------------------------------------------------------------------------------------------
+            // insert data via AJAX
+            </script>
+            <script>
+            var x = getSelectedSeats();
+           console.log("typ of getSelectedSeats(): " +  typeof x);
+            $(document).ready(function(){
+                $("#seats_to_db_id").click(function(){                                      
+                    var r_seats= getSelectedSeats();//$("#name").val();
+                    console.log("getSelectedSeats: " + getSelectedSeats());
+                    //var email=$("#email").val();
+                    $.ajax({
+                        url:'ajax-insert-reserved-seats.php',
+                        method:'POST',
+                        data:{
+                            reserved_seats:r_seats,
+                            //email:email
+                        },
+                    success:function(data){
+                        //alert(data);
+                        $('#msg').html(data);
+                        window.location.reload();
+                    }
+                    });
+                });
+            });
+            </script>
 
-        </script>
-        <script>   
-            function disableSeat(){
-                var s = sc.get(62);
-                console.log("seat 62: " + s);
-                /*
-                console.log("typ: " + s.type);    
-                options.map.reserved.seats.push(s);
-                console.log("new typ: " + s.type);        
-                */
-                //console.log(s);            
-            }
-        </script>
+
 
     </body>
 </html>

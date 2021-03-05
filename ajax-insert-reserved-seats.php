@@ -1,4 +1,3 @@
-
 <?php 
     $servername = "localhost";
     $username = "root";
@@ -11,11 +10,11 @@
     if ($con){
         echo "Connected successfully to ".$servername." with User: ".$username."<br>";
     }
-    $reserved_seats=$_POST['key123'];
-    $email=$_POST['email'];
-    $sql="Insert INTO kinoticketing.seat_picking (name, email) VALUES ('$reserved_seats', '$email')";
+
+    $reserved_seats=$_POST['reserved_seats'];
+    $sql="Insert INTO kinoticketing.seat_picking (reserved_seats) VALUES ('$reserved_seats')";
     if ($con->query($sql) === TRUE) {
-        echo "data inserted: ".$reserved_seats.", ".$email ;
+        echo "data inserted: ".$reserved_seats;
     }
     else 
     {
@@ -24,4 +23,3 @@
       
 
     ?>
-

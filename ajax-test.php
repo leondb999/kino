@@ -11,16 +11,16 @@
     <button type="submit" id="button">SAVE</button>   
     <p id="msg"></p> 
     <script>
-    var reserved_seats_str = "0,1,2,3,4";
+        var reserved_seats_str = "0,1,2,3,4";
         $(document).ready(function(){
             $("#button").click(function(){
-                var name=reserved_seats_str;//$("#name").val();
+                var reserved_seats=reserved_seats_str;//$("#name").val();
                 var email=$("#email").val();
                 $.ajax({
                     url:'ajax-data-insert.php',
                     method:'POST',
                     data:{
-                        name:name,
+                      key123:reserved_seats,
                         email:email
                     },
                    success:function(data){
