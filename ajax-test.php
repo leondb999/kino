@@ -1,24 +1,35 @@
-<!DOCTYPE html>
 <html>
 <head>
-	<title>Insert data in MySQL database using Ajax</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <title>Ajax Data Insert</title>
 </head>
 <body>
- 
-  <div class="user-detail">
-    <h2>Insert User Data</h2>
-    <p id="msg"></p>
-    <form id="userForm" method="POST">
-          <label>Full Name</label>
-          <input type="text" placeholder="Enter Full Name" name="fullName" required>
-          <button type="submit">Submit</button>
-    </form>
-        </div>
-</div>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script type="text/javascript" src="ajax-script.js"></script>
+    <label>Name</label>
+    <input type="text" id="name"> 
+    <label>Email</label>
+    <input type="text" id="email">
+    <button type="submit" id="button">SAVE</button>   
+    <p id="msg"></p> 
+    <script>
+    var reserved_seats_str = "0,1,2,3,4";
+        $(document).ready(function(){
+            $("#button").click(function(){
+                var name=reserved_seats_str;//$("#name").val();
+                var email=$("#email").val();
+                $.ajax({
+                    url:'ajax-data-insert.php',
+                    method:'POST',
+                    data:{
+                        name:name,
+                        email:email
+                    },
+                   success:function(data){
+                       //alert(data);
+                       $('#msg').html(data);
+                   }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
