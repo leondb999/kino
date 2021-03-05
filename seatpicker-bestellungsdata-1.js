@@ -35,7 +35,9 @@ function getSelectedSeats(){
     console.log("Item in all_elements: " +  all_selected_seats.keys());
     for (x of  all_selected_seats){
         // console.log("y: " + x);
-        //var s = sc.get(4);
-        console.log("seat: " );
+        var s = sc.get(x);
+        console.log("seat: " +s.index + ", "+ s.type);
+        //sc.set(x, 'reserved');
     }
+    
 }

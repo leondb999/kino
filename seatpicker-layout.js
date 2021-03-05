@@ -1,3 +1,4 @@
+ 
  // API Referenz des Seatpickers https://seatchart.js.org/api.html#Seatchart
  console.log(document.getElementById("map-container"));
  var options = {
@@ -8,11 +9,11 @@
      // I = columns * R + C
      map: {
          id: 'map-container',
-         rows: 9,
+         rows: 8,
          columns: 9,
          // e.g. Reserved Seat [Row: 1, Col: 2] = 7 * 1 + 2 = 9
          reserved: {
-            seats: [1, 2, 3, 5, 6, 7, 9, 10, 11, 12, 14, 15, 16, 17, 18, 19, 20, 21],
+           seats: [1, 2, 3, 5, 6, 7, 9, 10, 11, 12, 14, 15, 16, 17, 18, 19, 20, 21, 35],
          },
          disabled: {
              seats: [0, 8],
@@ -24,7 +25,8 @@
          // hier kann man die Preisklassen festlegen
          // bei dem Typ darf kein Leerzeichen dazwischen sein 
          { type: "regular", backgroundColor: "#006c80", price: 10 },//, selected: [23, 24] },
-         { type: "reduced", backgroundColor: "#287233", price: 7.5} //, selected: [25, 26] }
+         { type: "reduced", backgroundColor: "#287233", price: 7.5}, //, selected: [25, 26] }
+        
          //{ type: "VIP", backgroundColor: "#FFA500", price: 20},
      ],
      cart: {
