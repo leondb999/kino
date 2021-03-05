@@ -55,7 +55,7 @@ if(!isset($_COOKIE["username_cookie"])){
     </head>
     <body>
         <header>
-          <?php include('./functions/navbar.php') ?>
+        <!--  <?php include('./functions/navbar.php') ?>-->
         </header>
         <?php
                 // get Film Data by url parameter 
@@ -104,8 +104,15 @@ if(!isset($_COOKIE["username_cookie"])){
                 ?>
         <?php 
             // get reserved seats from db
+            $f_ID_seat = 6;
+            $result_user_data = mysqli_query($con, "Select reserved_seats From kinoticketing.seat_picking Where Film_ID = '$f_ID_seat'");
+            while($r_seats = mysqli_fetch_array($result_user_data)){
+              $r_seats_str = $r_seats['reserved_seats'];
+            }
+            $reserved_seats_db_arr = explode(',',$r_seats_str);
+          // $reserved_seats_db_str = "1, 2, 3, 5,7";           
+          // $reserved_seats_db_arr = explode(',',$reserved_seats_db_str);   
            
-
         ?>
         <main role="main" style="padding-top: 40px; padding-bottom: 30px"> 
             
@@ -145,57 +152,58 @@ if(!isset($_COOKIE["username_cookie"])){
             <?php include('./functions/footer.php') ?>
         </footer>
         <script type="text/javascript" src="seatchart.js"></script>
-       <script>
-         
-        // API Referenz des Seatpickers https://seatchart.js.org/api.html#Seatchart
-        console.log(document.getElementById("map-container"));
-        var options = {
-            // Reserved and disabled seats are indexed
-            // from left to right by starting from 0.
-            // Given the seatmap as a 2D array and an index [R, C]
-            // the following values can obtained as follow:
-            // I = columns * R + C
-            map: {
-                id: 'map-container',
-                rows: 8,
-                columns: 9,
-                // e.g. Reserved Seat [Row: 1, Col: 2] = 7 * 1 + 2 = 9
-                reserved: {
-                seats: [50],
+        <script>
+            
+            // API Referenz des Seatpickers https://seatchart.js.org/api.html#Seatchart
+            console.log(document.getElementById("map-container"));
+            var js_array = [<?php echo '"'.implode('","',  $reserved_seats_db_arr ).'"' ?>];
+            var options = {
+                // Reserved and disabled seats are indexed
+                // from left to right by starting from 0.
+                // Given the seatmap as a 2D array and an index [R, C]
+                // the following values can obtained as follow:
+                // I = columns * R + C
+                map: {
+                    id: 'map-container',
+                    rows: 8,
+                    columns: 9,
+                    // e.g. Reserved Seat [Row: 1, Col: 2] = 7 * 1 + 2 = 9
+                    reserved: {
+                        seats:js_array
+                    },
+                    disabled: {
+                        seats: [0, 8],
+                        rows: [4],
+                        columns: [4]
+                    }
                 },
-                disabled: {
-                    seats: [0, 8],
-                    rows: [4],
-                    columns: [4]
+                types: [
+                    // hier kann man die Preisklassen festlegen
+                    // bei dem Typ darf kein Leerzeichen dazwischen sein 
+                    { type: "regular", backgroundColor: "#006c80", price: 10 },//, selected: [23, 24] },
+                    { type: "reduced", backgroundColor: "#287233", price: 7.5}, //, selected: [25, 26] }
+                    
+                    //{ type: "VIP", backgroundColor: "#FFA500", price: 20},
+                ],
+                cart: {
+                    id: 'cart-container',
+                    width: 280,
+                    height: 250,
+                    currency: '€',
+                },
+                legend: {
+                    id: 'legend-container',
+                },
+                assets: {
+                    path: "./assets",
                 }
-            },
-            types: [
-                // hier kann man die Preisklassen festlegen
-                // bei dem Typ darf kein Leerzeichen dazwischen sein 
-                { type: "regular", backgroundColor: "#006c80", price: 10 },//, selected: [23, 24] },
-                { type: "reduced", backgroundColor: "#287233", price: 7.5}, //, selected: [25, 26] }
-                
-                //{ type: "VIP", backgroundColor: "#FFA500", price: 20},
-            ],
-            cart: {
-                id: 'cart-container',
-                width: 280,
-                height: 250,
-                currency: '€',
-            },
-            legend: {
-                id: 'legend-container',
-            },
-            assets: {
-                path: "./assets",
-            }
-        };
+            };
 
-        var sc = new Seatchart(options);
-        var arr = [3];
-        Array.Prototype.push.apply([options.map.reserved.seats], arr);
-        console.log("hello", sc.getCart());
-        //https://jsc.mm-lamp.com/
+            var sc = new Seatchart(options);
+            var arr = [3];
+            Array.Prototype.push.apply([options.map.reserved.seats], arr);
+            console.log("hello", sc.getCart());
+            //https://jsc.mm-lamp.com/
 
         </script>
         <!--<script type="text/javascript" src="seatpicker-layout.js"></script>     -->            
@@ -203,7 +211,10 @@ if(!isset($_COOKIE["username_cookie"])){
         <script>   
             function disableSeat(){
             var s = sc.get(62);
-            console.log("seat 62: " + s);            
+            console.log("seat 62: " + s);
+            console.log("typ: " + s.type);    
+            options.map.reserved.seats.push(s);
+            console.log("new typ: " + s.type);        
             //console.log(s);            
             }
     </script>

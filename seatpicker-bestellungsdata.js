@@ -1,17 +1,8 @@
 function getSelectedSeats(){
     // API Referenz: https://seatchart.js.org/api.html#SeatchartonChange
     var seats_json = sc.getCart();
-    /*document.getElementById('selected-seats').innerHTML = seats_json + ", Total Price" + sc.getTotal(); 
-    document.getElementById('selected-seats-items').innerHTML = "regular seats: "+  sc.getCart()["regular"] + "<br>" + "reduced seats: " + sc.getCart()["reduced"] + "<br> Total Price: " + sc.getTotal() + options.cart["currency"] ;
-    console.log("keys: "+ Object.keys(sc.getCart()));
-    console.log("reduced: " + sc.getCart()["reduced"]);
-        typeof
-        - options.types --> object
-        - typof options.types[0] --> object
-    */
-
-    console.log("Kathegorie: options.types[i]: " + options.types[0].type);
-    console.log("Elemente der Kathegorie 'regular:'" + sc.getCart()[options.types[0].type])
+    //console.log("Kathegorie: options.types[i]: " + options.types[0].type);
+    //console.log("Elemente der Kathegorie 'regular:'" + sc.getCart()[options.types[0].type])
     //get kathegorien
     var seat_data ="";
     var all_selected_seats =[];
