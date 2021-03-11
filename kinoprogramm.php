@@ -39,7 +39,7 @@
             {?>
             <div class="col-xl-4 col-xl-4 mb-5">
               <div class="card border-0 shadow">
-                <a href="./film.php?ID=<?php echo $film['ID'] ?>"><img src="<?php echo $film['Image_Slider_Path']?>" class="card-img-top" alt="First Card"></a>
+                <a href="./film.php?ID=<?php echo $film['ID'] ?>"><img class="card-img-top" alt="First Card" src="<?php echo $film['Image_Slider_Path']?>" ></a>
                 <div class="card-body text-center">
                   <h5 class="card-title mb-0"><a href="./film.php?ID=<?php echo $film['ID'] ?>">"<?php echo $film['Name']?>"</a></h5>
                   <div class="card-text text-black-50">"<?php echo $film['Short_Description']?>"</div>

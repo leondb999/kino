@@ -12,7 +12,7 @@
   <title>Warenkorb</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
+ 
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -23,6 +23,10 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
   <link rel ="stylesheet"type="text/css" href="style.css"> 
+
+
+
+
 </head>
 <body>
 
@@ -30,7 +34,7 @@
     <?php include('./functions/navbar.php') ?>
   </header>
 
-  <main role="main" style="padding-top: 60px; padding-bottom: 30px">
+  <main class="container" role="main" style="padding-top: 30px; padding-bottom: 30px">
     <!-- DB connection -->
     <?php include('./functions/database_config.php') ?>
 
@@ -45,19 +49,52 @@
 
         // get ID from logged in user
         $uID = $user_cookie['ID'];
-        $sql_warenkorb_films = "Select * from kinoticketing.user_schaut_film Where User_ID = $uID";
-        $result_warenkorb_films= mysqli_query($con,  $sql_warenkorb_films);
-        //$film = mysqli_fetch_assoc($result_warenkorb_films);
+        $name = $user_cookie['Username'];
+
+       
+        $result_warenkorb_films= mysqli_query($con,  "Select * from kinoticketing.user_schaut_film Where User_Name = '$name'");
+        $result_warenkorb_films_assoc = mysqli_fetch_assoc(mysqli_query($con,  "Select * from kinoticketing.user_schaut_film Where User_Name = '$name'"));
+        
+
+        /*
         while($film = mysqli_fetch_array($result_warenkorb_films)){
-                echo $film['Film_ID'];
-                echo ", ".$film['Film_Name'];
-                echo ", ".$film['User_ID'];
-                echo ", ".$film['User_Name']."<br>";
-        }
+          echo "Film: ".$film['Film_ID'].", ".$film['Film_Name']."<br>";        
+          echo "User:  ".$film['User_ID'].", ".$film['User_Name']."<br><br>";
+      }
+      */
+     
+
     ?>
-
-
+    <section class="py-2 m-10">
+      <div class="container" style="padding-top: 20px">
+        <h3 class="display-4">Gekaufte Karten</h3>
+        <div class="row" style="padding-top: 20px">
+          <?php foreach($result_warenkorb_films as $film): ?>
+            <?php 
+              // get Image            
+              $film_id_img = $film['Film_ID'];
+              $result_image_path= mysqli_query($con,  "Select * from kinoticketing.film Where ID = '$film_id_img'");
+              $film_image = mysqli_fetch_assoc($result_image_path);
+              while($film_image1 = mysqli_fetch_assoc($result_image_path)){
+                echo "Image Path: ".$film_image1['Image_Slider_Path'] ;
+              }                     
+              ?>
+                
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-0 shadow">
+                <a href="./film.php?ID=<?php echo $film['Film_ID'] ?>"><img class="card-img-top" src="<?php echo $film_image['Image_Slider_Path']?>"></a>
+                <div class="card-body text-center">
+                  <h5 class="card-title mb-0"><?php echo $film['Film_Name']?></h5>
+                  <div class="card-text text-black-50">Reservierte Sitze: <?php echo $film['Reserved_Seats']?></div>
+                </div> 
+              </div>
+            </div>
+          <?php endforeach; ?>
+        </div>
+      </div>
+    </section>
   </main>
+
 
   <footer class="py-3 bg-dark" style="color: grey">
     <?php include('./functions/footer.php') ?>

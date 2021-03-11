@@ -45,9 +45,14 @@
   <main role="main" style="padding-top: 56px; padding-bottom: 30px">
     <div class="container">
       <div class="row">
-      <div class="col-xl">
-        <img src="<?php echo $film["Image_Slider_Path"] ?>" class="img-fluid" alt="Responsive image">
+        <div class="col-xl">
+          <img src="<?php echo $film["Image_Slider_Path"] ?>" class="img-fluid" alt="Responsive image">
+        </div>
       </div>
+      <div class="row">
+        <div class="col-xl">
+          <button type="button" class="btn btn-primary" onclick="window.location.href = '/kino/ticket_picking.php?ID=<?php echo $film['ID'] ?>'">Bestelle tickets</button>          
+        </div>
       </div>
       <div class="row">
       <div class="col-xl">
@@ -75,11 +80,7 @@
       </div>
       <br>
       <br>
-      <div class="row">
-        <div class="col-xl">
-          <a href="/kino/ticket_picking.php?ID=<?php echo $film['ID'] ?>" style="color: black"><h3>Klicke hier um Tickets zu kaufen</h3></a>
-        </div>
-      </div>
+     
     </div>
   </main>
 

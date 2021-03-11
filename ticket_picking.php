@@ -35,7 +35,7 @@ if(!isset($_COOKIE["username_cookie"])){
                 justify-content: center;
                 margin-top: 40px;
             }
-
+            
             .right {
                 display: flex;
                 flex-direction: column;
@@ -244,7 +244,10 @@ if(!isset($_COOKIE["username_cookie"])){
                 seat_data += "Total Price: " + sc.getTotal() + options.cart["currency"] ;
                 document.getElementById('selected-seats').innerHTML = seat_data + "<br> All seats: " + all_selected_seats ;//+ "   Length All seats: " + all_selected_seats.length;
                 
-                return all_selected_seats.toString();
+                return {
+                    all_selected_seats:    all_selected_seats.toString(),
+                    total_price : sc.getTotal()
+                }
             }
 //-------------------------------------------------------------------------------------------------------------------------------
             // insert data via AJAX
@@ -263,21 +266,30 @@ if(!isset($_COOKIE["username_cookie"])){
            
             console.log("Film ID (URL Parameter): " + $.urlParam('ID'));
 
-            
+            function getCookie(name) {
+                const value = `; ${document.cookie}`;
+                const parts = value.split(`; ${name}=`);
+                if (parts.length === 2) return parts.pop().split(';').shift();
+                }
             
             $(document).ready(function(){
+               
                 $("#seats_to_db_id").click(function(){   
-                                                                       
-                    var r_seats= getSelectedSeats();
+                    var bestellungsdata = getSelectedSeats();                                              
+                    //var r_seats= getSelectedSeats();
+                    var r_seats = bestellungsdata.all_selected_seats;
                     var f_id = $.urlParam('ID');
+                    var u_username = getCookie("username_cookie");
                     console.log("getSelectedSeats: " + getSelectedSeats());
+                   
                     //var email=$("#email").val();
                     $.ajax({
                         url:'ajax-insert-reserved-seats.php',
                         method:'POST',
                         data:{
                             reserved_seats:r_seats,
-                            film_id : f_id
+                            film_id : f_id,
+                            user_username : u_username
                         },
                     success:function(data){
                         //alert(data);
@@ -287,6 +299,11 @@ if(!isset($_COOKIE["username_cookie"])){
                     });
                 });
             });
+            //---------------------Mittwoch ----------------
+
+
+
+
             </script>
     </body>
 </html>
