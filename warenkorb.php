@@ -34,7 +34,7 @@
     <?php include('./functions/navbar.php') ?>
   </header>
 
-  <main class="container" role="main" style="padding-top: 30px; padding-bottom: 30px">
+  <main class="container" role="main" style="padding-top: 56px; padding-bottom: 30px">
     <!-- DB connection -->
     <?php include('./functions/database_config.php') ?>
 

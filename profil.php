@@ -26,13 +26,8 @@ if(!isset($_COOKIE["username_cookie"])){
     <link rel ="stylesheet"type="text/css" href="style.css"> 
     
   </head>
-  <body>
-    <header>
-        <?php include('./functions/navbar.php') ?>
-      </header>
-    <main role="main" style="padding-top: 56px; padding-bottom: 30px">
-      <?php include('./functions/database_config.php') ?>
-      <?php 
+  <?php include('./functions/database_config.php') ?>
+  <?php 
         // get User Data
         // WICHTIG es müssen Cookies verfügbar sein!, Wenn der Benutzer sie zwischenzeitlich löscht funktioniert das ganze nicht mehr. Dann müsste man immer prüfen, ob ein Cookie verfügbar ist und wenns nicht verfügbar ist wird man automatisch zur login page umgeleitet
           $v = $_COOKIE['username_cookie'];
@@ -40,17 +35,68 @@ if(!isset($_COOKIE["username_cookie"])){
           while($user = mysqli_fetch_array($result_user_data)){
             $email = $user['EMail'];
         }
-      ?>
+  ?>
+  <?php 
+    // get Data from Person by Username that is stored in cookie
+    include('./functions/get_user_data_cookie.php') 
+    // returns userdata as user_cookie
+  ?>
+  <?php
+    // Display all Films that were added to the Warenkorb
+    // get ID from logged in user
+    $uID = $user_cookie['ID'];
+    $name = $user_cookie['Username'];    
+    $result_warenkorb_films= mysqli_query($con,  "Select * from kinoticketing.user_schaut_film Where User_Name = '$name'");
+    $result_warenkorb_films_assoc = mysqli_fetch_assoc(mysqli_query($con,  "Select * from kinoticketing.user_schaut_film Where User_Name = '$name'"));        
+  ?>
 
-        <div class="container">
-          <h1>User Profil </h1>
-          <?php 
-            echo "Hello ".$_COOKIE['username_cookie']; 
-           
-            echo $email;
-          ?>
-          
+  <body>
+    <header>
+        <?php include('./functions/navbar.php') ?>
+    </header>
+    
+    <main role="main" style="padding-top: 56px; padding-bottom: 30px">
+    <section>
+      <div class="container">
+          <!-- <h3 class="display-4">User Profil</h3> -->
+          <?php echo "<h1 > Hallo ".$_COOKIE['username_cookie']."</h1>";?>          
+      </div>
+    </section>
+
+ 
+    <section class="py-2 m-10">
+      <div class="container" style="padding-top: 20px">
+        <h3 class="display-4">Gekaufte Karten</h3>
+        <div class="row" style="padding-top: 20px">
+          <?php foreach($result_warenkorb_films as $film): ?>
+            <?php 
+              // get Image            
+              $film_id_img = $film['Film_ID'];
+              $result_image_path= mysqli_query($con,  "Select * from kinoticketing.film Where ID = '$film_id_img'");
+              $film_image = mysqli_fetch_assoc($result_image_path);
+              while($film_image1 = mysqli_fetch_assoc($result_image_path)){
+                echo "Image Path: ".$film_image1['Image_Slider_Path'] ;
+              }                     
+              ?>                
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-0 shadow">
+                <a href="./film.php?ID=<?php echo $film['Film_ID'] ?>"><img class="card-img-top" src="<?php echo $film_image['Image_Slider_Path']?>"></a>
+                <div class="card-body text-center">
+                  <h5 class="card-title mb-0"><a href="./film.php?ID=<?php echo $film['Film_ID'] ?>"><?php echo $film['Film_Name']?></a></h5>
+
+                  <div class="card-text text-black-50">Reservierte Sitze: <?php echo $film['Reserved_Seats']?></div>
+                </div> 
+              </div>
+            </div>
+          <?php endforeach; ?>
         </div>
+      </div>
+    </section>
+
+
     </main>
+    <footer class="py-3 bg-dark" style="color: grey">
+      <?php include('./functions/footer.php') ?>
+    </footer>
   </body>
 </html>
