@@ -10,7 +10,7 @@ if(!isset($_COOKIE["username_cookie"])){
 <html>
     <head>
 
-        <?php include('./functions/database_config.php') ?>
+       
 
         <title>Tickets</title>
         <meta charset="utf-8">
@@ -50,125 +50,104 @@ if(!isset($_COOKIE["username_cookie"])){
             #legend-container {
                 margin-top: 20px;
             }
-        </style>
-       
+        </style>   
     </head>
+    <?php include('./functions/database_config.php') ?>
+    <?php
+            // get Film Data by url parameter 
+            
+            $url = $_SERVER['REQUEST_URI'];
+            $url_components = parse_url($url); 
+            parse_str($url_components['query'], $params);  
+            $id_film = $params['ID'];
+        
+            mysqli_set_charset($con,"utf8");
+            $sql_film_id = "Select * from kinoticketing.film where ID=".$id_film;
+            $result_film_id= mysqli_query($con,  $sql_film_id);
+            $film = mysqli_fetch_assoc($result_film_id);                    
+    ?>
+     <?php 
+            // get Data from Person by Username that is stored in cookie
+            include('./functions/get_user_data_cookie.php') 
+            // returns userdata as user_cookie
+    ?>
+    <?php
+        // Füge Daten Film_ID und User_ID in Tabelle user_schaut_film ein
+        
+        if(isset($_POST["add_Warenkorb"])){
+            
+            require("mysql.php");
+            //film ID und Name
+            $f_ID = $film['ID'];
+            $f_Name = $film['Name'];
+            // logged in User ID und Name
+            $u_ID = $user_cookie['ID'];
+            $u_Username =  $user_cookie['Username'];
+
+            $sql_add_warenkorb = "Insert Into kinoticketing.user_schaut_film (Film_ID, User_ID, Film_Name, User_Name) VALUES('$f_ID', '$u_ID', '$f_Name', '$u_Username')";
+            if (mysqli_query($con, $sql_add_warenkorb)) {
+                $message = '<div class="alert alert-success" role="alert">Success</div>';
+            } else {
+                echo "Error: " . $sql_add_warenkorb . "<br>" . mysqli_error($con);
+            }
+            //header("Location: ./film.php?ID=$f_ID");
+            //header("Location: kinoprogramm.php");                
+        } 
+    ?>
+
     <body>
         <header>
             <?php include('./functions/navbar.php') ?>
         </header>
-        <?php
-                // get Film Data by url parameter 
-                
-                    $url = $_SERVER['REQUEST_URI'];
-                    $url_components = parse_url($url); 
-                    parse_str($url_components['query'], $params);  
-                    $id_film = $params['ID'];
-                
-                    mysqli_set_charset($con,"utf8");
-                    $sql_film_id = "Select * from kinoticketing.film where ID=".$id_film;
-                    $result_film_id= mysqli_query($con,  $sql_film_id);
-                    $film = mysqli_fetch_assoc($result_film_id);
-                    
-        ?>
-        <?php 
-            // get Data from Person by Username that is stored in cookie
-            include('./functions/get_user_data_cookie.php') 
-            // returns userdata as user_cookie
-        ?>
-        <?php
-            // Füge Daten Film_ID und User_ID in Tabelle user_schaut_film ein
-            
-            if(isset($_POST["add_Warenkorb"])){
-                
-                require("mysql.php");
-                //film ID und Name
-                $f_ID = $film['ID'];
-                $f_Name = $film['Name'];
-                // logged in User ID und Name
-                $u_ID = $user_cookie['ID'];
-                $u_Username =  $user_cookie['Username'];
 
-                $sql_add_warenkorb = "Insert Into kinoticketing.user_schaut_film (Film_ID, User_ID, Film_Name, User_Name) VALUES('$f_ID', '$u_ID', '$f_Name', '$u_Username')";
-                if (mysqli_query($con, $sql_add_warenkorb)) {
-                    $message = '<div class="alert alert-success" role="alert">Success</div>';
-                } else {
-                    echo "Error: " . $sql_add_warenkorb . "<br>" . mysqli_error($con);
-                }
-            
-                //header("Location: ./film.php?ID=$f_ID");
-
-                //header("Location: kinoprogramm.php");
-                
-            } 
-        ?>
-
-       
-        <main role="main" style="padding-top: 40px; padding-bottom: 30px"> 
-            
-            <h1 class="display-4">Ticketauswahl:</h1>
-            <br>
-            <form action="" method="post">  <!--action ="ticket_picking.php"  -->
-                <button type="submit" name="add_Warenkorb">Add to Warenkorb</button>
-            </form>
-            <div>  
-                             
-                <?php echo "Film_ID: ".$film['ID'] ?>
-                <?php echo "Film_Name: ".$film['Name'] ?>
-                <br>
-                <?php echo "User_ID: ".$user_cookie['ID'] ?>
-                <?php echo "User_Name: ".$user_cookie['Username']; ?>         
-            </div> 
-            
-        <div class="container">
-            <p id="msg">Message: </p>
-            <p id="all_seats_html"> </p>
-            <div class="content">
-                <div id="map-container"></div>
-                <div class="right">
-                    <div id="cart-container"></div>
-                    <div id="legend-container"></div>
-                       <!-- <form action="" method="post">  -->
-                        <button type="submit" class="btn-primary" name= "seats_to_db" id="seats_to_db_id" >Push Seats to DB</button>
-                       <!-- </form>-->
-                        <button type="submit" class="btn-primary" name="get_selected_seats" onclick="getSelectedSeats()">Get Seats</button>                   
-                    <div>
-                        <h3>Bestellungs Data</h3>                        
-                        <p id="selected-seats"></p>                        
+        <main role="main" style="padding-top: 40px; padding-bottom: 30px">         
+            <section  class="py-2 m-10">
+                <div class="container" style="padding-top: 20px">
+                    <h3 class="display-4">Sitzauswahl</h3>
+                    <div class="container">
+                        <p id="msg">Message: </p>
+                        <p id="all_seats_html"> </p>
+                        <div class="content">
+                            <div id="map-container"></div>
+                            <div class="right">
+                                <div id="cart-container"></div>
+                                <div id="legend-container"></div>
+                                <!-- <form action="" method="post">  -->
+                                    <button type="submit" class="btn-primary" name= "seats_to_db" id="seats_to_db_id" >Push Seats to DB</button>
+                                <!-- </form>-->
+                                    <button type="submit" class="btn-primary" name="get_selected_seats" onclick="getSelectedSeats()">Get Seats</button>                   
+                                <div>
+                                    <h3>Bestellungs Data</h3>                        
+                                    <p id="selected-seats"></p>                        
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-
+            </section>
+        </main>
 
         <footer class="py-3 bg-dark" style="color: grey">
             <?php include('./functions/footer.php') ?>
         </footer>
+
+
         <script type="text/javascript" src="seatchart.js"></script>
         <?php 
             // get reserved seats from db
             /// !!! hier könnte man mit AJAX 
             $f_ID_seat = $film['ID'];
             $result_user_data = mysqli_fetch_array(mysqli_query($con, "Select reserved_seats From kinoticketing.seat_picking Where Film_ID = '$f_ID_seat'"));
-           
-            
+                       
             if(isset($result_user_data)){
                 echo "variable is definded";
-                $r_seats_str = $result_user_data['reserved_seats'];
-              
+                $r_seats_str = $result_user_data['reserved_seats'];              
             }
+
             if(!isset($result_user_data)){
                 echo "variable is undefined";
             }
-            $reserved_seats_db_arr = explode(',',$r_seats_str);
-           // $r_seats_str = $result_user_data['reserved_seats'];
-            //while($r_seats = mysqli_fetch_array($result_user_data)){
-               // $r_seats_str = $r_seats['reserved_seats'];
-            //}
-          
-            
-          // $reserved_seats_db_str = "1, 2, 3, 5,7";           
-          // $reserved_seats_db_arr = explode(',',$reserved_seats_db_str);              
+            $reserved_seats_db_arr = explode(',',$r_seats_str);         
         ?>
         <script>
             
@@ -217,42 +196,47 @@ if(!isset($_COOKIE["username_cookie"])){
                 }
             };
 
-            var sc = new Seatchart(options);
-            
-           
-            console.log("hello", sc.getCart());
-            //https://jsc.mm-lamp.com/
-
+            var sc = new Seatchart(options);                       
+            console.log("sc.getCart(): ", sc.getCart());
         </script>
-        <!--<script type="text/javascript" src="seatpicker-layout.js"></script>     -->            
-        <!--<script type="text/javascript" src="seatpicker-bestellungsdata-1.js"></script>-->
+        
         <script>
            function getSelectedSeats(){
                
                 var seats_json = sc.getCart();
                 var seat_data ="";
                 var all_selected_seats =[];
+                var all_seat_names = [];
 
                 for(var i = 0; i < options.types.length; i++){
                     var seat_type =  options.types[i].type;
                     seat_data += seat_type + " seats: " + sc.getCart()[seat_type] + "// Price pro Sitz: " +sc.getPrice(seat_type)+ "<br>";
-                    Array.prototype.push.apply(all_selected_seats, sc.getCart()[seat_type]);               
+                    Array.prototype.push.apply(all_selected_seats, sc.getCart()[seat_type]);  
+                    if(all_selected_seats.length != 0){
+                        // add Sitz Name z.B: F( hinzu)
+                        
+                        for (var i = 0; i < all_selected_seats.length; i++){                                                      
+                            all_seat_names.push(sc.get(all_selected_seats[i]).name);                            
+                        }
+                    }                                                               
                 }
-                //console.log("all_seats: " +   all_selected_seats);
+                
+                console.log("seat_names: " + all_seat_names.toString());
+                //console.log("get Seat 62: " + Object.getOwnPropertyNames(sc.get(62)));                
                 //console.log("length all_seats: " + all_selected_seats.length);
                
                 seat_data += "Total Price: " + sc.getTotal() + options.cart["currency"] ;
-                document.getElementById('selected-seats').innerHTML = seat_data + "<br> All seats: " + all_selected_seats ;//+ "   Length All seats: " + all_selected_seats.length;
+                document.getElementById('selected-seats').innerHTML = seat_data + "<br> All seats: " + all_selected_seats + "<br> Seat Names: " +  all_seat_names.toString();//+ "   Length All seats: " + all_selected_seats.length;
                 
                 return {
                     all_selected_seats:    all_selected_seats.toString(),
-                    total_price : sc.getTotal()
+                    total_price : sc.getTotal(),
+                    all_seat_names : all_seat_names.toString()
                 }
             }
-//-------------------------------------------------------------------------------------------------------------------------------
-            // insert data via AJAX
-            </script>
-            <script>
+        </script>
+            
+        <script>
            
             // get dynamic variables from url in js
             // Referenz stackoverflow: https://stackoverflow.com/questions/19491336/how-to-get-url-parameter-using-jquery-or-plain-javascript
@@ -294,16 +278,18 @@ if(!isset($_COOKIE["username_cookie"])){
                     success:function(data){
                         //alert(data);
                         $('#msg').html(data);
-                        //window.location.reload();
+                        // hier wird gesteuert was passieren soll, wenn die Daten erfolgreich eingefügt wurden
+                            // lade Seite neu
+                            //window.location.reload();
+                        //navigiere nach Kauf direkt zum Profil. Dort sieht der User nun das gekaufte Ticket 
+                        //location.assign('./profil.php');
+
                     }
                     });
                 });
             });
-            //---------------------Mittwoch ----------------
 
+        </script>
 
-
-
-            </script>
     </body>
 </html>
