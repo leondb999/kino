@@ -8,7 +8,7 @@
         die("Connection failed: " . mysqli_connect_error());
       } 
     if ($con){
-        echo "Connected successfully to ".$servername." with User: ".$username."<br>";
+       // echo "Connected successfully to ".$servername." with User: ".$username."\n";
     }
     
     // hole die reserved_seats und die film_ID von AJAX
@@ -22,7 +22,7 @@
     $sql_get_film = "Select * From kinoticketing.film Where ID =".$film_ID;
     $film_n=  mysqli_fetch_assoc(mysqli_query($con, $sql_get_film));
     $film_name = $film_n['Name'];
-    echo "Film Name: ". $film_name."<br>";
+    //echo "Film Name: ". $film_name."<br>";
 
     // hole Sitz Buchungsdaten für eine Film_ID aus seat_picking
     $sql_get_seats_by_filmID = "Select * From kinoticketing.seat_picking Where Film_ID= $film_ID";
@@ -30,21 +30,15 @@
     
     // prüfe, ob ein seat selected wurde, wenn kein Sitz ausgewählt wurde ist Stringlänge gleich  0
     if(strlen($reserved_seats)==0){
-        echo "no seat selected,, String Länge: ". strlen($reserved_seats);   
+        echo ";no seat selected,hello; reserved_seats_str:;".strlen($reserved_seats);   //reserved_seats ist ein string
     } else {
-        echo "seat länge selected: ".strlen($reserved_seats);
-        
+        echo "seats selected, selected_seats_str:".strlen($reserved_seats).";\n"; 
+        //echo "seats selected, selected_seats:[".$reserved_seats."];\n"; 
         // check, ob bereits Sitze für den Film gebucht wurden 
         if($film_seats){
-            echo "<p>Die Sitze".$film_seats['reserved_seats']." bereits zu Film ".$film_ID." gebucht</p>";
-            
-            echo "<h4>Bei dem Film wurde bereits gebucht:<br>Film_ID: ".$film_seats['Film_ID'].", Seats: ".$film_seats['reserved_seats']."</h4>";//$film['reserved_seats']
-            //echo "<p> Film_ID: ".$film_seats['Film_ID'].", Seats: ".$film_seats['reserved_seats']."</p>";
-       
-
+           // echo "Film_ID:".$film_ID."\nalready_booked_seats:[".$film_seats['reserved_seats']."];\n\n";
             // füge bereits belegte sitze und neue ausgewählte sitze zusammen
             $updated_seat_str =  $film_seats['reserved_seats'].",".$reserved_seats;
-            
             
             $result_film_seats_update = mysqli_query($con, "Update kinoticketing.seat_picking SET reserved_seats = '$updated_seat_str' Where Film_ID = $film_ID");
             
@@ -57,12 +51,12 @@
             if($result_film_seats_update){
                 // display updated seats:
                 $film_seats_uo =  mysqli_fetch_assoc(mysqli_query($con, $sql_get_seats_by_filmID));
-                echo "<p> Data sucessfully updated: FilmID: ".$film_seats['Film_ID'].", Seats: ".$updated_seat_str."</p>";                       
+               // echo "Data sucessfully updated beim Film_ID:[".$film_seats['Film_ID']."];\n updated Seats:".$updated_seat_str.";\n";                       
             }
              
         } else { // wenn bisher keine Sitze zu diesem Film gebucht wurden
 
-            echo "<p> keine Sitze bisher bei Film ".$film_ID." gebucht</p><br>";
+           // echo "<p> keine Sitze bisher bei Film ".$film_ID." gebucht</p><br>";
             // füge die ausgewählten Sitze mit Film_ID in DB ein
             $sql_insert_seats="Insert INTO kinoticketing.seat_picking (reserved_seats, Film_ID, Film_Name) VALUES ('$reserved_seats', '$film_ID', '$film_name')";
 
@@ -71,7 +65,7 @@
 
             // wenn die Daten erfolgreich eingefügt wurden    
             if ($con->query($sql_insert_seats) === TRUE) {
-                echo "data inserted - FilmID:".$film_ID.", Seats:".$reserved_seats;
+                echo "Daten erfolgreich eingefügt FilmID:".$film_ID."; Seats:".$reserved_seats.";";
             } else {
                 echo  "Error: " . $sql . "<br>" . mysqli_error($con);
             }                                        

@@ -27,7 +27,9 @@ if(!isset($_COOKIE["username_cookie"])){
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
         <link rel ="stylesheet"type="text/css" href="style.css"> 
-        
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" rel="stylesheet" />
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous"></script> -->
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <style>
             .content {
                 display: flex;
@@ -115,11 +117,13 @@ if(!isset($_COOKIE["username_cookie"])){
                                 <div class="col-sm right">                                  
                                     <div id="cart-container"></div>
                                     <button type="submit" class="btn-primary" name= "seats_to_db" id="seats_to_db_id" >Push Seats to DB</button>
-                                    <button type="submit" class="btn-primary" name="get_selected_seats" onclick="getSelectedSeats()">Get Seats</button>                   
+                                    <!-- <button type="submit" class="btn-primary" name="get_selected_seats" onclick="getSelectedSeats()">Get Seats</button> -->   
+                                <!--               
                                     <div>
                                         <h3>Bestellungs Data</h3>                        
                                         <p id="selected-seats"></p>            
                                     </div>
+                                -->
                                 </div>
                      
                             </div>
@@ -225,7 +229,7 @@ if(!isset($_COOKIE["username_cookie"])){
                 console.log("seat_names: " + all_seat_names.toString());
                
                 seat_data += "Total Price: " + sc.getTotal() + options.cart["currency"] ;
-                document.getElementById('selected-seats').innerHTML = seat_data + "<br> All seats: " + all_selected_seats + "<br> Seat Names: " +  all_seat_names.toString();//+ "   Length All seats: " + all_selected_seats.length;
+               // document.getElementById('selected-seats').innerHTML = seat_data + "<br> All seats: " + all_selected_seats + "<br> Seat Names: " +  all_seat_names.toString();//+ "   Length All seats: " + all_selected_seats.length;
                 
                 return {
                     all_selected_seats:    all_selected_seats.toString(),
@@ -276,15 +280,36 @@ if(!isset($_COOKIE["username_cookie"])){
                             all_seat_names : r_seat_names
                         },
                     success:function(data){
-                        //alert(data);
-                        $('#msg').html(data);
-                        // hier wird gesteuert was passieren soll, wenn die Daten erfolgreich eingefügt wurden
-                            // lade Seite neu
-                            //window.location.reload();
-                        //navigiere nach Kauf direkt zum Profil. Dort sieht der User nun das gekaufte Ticket 
-                        //location.assign('./profil.php');
+                         
 
-                    }
+                        var s  =   /[0-9]/.exec(data)
+                        console.log("regexp:" + s);
+                        if( s != 0){
+                            console.log("trim: " + data.trim());
+                            console.log("split: "+ data.split(':',2));//.pop().split(';')[0]);
+                            swal(
+                                    {
+                                        title: "Ticket gebucht",
+                                        text: "Klicke OK, um den Kauf im Profil einzusehen",
+                                        icon: "success",
+                                        button: "Ok"
+                                    }
+                                ).then((value) => {                               
+                                    //window.location.reload(); //lade Seite neu                         
+                                    location.assign('./profil.php'); //navigiere nach Kauf direkt zum Profil. Dort sieht der User nun das gekaufte Ticket 
+                                });
+                            } else{
+                                swal(
+                                    {
+                                        title: "Error!",
+                                        text: "Wähle einen Sitzplatz aus",
+                                        icon: "error",
+                                        button: "Ok"
+                                    }
+                                )
+                            }
+                        }
+
                     });
                 });
             });
