@@ -156,10 +156,7 @@ if(!isset($_COOKIE["username_cookie"])){
             console.log(document.getElementById("map-container"));
             var js_array = [<?php echo '"'.implode('","',  $reserved_seats_db_arr ).'"' ?>];
             var options = {
-                // Reserved and disabled seats are indexed
-                // from left to right by starting from 0.
-                // Given the seatmap as a 2D array and an index [R, C]
-                // the following values can obtained as follow:
+                // Reserved and disabled seats are indexed from left to right by starting from 0.  Given the seatmap as a 2D array and an index [R, C] the following values can obtained as follow:
                 // I = columns * R + C
                 map: {
                     id: 'map-container',
