@@ -116,7 +116,7 @@ if(!isset($_COOKIE["username_cookie"])){
                                 </div>
                                 <div class="col-sm right">                                  
                                     <div id="cart-container"></div>
-                                    <button type="submit" class="btn-primary" name= "seats_to_db" id="seats_to_db_id" >Push Seats to DB</button>
+                                    <button type="submit" class=" btn btn-outline-primary" name= "seats_to_db" id="seats_to_db_id" >Buche Ticket</button>
                                     <!-- <button type="submit" class="btn-primary" name="get_selected_seats" onclick="getSelectedSeats()">Get Seats</button> -->   
                                 <!--               
                                     <div>
@@ -281,12 +281,11 @@ if(!isset($_COOKIE["username_cookie"])){
                         },
                     success:function(data){
                          
-
-                        var s  =   /[0-9]/.exec(data)
-                        console.log("regexp:" + s);
-                        if( s != 0){
-                            console.log("trim: " + data.trim());
-                            console.log("split: "+ data.split(':',2));//.pop().split(';')[0]);
+                        // prüft, ob Sitze ausgewählt wurden, wenn die Stringlänge von selected_seats == 0 ist, dann wurde keiner ausgewählt, ansonsten schon 
+                        var selected_seats_length  = /[0-9]/.exec(data); console.log("regexp:" + selected_seats_length);
+                        
+                        if( selected_seats_length != 0){
+                            // Sitze wurden ausgewählt, Buchung erfolgreich
                             swal(
                                     {
                                         title: "Ticket gebucht",
@@ -299,10 +298,11 @@ if(!isset($_COOKIE["username_cookie"])){
                                     location.assign('./profil.php'); //navigiere nach Kauf direkt zum Profil. Dort sieht der User nun das gekaufte Ticket 
                                 });
                             } else{
+                                // Es wurden keine Sitze ausgewählt. Besucher muss Sitz auswählen 
                                 swal(
                                     {
-                                        title: "Error!",
-                                        text: "Wähle einen Sitzplatz aus",
+                                        title: "Wähle einen Sitzplatz aus!",
+                                       
                                         icon: "error",
                                         button: "Ok"
                                     }

@@ -42,7 +42,7 @@ if(!isset($_COOKIE["username_cookie"])){
     // returns userdata as user_cookie
   ?>
   <?php
-    // Display all Films that were added to the Warenkorb
+    // Display all gekaufte Karten für die Filme, die zum Profil hinzugefügt wurden
     // get ID from logged in user
     $uID = $user_cookie['ID'];
     $name = $user_cookie['Username'];    
@@ -84,7 +84,9 @@ if(!isset($_COOKIE["username_cookie"])){
                 <div class="card-body text-center">
                   <h5 class="card-title mb-0"><a href="./film.php?ID=<?php echo $film['Film_ID'] ?>"><?php echo $film['Film_Name']?></a></h5>
 
-                  <div class="card-text text-black-50">Reservierte Sitze: <?php echo $film['Reserved_Seats']?></div>
+                  <div class="card-text text-black-50">Sitzplätze: <?php echo $film['Seat_Names']?></div>
+                
+
                 </div> 
               </div>
             </div>
