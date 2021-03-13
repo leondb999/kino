@@ -114,22 +114,17 @@ if(!isset($_COOKIE["username_cookie"])){
 
         <main role="main" style="padding-top: 10px; padding-bottom: 50px">         
             <section class="py-2 m-10">
-                
+               <!-- 
                 <div class="container" style="padding-top: 20px">
                     <h3 class="display-4">Sitzauswahl</h3> 
                     <p> Info: Lösche Sitze per Rechtsklick aus der Auswahl, oder in der Mobilen Ausicht durch langes draufdrücken</p>
-                </div>    
-            
-                 <!--
-                        <p id="msg">Message: </p>
-                        <p id="all_seats_html"> </p>
-    -->
+                </div>    -->
                          <!--<div class="content"> -->
                             <div class="row content" style ="margin-bottom: 50px;">
                             
-                                <div class="col-sm-auto col-xs-12">
+                               <!-- <div class="col-sm-auto col-xs-12">
                                     <div id="legend-container" class=" d-flex justify-content-center align-items-center"></div> 
-                                </div>
+                                </div> -->
                                 <div class="col-sm-">
                                     <div id="map-container"></div>
                                     <div class=" d-flex justify-content-center align-items-center" style = "margin-top: 10px;">
