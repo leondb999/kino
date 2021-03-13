@@ -15,7 +15,8 @@
     $reserved_seats=$_POST['reserved_seats'];
     $film_ID = $_POST['film_id'];
     $user_username = $_POST['user_username'];
-    $seat_names = $_POST['all_seat_names'];
+    $seat_names = $_POST['selected_seats_name'];
+    $total_price = $_POST['total_price'];
     
    
     // hole den Film Namen
@@ -44,7 +45,7 @@
             
             //---------------------------------------------------------------------------------------------
             // Füge bestellung zu Warenkorb hinzu---------------------------------------------------------------         
-            $result_bestellung =  mysqli_query($con, "Insert Into kinoticketing.user_schaut_film (Film_ID, Film_Name, User_Name, Reserved_Seats, Seat_Names) VALUES('$film_ID', '$film_name', '$user_username', '$reserved_seats', '$seat_names')");
+            $result_bestellung =  mysqli_query($con, "Insert Into kinoticketing.user_schaut_film (Film_ID, Film_Name, User_Name, Reserved_Seats, Seat_Names, Total_Price) VALUES('$film_ID', '$film_name', '$user_username', '$reserved_seats', '$seat_names', '$total_price')");
 
             //----------------------------------------------------------------------------------------------------------
             // wenn die Daten erfolgreich upgedatet wurden                        
@@ -61,7 +62,7 @@
             $sql_insert_seats="Insert INTO kinoticketing.seat_picking (reserved_seats, Film_ID, Film_Name) VALUES ('$reserved_seats', '$film_ID', '$film_name')";
 
             // Füge bestellung zu Warenkorb hinzu---------------------------------------------------------------         
-            $result_bestellung =  mysqli_query($con, "Insert Into kinoticketing.user_schaut_film (Film_ID, Film_Name, User_Name, Reserved_Seats, Seat_Names) VALUES('$film_ID', '$film_name', '$user_username', '$reserved_seats', '$seat_names')");
+            $result_bestellung =  mysqli_query($con, "Insert Into kinoticketing.user_schaut_film (Film_ID, Film_Name, User_Name, Reserved_Seats, Seat_Names, Total_Price) VALUES('$film_ID', '$film_name', '$user_username', '$reserved_seats', '$seat_names', '$total_price')");
 
             // wenn die Daten erfolgreich eingefügt wurden    
             if ($con->query($sql_insert_seats) === TRUE) {
