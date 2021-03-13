@@ -67,6 +67,7 @@
     
 
     <!-- Film Cards with PHP -->
+
     <section class="py-2 m-10">
         <div class="container" style="padding-top: 20px">
             <h3 class="display-4">Kinoprogramm</h3>

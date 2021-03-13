@@ -15,7 +15,7 @@ if(!isset($_COOKIE["username_cookie"])){
         <title>Tickets</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
+        <link rel="stylesheet" href="./css/seatchart.css">
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" ></script> <!--integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"  crossorigin="anonymous"-->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -27,7 +27,7 @@ if(!isset($_COOKIE["username_cookie"])){
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
         <link rel ="stylesheet"type="text/css" href="style.css"> 
-        <link rel="stylesheet" href="seatchart.css">
+        
         <style>
             .content {
                 display: flex;
@@ -100,29 +100,30 @@ if(!isset($_COOKIE["username_cookie"])){
             <?php include('./functions/navbar.php') ?>
         </header>
 
-        <main role="main" style="padding-top: 40px; padding-bottom: 30px">         
-            <section  class="py-2 m-10">
+        <main role="main" style="padding-top: 10px; padding-bottom: 30px">         
+            <section class="py-2 m-10">
                 <div class="container" style="padding-top: 20px">
-                    <h3 class="display-4">Sitzauswahl</h3>
-                    <div class="container">
+                    <h3 class="display-4">Sitzauswahl</h3>              
                         <p id="msg">Message: </p>
                         <p id="all_seats_html"> </p>
+                        <div id="legend-container" class="right"></div>  
                         <div class="content">
-                            <div id="map-container"></div>
-                            <div class="right">
-                                <div id="cart-container"></div>
-                                <div id="legend-container"></div>
-                                <!-- <form action="" method="post">  -->
-                                    <button type="submit" class="btn-primary" name= "seats_to_db" id="seats_to_db_id" >Push Seats to DB</button>
-                                <!-- </form>-->
-                                    <button type="submit" class="btn-primary" name="get_selected_seats" onclick="getSelectedSeats()">Get Seats</button>                   
-                                <div>
-                                    <h3>Bestellungs Data</h3>                        
-                                    <p id="selected-seats"></p>                        
+                            <div class="row">
+                                <div class="col-sm">
+                                    <div id="map-container"></div>                                                        
                                 </div>
+                                <div class="col-sm right">                                  
+                                    <div id="cart-container"></div>
+                                    <button type="submit" class="btn-primary" name= "seats_to_db" id="seats_to_db_id" >Push Seats to DB</button>
+                                    <button type="submit" class="btn-primary" name="get_selected_seats" onclick="getSelectedSeats()">Get Seats</button>                   
+                                    <div>
+                                        <h3>Bestellungs Data</h3>                        
+                                        <p id="selected-seats"></p>            
+                                    </div>
+                                </div>
+                     
                             </div>
-                        </div>
-                    </div>
+                        </div>                 
                 </div>
             </section>
         </main>
@@ -132,7 +133,7 @@ if(!isset($_COOKIE["username_cookie"])){
         </footer>
 
 
-        <script type="text/javascript" src="seatchart.js"></script>
+        <script type="text/javascript" src="./js/seatchart.js"></script>
         <?php 
             // get reserved seats from db
             /// !!! hier könnte man mit AJAX 
@@ -166,7 +167,7 @@ if(!isset($_COOKIE["username_cookie"])){
                     columns: 9,
                     // e.g. Reserved Seat [Row: 1, Col: 2] = 7 * 1 + 2 = 9
                     reserved: {
-                        seats:js_array
+                        seats: js_array
                     },
                     disabled: {
                         seats: [0, 8],
@@ -199,6 +200,9 @@ if(!isset($_COOKIE["username_cookie"])){
             var sc = new Seatchart(options);                       
             console.log("sc.getCart(): ", sc.getCart());
         </script>
+        <script>
+        document.getElementsByClassName("sc-cart-delete").style.visibility = "hidden";
+        </script>
         
         <script>
            function getSelectedSeats(){
@@ -220,10 +224,8 @@ if(!isset($_COOKIE["username_cookie"])){
                         }
                     }                                                               
                 }
-                
+
                 console.log("seat_names: " + all_seat_names.toString());
-                //console.log("get Seat 62: " + Object.getOwnPropertyNames(sc.get(62)));                
-                //console.log("length all_seats: " + all_selected_seats.length);
                
                 seat_data += "Total Price: " + sc.getTotal() + options.cart["currency"] ;
                 document.getElementById('selected-seats').innerHTML = seat_data + "<br> All seats: " + all_selected_seats + "<br> Seat Names: " +  all_seat_names.toString();//+ "   Length All seats: " + all_selected_seats.length;
@@ -259,9 +261,9 @@ if(!isset($_COOKIE["username_cookie"])){
             $(document).ready(function(){
                
                 $("#seats_to_db_id").click(function(){   
-                    var bestellungsdata = getSelectedSeats();                                              
-                    //var r_seats= getSelectedSeats();
+                    var bestellungsdata = getSelectedSeats();                                                                  
                     var r_seats = bestellungsdata.all_selected_seats;
+                    var r_seat_names = bestellungsdata.all_seat_names;
                     var f_id = $.urlParam('ID');
                     var u_username = getCookie("username_cookie");
                     console.log("getSelectedSeats: " + getSelectedSeats());
@@ -273,7 +275,8 @@ if(!isset($_COOKIE["username_cookie"])){
                         data:{
                             reserved_seats:r_seats,
                             film_id : f_id,
-                            user_username : u_username
+                            user_username : u_username,
+                            all_seat_names : r_seat_names
                         },
                     success:function(data){
                         //alert(data);

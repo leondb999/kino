@@ -399,11 +399,11 @@
          */
         var createScDeleteButton = function createScDeleteButton() {
             var binImg = document.createElement('img');
-            binImg.src = '{0}/icons/bin.svg'.format(options.assets.path);
+           // binImg.src = '{0}/icons/bin.svg'.format(options.assets.path);
 
             var deleteBtn = document.createElement('div');
             deleteBtn.className = 'sc-cart-delete';
-            deleteBtn.appendChild(binImg);
+            //deleteBtn.appendChild(binImg);
 
             return deleteBtn;
         };
@@ -1677,10 +1677,11 @@
             deleteBtn.onclick = deleteAllClick;
             deleteBtn.className += ' all';
 
+            /*
             var label = document.createElement('p');
-            label.textContent = 'All';
+                label.textContent = 'All';
             deleteBtn.appendChild(label);
-
+            */
             container.appendChild(cartTotal);
             container.appendChild(deleteBtn);
 
