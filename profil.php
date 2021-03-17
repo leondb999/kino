@@ -84,8 +84,11 @@ if(!isset($_COOKIE["username_cookie"])){
                 <div class="card-body text-center">
                   <h5 class="card-title mb-0"><a href="./film.php?ID=<?php echo $film['Film_ID'] ?>"><?php echo $film['Film_Name']?></a></h5>
 
+                  <div class="card-text text-black-50">Date: <?php echo $film['Date']?></div>
+                  <div class="card-text text-black-50">Time: <?php echo $film['Time']?></div>
                   <div class="card-text text-black-50">Sitzplätze: <?php echo $film['Seat_Names']?></div>
-                
+                  <div class="card-text text-black-50">Price: <?php echo $film['Total_Price']?>€</div>
+                 
 
                 </div> 
               </div>

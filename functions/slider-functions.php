@@ -10,29 +10,25 @@
     return $result;
     }
 
-    function make_slide_indicators($connect)
-    {
-    $output = ''; 
-    $count = 0;
-    // hole alle Daten aus der DB
-    $result = make_query($connect);
-    while($row = mysqli_fetch_array($result))
-    {
-    if($count == 0)
-    {
-    $output .= '
-    <li data-target="#top-film-carousel" data-slide-to="'.$count.'" class="active"></li>
-    ';
-    }
-    else
-    {
-    $output .= '
-    <li data-target="#top-film-carousel" data-slide-to="'.$count.'"></li>
-    ';
-    }
-    $count = $count + 1;
-    }
-    return $output;
+    function make_slide_indicators($connect){
+        $output = ''; 
+        $count = 0;
+        // hole alle Daten aus der DB
+        $result = make_query($connect);
+        while($row = mysqli_fetch_array($result)){
+            if($count == 0){
+                $output .= '
+                <li data-target="#top-film-carousel" data-slide-to="'.$count.'" class="active"></li>
+                ';
+            }
+            else{
+                $output .= '
+                <li data-target="#top-film-carousel" data-slide-to="'.$count.'"></li>
+                ';
+            }
+            $count = $count + 1;
+        }
+        return $output;
     }
 
     function make_slides($connect)

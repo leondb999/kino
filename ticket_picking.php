@@ -9,9 +9,6 @@ if(!isset($_COOKIE["username_cookie"])){
 <!DOCTYPE html>
 <html>
     <head>
-
-       
-
         <title>Tickets</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -72,6 +69,8 @@ if(!isset($_COOKIE["username_cookie"])){
             $url_components = parse_url($url); 
             parse_str($url_components['query'], $params);  
             $id_film = $params['ID'];
+            $date_film = $params['Date'];
+            $time_film = $params['Time'];
         
             mysqli_set_charset($con,"utf8");
             $sql_film_id = "Select * from kinoticketing.film where ID=".$id_film;
@@ -84,8 +83,7 @@ if(!isset($_COOKIE["username_cookie"])){
             // returns userdata as user_cookie
     ?>
     <?php
-        // Füge Daten Film_ID und User_ID in Tabelle user_schaut_film ein
-        
+        // Füge Daten Film_ID und User_ID in Tabelle user_schaut_film ein        
         if(isset($_POST["add_Warenkorb"])){
             
             require("mysql.php");
@@ -107,7 +105,7 @@ if(!isset($_COOKIE["username_cookie"])){
         } 
     ?>
 
-    <body>
+    <body > <!--style="background-color: black; color: white"-->
         <header>
             <?php include('./functions/navbar.php') ?>
         </header>
@@ -118,7 +116,9 @@ if(!isset($_COOKIE["username_cookie"])){
                 <div class="container" style="padding-top: 20px">
                     <h3 class="display-4">Sitzauswahl</h3> 
                     <p> Info: Lösche Sitze per Rechtsklick aus der Auswahl, oder in der Mobilen Ausicht durch langes draufdrücken</p>
+                   <?php  echo "Date: ".$date_film.", Time: ".$time_film; ?>
                 </div>    
+
                          <!--<div class="content"> -->
                             <div class="row content" style ="margin-bottom: 50px;">
                             
@@ -141,26 +141,29 @@ if(!isset($_COOKIE["username_cookie"])){
                 <!--</div> -->
             </section>
         </main>
+        
 <!--
         <footer class="py-3 bg-dark" style="color: grey; margin-bottom: 0px">
         
         </footer>
     -->
     <footer class="footer py-3 bg-dark">
-    <?php include('./functions/footer.php') ?>
-</footer>
+        <?php include('./functions/footer.php') ?>
+    </footer>
 
 
         <script type="text/javascript" src="./js/seatchart.js"></script>
         <?php 
-            // get reserved seats from db
+            // get reserved seats from db für einen Speziellen Film an einem bestimmten Datum zu einer bestimmten Uhrzeit  
+        
             /// !!! hier könnte man mit AJAX 
             $f_ID_seat = $film['ID'];
-            $result_user_data = mysqli_fetch_array(mysqli_query($con, "Select reserved_seats From kinoticketing.seat_picking Where Film_ID = '$f_ID_seat'"));
+            $result_user_data = mysqli_fetch_array(mysqli_query($con, "Select reserved_seats From kinoticketing.seat_picking Where Film_ID = $f_ID_seat And Date= '$date_film' And Time='$time_film'")); //'2021-03-18' '15:00-17:00'
                        
             if(isset($result_user_data)){
                 //echo "variable is definded";
-                $r_seats_str = $result_user_data['reserved_seats'];              
+                $r_seats_str = $result_user_data['reserved_seats'];   
+                echo "Reservierte Sitze: ".$r_seats_str;      
             }
 
             if(!isset($result_user_data)){
@@ -168,8 +171,7 @@ if(!isset($_COOKIE["username_cookie"])){
             }
             $reserved_seats_db_arr = explode(',',$r_seats_str);         
         ?>
-        <script>
-            
+        <script>            
             // API Referenz des Seatpickers https://seatchart.js.org/api.html#Seatchart
             console.log(document.getElementById("map-container"));
             var js_array = [<?php echo '"'.implode('","',  $reserved_seats_db_arr ).'"' ?>];
@@ -194,8 +196,7 @@ if(!isset($_COOKIE["username_cookie"])){
                     // hier kann man die Preisklassen festlegen
                     // bei dem Typ darf kein Leerzeichen dazwischen sein 
                     { type: "regular", backgroundColor: "#006c80", price: 10 },//, selected: [23, 24] },
-                    { type: "reduced", backgroundColor: "#287233", price: 7.5}, //, selected: [25, 26] }
-                    
+                    { type: "reduced", backgroundColor: "#287233", price: 7.5}, //, selected: [25, 26] }                    
                     //{ type: "VIP", backgroundColor: "#FFA500", price: 20},
                 ],
                 cart: {
@@ -276,6 +277,11 @@ if(!isset($_COOKIE["username_cookie"])){
             $(document).ready(function(){
                
                 $("#seats_to_db_id").click(function(){   
+                    var r_date = $.urlParam('Date');
+                    console.log("date: " +r_date);
+                    //console.log("\ntime: " +r_time);
+                    var r_time = $.urlParam('Time');
+                                       
                     var bestellungsdata = getSelectedSeats();                                                                  
                     var r_seats = bestellungsdata.selected_seats_index;
                     var r_seat_names = bestellungsdata.selected_seats_name;
@@ -283,7 +289,7 @@ if(!isset($_COOKIE["username_cookie"])){
                     var f_id = $.urlParam('ID');
                     var u_username = getCookie("username_cookie");
                     console.log("getSelectedSeats: " + getSelectedSeats());
-                   
+                    
                     //var email=$("#email").val();
                     $.ajax({
                         url:'ajax-insert-reserved-seats.php',
@@ -293,13 +299,16 @@ if(!isset($_COOKIE["username_cookie"])){
                             film_id: f_id,
                             user_username: u_username,
                             selected_seats_name: r_seat_names,
-                            total_price: r_total_price
+                            total_price: r_total_price,
+                            date: r_date,
+                            time: r_time
                         },
                     success:function(data){
                          
                         // prüft, ob Sitze ausgewählt wurden, wenn die Stringlänge von selected_seats == 0 ist, dann wurde keiner ausgewählt, ansonsten schon 
                         var selected_seats_length  = /[0-9]/.exec(data); console.log("regexp:" + selected_seats_length);
-                        
+                        console.log("Selected Seats länge: " + selected_seats_length);
+                        console.log(data)
                         if( selected_seats_length != 0){
                             // Sitze wurden ausgewählt, Buchung erfolgreich
                             swal(
@@ -311,26 +320,24 @@ if(!isset($_COOKIE["username_cookie"])){
                                     }
                                 ).then((value) => {                               
                                     //window.location.reload(); //lade Seite neu                         
-                                    //location.assign('./profil.php'); //navigiere nach Kauf direkt zum Profil. Dort sieht der User nun das gekaufte Ticket 
+                                    location.assign('./profil.php'); //navigiere nach Kauf direkt zum Profil. Dort sieht der User nun das gekaufte Ticket 
                                 });
                             } else{
                                 // Es wurden keine Sitze ausgewählt. Besucher muss Sitz auswählen 
                                 swal(
                                     {
-                                        title: "Wähle einen Sitzplatz aus!",
-                                       
+                                        title: "Wähle einen Sitzplatz aus!",                                       
                                         icon: "error",
                                         button: "Ok"
                                     }
                                 )
                             }
                         }
-
                     });
                 });
             });
 
         </script>
-
+    
     </body>
 </html>
