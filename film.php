@@ -33,10 +33,10 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
   <link rel="stylesheet"type="text/css" href="style.css"> 
   <!-- Datepicker -->
-  <link rel="stylesheet" type="text/css"  href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css"  href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+  
   <!-- Sweet Alert -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" rel="stylesheet" />       
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -50,7 +50,7 @@
   <main role="main" style="padding-top: 25px; padding-bottom: 30px">
     <?php $bg_image =  $film["Image_Slider_Path"]; ?>
     <!-- d-flex  align-items-center-->
-    <div class="d-flex jumbotron-fluid align-items-center" style="   background-image: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.6) 100%),url('<?php echo $bg_image ?>'); height: 100vh; color: white; background-repeat: no-repeat; background-size: cover;"> 
+    <div class="d-flex jumbotron-fluid align-items-center" style="background-image: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.6) 100%),url('<?php echo $bg_image ?>'); height: 100vh; color: white; background-repeat: no-repeat; background-size: cover;"> 
       <div class="container">   
         <br>     
         <br>

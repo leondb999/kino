@@ -18,14 +18,22 @@ if(!isset($_COOKIE["username_cookie"])){
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" ></script> integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"
-    
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" ></script> 
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <link rel ="stylesheet"type="text/css" href="style.css"> 
-    
+  
+    <!-- SVG 3.0 -->
+    <script src="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist/svg.min.js"></script>
+    <!-- SVG 2.0 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/2.6.3/svg.min.js"></script>
+
+
   </head>
+
   <?php include('./functions/database_config.php') ?>
   <?php 
         // get User Data
@@ -53,19 +61,24 @@ if(!isset($_COOKIE["username_cookie"])){
   <body>
     <header>
         <?php include('./functions/navbar.php') ?>
+       
     </header>
+
     
     <main role="main" style="padding-top: 56px; padding-bottom: 30px">
     <section>
-      <div class="container">
-          <!-- <h3 class="display-4">User Profil</h3> -->
+      <div class="container">        
           <?php echo "<h1 > Hallo ".$_COOKIE['username_cookie']."</h1>";?>          
+          <div id="svg_container"></div>          
       </div>
-    </section>
-
- 
+    </section>   
+    <script>
+        var draw = SVG('svg_container').size(1000, 100);;
+        var rect = draw.rect(100,1005).attr({fill:'#a0d3de'});
+    </script>
+    
     <section class="py-2 m-10">
-      <div class="container" style="padding-top: 20px">
+      <div class="container" ><!--style="padding-top: 20px"-->
         <h3 class="display-4">Gekaufte Karten</h3>
         <div class="row" style="padding-top: 20px">
           <?php foreach($result_warenkorb_films as $film): ?>

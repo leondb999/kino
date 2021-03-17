@@ -41,3 +41,15 @@
   color: grey;
   text-align: center;
 }
+
+svg {
+  width: 100%;/*50vw;*/
+  height:5vh;
+}
+
+rect {
+  width:100vw ; /* we remove 60px to keep the same offset (30px) on both sides*/
+  height: 6px;/*calc(100vh - 60px);*/
+  max-width: 100%;
+  max-height: 100%;
+}

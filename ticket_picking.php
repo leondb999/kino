@@ -72,9 +72,8 @@ if(!isset($_COOKIE["username_cookie"])){
             $date_film = $params['Date'];
             $time_film = $params['Time'];
         
-            mysqli_set_charset($con,"utf8");
-            $sql_film_id = "Select * from kinoticketing.film where ID=".$id_film;
-            $result_film_id= mysqli_query($con,  $sql_film_id);
+            mysqli_set_charset($con,"utf8");         
+            $result_film_id= mysqli_query($con,  "Select * from kinoticketing.film where ID=".$id_film);
             $film = mysqli_fetch_assoc($result_film_id);                    
     ?>
      <?php 
@@ -82,45 +81,36 @@ if(!isset($_COOKIE["username_cookie"])){
             include('./functions/get_user_data_cookie.php') 
             // returns userdata as user_cookie
     ?>
-    <?php
-        // Füge Daten Film_ID und User_ID in Tabelle user_schaut_film ein        
-        if(isset($_POST["add_Warenkorb"])){
-            
-            require("mysql.php");
-            //film ID und Name
-            $f_ID = $film['ID'];
-            $f_Name = $film['Name'];
-            // logged in User ID und Name
-            $u_ID = $user_cookie['ID'];
-            $u_Username =  $user_cookie['Username'];
-
-            $sql_add_warenkorb = "Insert Into kinoticketing.user_schaut_film (Film_ID, User_ID, Film_Name, User_Name) VALUES('$f_ID', '$u_ID', '$f_Name', '$u_Username')";
-            if (mysqli_query($con, $sql_add_warenkorb)) {
-                $message = '<div class="alert alert-success" role="alert">Success</div>';
-            } else {
-                echo "Error: " . $sql_add_warenkorb . "<br>" . mysqli_error($con);
-            }
-            //header("Location: ./film.php?ID=$f_ID");
-            //header("Location: kinoprogramm.php");                
-        } 
-    ?>
+   
 
     <body > <!--style="background-color: black; color: white"-->
         <header>
             <?php include('./functions/navbar.php') ?>
         </header>
-
-        <main role="main" style="padding-top: 10px; padding-bottom: 50px">         
+        <main role="main" style="padding-top: 10px">         
             <section class="py-2 m-10">
                
-                <div class="container" style="padding-top: 20px">
-                    <h3 class="display-4">Sitzauswahl</h3> 
-                    <p> Info: Lösche Sitze per Rechtsklick aus der Auswahl, oder in der Mobilen Ausicht durch langes draufdrücken</p>
-                   <?php  echo "Date: ".$date_film.", Time: ".$time_film; ?>
-                </div>    
+                <div class="container" style="padding-top: 30px; margin-bottom: -50px">
+                    <div class="d-flex justify-content-center">
+                        <h3 class="display-4">Sitzauswahl</h3> 
+                    </div>
+                    <div class="d-flex justify-content-center" style="margin-bottom: 20px;">                   
+                        <canvas id="Canvas_Prozent_Reserved_Seats" width="170" height="170"></canvas>
+                      
+                    </div>
+                    <div > 
+                        <p class="d-flex justify-content-center">Film: <?php echo $film['Name']?> </p>
+                        <p class="d-flex justify-content-center">Date: <?php echo $date_film?></p>
+                        <p class="d-flex justify-content-center">Time: <?php echo $time_film?></p>
+                        
+                    </div>                          
+                    <!--<p> Info: Lösche Sitze per Rechtsklick aus der Auswahl, oder in der Mobilen Ansicht durch langes draufdrücken</p> -->                                                        
+                </div> 
+            </section>
+            <section>   
 
                          <!--<div class="content"> -->
-                            <div class="row content" style ="margin-bottom: 50px;">
+                            <div class="row content" style ="margin-bottom: 70px;">
                             
                                 <div class="col-sm-auto col-xs-12">
                                     <div id="legend-container" class=" d-flex justify-content-center align-items-center"></div> 
@@ -171,10 +161,52 @@ if(!isset($_COOKIE["username_cookie"])){
             }
             $reserved_seats_db_arr = explode(',',$r_seats_str);         
         ?>
+        <script>
+     
+
+        </script>
         <script>            
             // API Referenz des Seatpickers https://seatchart.js.org/api.html#Seatchart
-            console.log(document.getElementById("map-container"));
+            console.log("hello: "+ document.getElementById("map-container"));
             var js_array = [<?php echo '"'.implode('","',  $reserved_seats_db_arr ).'"' ?>];
+            var max_sitze = 54;
+            console.log("Prozent: " + (js_array.length/max_sitze)*100)
+
+            // Canvas Referenz: https://www.tothenew.com/blog/tutorial-to-create-a-circular-progress-bar-with-canvas/
+            var canvas = document.getElementById('Canvas_Prozent_Reserved_Seats');
+            var context = canvas.getContext('2d');
+            var al=0;
+            var start=4.72;
+            var cw=context.canvas.width/2;
+            var ch=context.canvas.height/2;
+            var diff;
+            
+            function progressBar(){
+                diff=(al/100)*Math.PI*2;
+                context.clearRect(0,0,100,50);
+                context.beginPath();
+                context.arc(cw,ch,100,0,2*Math.PI,false);
+                context.fillStyle='#FFF';
+                context.fill();
+                context.strokeStyle='#FFF'; //# e7f2ba
+                context.stroke();
+                context.fillStyle='#000';
+                context.strokeStyle='#a0d3de'; //b3cf3c
+                context.textAlign='center';
+                context.lineWidth=10;
+                context.font = '10pt Verdana';
+                context.beginPath();
+                context.arc(cw,ch,80,start,diff+start,false);
+                context.stroke();
+                context.fillText("Ausgebucht:"+ al+'%',cw+2,ch+6);
+                if(al>=100){//(js_array.length/max_sitze)*100-2
+                    clearTimeout(bar);
+                }                
+                al++;
+            }        
+            var bar=setInterval(progressBar,80);
+            
+            console.log("js_array: " + js_array.length);
             var options = {
                 // Reserved and disabled seats are indexed from left to right by starting from 0.  Given the seatmap as a 2D array and an index [R, C] the following values can obtained as follow:
                 // I = columns * R + C
@@ -306,8 +338,9 @@ if(!isset($_COOKIE["username_cookie"])){
                     success:function(data){
                          
                         // prüft, ob Sitze ausgewählt wurden, wenn die Stringlänge von selected_seats == 0 ist, dann wurde keiner ausgewählt, ansonsten schon 
+                        // \W*((?i)strlen==0:(?-i))\W*
                         var selected_seats_length  = /[0-9]/.exec(data); console.log("regexp:" + selected_seats_length);
-                        console.log("Selected Seats länge: " + selected_seats_length);
+                        console.log("\n\n\nSelected Seats länge: " + selected_seats_length);
                         console.log(data)
                         if( selected_seats_length != 0){
                             // Sitze wurden ausgewählt, Buchung erfolgreich

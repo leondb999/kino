@@ -29,39 +29,48 @@
     //$result_date = mysqli_query($con,$sql_insert_seats);   
     // hole Sitz Buchungsdaten für eine Film_ID aus seat_picking
 
-    $film_seats =  mysqli_fetch_assoc(mysqli_query($con, "Select * From kinoticketing.seat_picking Where Film_ID=6 And  Date ='$date' And Time='$time'")); // '2021-03-18'    $film_seats ist ein Array mit den Keys "Film_ID", "reserved_seats", "Film_Name" usw | Stand 05.03.2021    
-    /*
-    if(isset($film_seats)){
-        echo "sitze gefunden----------------film_seats: ".$film_seats['reserved_seats'];
-    } else {
-        echo "keine Sitze gefunden -----------------film_seats: ".$film_seats['reserved_seats']; 
-    }
-    */
+    $film_seats =  mysqli_fetch_assoc(mysqli_query($con, "Select * From kinoticketing.seat_picking Where Film_ID=  $film_ID And  Date ='$date' And Time='$time'")); // '2021-03-18'    $film_seats ist ein Array mit den Keys "Film_ID", "reserved_seats", "Film_Name" usw | Stand 05.03.2021    
+    echo "-------------------PHP ------------------\n";
+    // -------------------------------------------------------
+    //!!!  Wichtig Es darf vor dem  echo "\nno seats selected strlen==0:".strlen($reserved_seats); keine Zahl im echo stehen !!! sonst wird bei dem Alert angezeigt, dass eine karte gebucht wurde obwohl keine Karte ausgewählt wurde
+    //----------------------------------------------------
 
+    // vor dem e
+    //echo "film_seats: ".$film_seats['reserved_seats'];
 
+            
     if(strlen($reserved_seats) == 0){
-        echo "\nno seats selected (strlen == 0)";
+        echo "\nno seats selected strlen==0:".strlen($reserved_seats);
     } else {
         echo "\nseats selected: ".$reserved_seats;
         if(isset($film_seats)){
-            echo "sitze in DB gefunden----------------\nfilm_seats: ".$film_seats['reserved_seats']." Date: ".$date." Time: ".$time;
+            echo "\n\nsitze in DB gefunden----------------\nfilm_seats: ".$film_seats['reserved_seats']." Date: ".$date." Time: ".$time;
             $updated_seat_str =  $film_seats['reserved_seats'].",".$reserved_seats;      
+            // UPDATE seat_picking
             $result_film_seats_update = mysqli_query($con, "Update kinoticketing.seat_picking SET reserved_seats = '$updated_seat_str' Where Film_ID = $film_ID And Date='$date' And Time='$time'");        // '2021-03-18'
             
+            // INSERT user_schaut_film
             $result_bestellung =  mysqli_query($con, "Insert Into kinoticketing.user_schaut_film (Film_ID, Film_Name, User_Name, Reserved_Seats, Seat_Names, Total_Price, Date, Time) VALUES('$film_ID', '$film_name', '$user_username', '$reserved_seats', '$seat_names', '$total_price', '$date', '$time')");
-            $result_bestellung_in_db =  mysqli_query($con, "Insert Into kinoticketing.user_schaut_film (Film_ID, Film_Name, User_Name, Reserved_Seats, Seat_Names, Total_Price, Date ) VALUES('$film_ID', '$film_name', '$user_username', '$reserved_seats', '$seat_names', '$total_price', '$date')"); //   
+            //$result_bestellung_in_db =  mysqli_query($con, "Insert Into kinoticketing.user_schaut_film (Film_ID, Film_Name, User_Name, Reserved_Seats, Seat_Names, Total_Price, Date ) VALUES('$film_ID', '$film_name', '$user_username', '$reserved_seats', '$seat_names', '$total_price', '$date')"); //   
+            
             if(isset($result_bestellung_in_db)){
-                echo "\nData successfully in user_schaut_film inserted ( bereits gebucht)\n";
+                echo "\n\nData successfully in user_schaut_film inserted ( bereits gebucht)\n";
             }
 
         } else {
             echo "\nkeine Sitze in DB gefunden -----------------";//.$film_seats['reserved_seats'];        
             $result_bestellung_new =  mysqli_query($con, "Insert Into kinoticketing.user_schaut_film (Film_ID, Film_Name, User_Name, Reserved_Seats, Seat_Names, Total_Price, Date ) VALUES('$film_ID', '$film_name', '$user_username', '$reserved_seats', '$seat_names', '$total_price', '$date')"); //   
             if(isset($result_bestellung_new)){
-                echo "\nData successfully in user_schaut_film inserted (noch nicht gebucht)\n";
+                echo "\n\nData successfully in user_schaut_film inserted (noch nicht gebucht)\n";
             }
             $result_insert_seats = mysqli_fetch_assoc(mysqli_query($con, "Insert INTO kinoticketing.seat_picking (reserved_seats, Film_ID, Film_Name, Date, Time) VALUES ('$reserved_seats', '$film_ID', '$film_name', '$date', '$time')"));                      
             
+            if(isset($result_insert_seats)){
+                echo "\n\nData successfully in seat_picking inserted (noch nicht gebucht)\n";
+            } else {
+                echo "No Data in seat_picking inserted";
+            }
+           
             
            
         }
