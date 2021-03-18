@@ -202,12 +202,14 @@
                     reserved: {
                         seats: js_array
                     },
+                    // Disabled Seats sind die sitze welche in der Mitte "unsichtbar sind". 
                     disabled: {
                         seats: [0, 8],
                         rows: [4],
                         columns: [4]
                     }
                 },
+                // Bei Sitzauswahl kann man zwischen zwei Preisklassen auswählen "regular und reduced". Zudem kann man den Preis festlegen
                 types: [
                     // hier kann man die Preisklassen festlegen
                     // bei dem Typ darf kein Leerzeichen dazwischen sein 
@@ -229,11 +231,8 @@
                 }
             };
 
-            var sc = new Seatchart(options);                       
-            console.log("sc.getCart(): ", sc.getCart());
-        </script>
-        <script>
-        document.getElementsByClassName("sc-cart-delete").style.visibility = "hidden";
+            var sc = new Seatchart(options);                        
+            document.getElementsByClassName("sc-cart-delete").style.visibility = "hidden";
         </script>
         
         <script>
@@ -337,7 +336,7 @@
                                     }
                                 ).then((value) => {                               
                                     //window.location.reload(); //lade Seite neu                         
-                                    location.assign('./profil.php'); //navigiere nach Kauf direkt zum Profil. Dort sieht der User nun das gekaufte Ticket 
+                                    //location.assign('./profil.php'); //navigiere nach Kauf direkt zum Profil. Dort sieht der User nun das gekaufte Ticket 
                                 });
                             } else{
                                 // Es wurden keine Sitze ausgewählt. Besucher muss Sitz auswählen 
