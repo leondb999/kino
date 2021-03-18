@@ -1,10 +1,11 @@
 <?php session_start(); ?>
 <?php
-// prüft, ob ein Cookie verfügbar ist, wenn das nicht der Fall ist wird man automatisch zur Login Page geleitet
-if(!isset($_COOKIE["username_cookie"])){
-  header("Location: login.php");
-  exit;
-} 
+/*  Prüft, ob ein Cookie verfügbar ist,
+    wenn das nicht der Fall ist wird man automatisch zur Login Page geleitet*/
+    if(!isset($_COOKIE["username_cookie"])){
+        header("Location: login.php");
+        exit;
+    } 
 ?>
 <!DOCTYPE html>
 <html>
@@ -13,22 +14,23 @@ if(!isset($_COOKIE["username_cookie"])){
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="./css/seatchart.css">
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" ></script> <!--integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"  crossorigin="anonymous"-->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" ></script> 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" ></script> <!-- integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous" -->
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" ></script> 
         
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
         <link rel ="stylesheet"type="text/css" href="style.css"> 
+        <!-- Sweet Alert -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" rel="stylesheet" />
-        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous"></script> -->
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-        <style>
 
+        <style>
+            /* Style for the Seatpicker */
             .content {
                 display: flex;
                 flex-direction: row;
@@ -63,8 +65,7 @@ if(!isset($_COOKIE["username_cookie"])){
     </head>
     <?php include('./functions/database_config.php') ?>
     <?php
-            // get Film Data by url parameter 
-            
+            // Hole Parameter aus der URL in ein Array          
             $url = $_SERVER['REQUEST_URI'];
             $url_components = parse_url($url); 
             parse_str($url_components['query'], $params);  
@@ -76,98 +77,80 @@ if(!isset($_COOKIE["username_cookie"])){
             $result_film_id= mysqli_query($con,  "Select * from kinoticketing.film where ID=".$id_film);
             $film = mysqli_fetch_assoc($result_film_id);                    
     ?>
-     <?php 
-            // get Data from Person by Username that is stored in cookie
-            include('./functions/get_user_data_cookie.php') 
-            // returns userdata as user_cookie
-    ?>
+    <?php include('./functions/get_user_data_cookie.php'); // get Data from Person by Username that is stored in cookie.  returns userdata as user_cookie?>
    
 
-    <body > <!--style="background-color: black; color: white"-->
+    <body >
         <header>
             <?php include('./functions/navbar.php') ?>
         </header>
-        <main role="main" style="padding-top: 10px">         
-            <section class="py-2 m-10">
-               
+        <main role="main" style="padding-top: 20px">    
+        <!-- Überschrift, Canvas-Ausgebucht, Date, Time -->     
+            <section class="py-2 m-10">               
                 <div class="container" style="padding-top: 30px; margin-bottom: -50px">
+                    <!--Film Name -->
                     <div class="d-flex justify-content-center">
-                        <h3 class="display-4">Sitzauswahl</h3> 
+                        <p class="d-flex justify-content-center display-4"><?php echo $film['Name']?> </p>
                     </div>
+                    <!-- Ausgebucht Canvas -->
                     <div class="d-flex justify-content-center" style="margin-bottom: 20px;">                   
-                        <canvas id="Canvas_Prozent_Reserved_Seats" width="170" height="170"></canvas>
-                      
+                        <canvas id="Canvas_Prozent_Reserved_Seats" width="170" height="170"></canvas>                      
                     </div>
-                    <div > 
-                        <p class="d-flex justify-content-center">Film: <?php echo $film['Name']?> </p>
-                        <p class="d-flex justify-content-center">Date: <?php echo $date_film?></p>
-                        <p class="d-flex justify-content-center">Time: <?php echo $time_film?></p>
-                        
-                    </div>                          
-                    <!--<p> Info: Lösche Sitze per Rechtsklick aus der Auswahl, oder in der Mobilen Ansicht durch langes draufdrücken</p> -->                                                        
+                    <!-- Date, Time -->
+                    <div>                        
+                        <p class="d-flex justify-content-center "><?php echo $date_film?></p>
+                        <p class="d-flex justify-content-center "><?php echo $time_film?></p>                                           
+                    </div>                                                                                                 
                 </div> 
             </section>
-            <section>   
 
-                         <!--<div class="content"> -->
-                            <div class="row content" style ="margin-bottom: 70px;">
-                            
-                                <div class="col-sm-auto col-xs-12">
-                                    <div id="legend-container" class=" d-flex justify-content-center align-items-center"></div> 
-                                </div> 
-                                <div class="col-sm-">
-                                    <div id="map-container"></div>
-                                    <div class=" d-flex justify-content-center align-items-center" style = "margin-top: 10px;">
-                                        <button type="submit" class=" btn btn-outline-primary" name= "seats_to_db" id="seats_to_db_id" >Buche Ticket</button>
-                                    </div>                                                       
-                                </div>
-                                <div class="col-sm-auto d-flex justify-content-center align-items-center"> 
-                                                                     
-                                    <div id="cart-container" class=" d-flex justify-content-center align-items-center"></div>
-                                </div>
-                     
-                            </div>
-                       <!-- </div>-->                
-                <!--</div> -->
+        <!-- Seatpicker, Legende, Selected-Tickets-Card -->
+            <section>   
+                <div class="row content" style ="margin-bottom: 70px;">  
+                    <!--Legende -->              
+                    <div class="col-sm-auto col-xs-12">
+                        <div id="legend-container" class=" d-flex justify-content-center align-items-center"></div> 
+                    </div> 
+                    <!-- Seatpicker & Bestell-Button -->
+                    <div class="col-sm-">
+                        <div id="map-container"></div>
+                        <div class=" d-flex justify-content-center align-items-center" style = "margin-top: 10px;">
+                            <button type="submit" class=" btn btn-outline-primary" name= "seats_to_db" id="seats_to_db_id" >Buche Ticket</button>
+                        </div>                                                       
+                    </div>
+                    <!-- Selected-Tickets-Card -->
+                    <div class="col-sm-auto d-flex justify-content-center align-items-center">                                                             
+                        <div id="cart-container" class=" d-flex justify-content-center align-items-center"></div>
+                    </div>            
+                </div>
             </section>
         </main>
-        
-<!--
-        <footer class="py-3 bg-dark" style="color: grey; margin-bottom: 0px">
-        
-        </footer>
-    -->
+
     <footer class="footer py-3 bg-dark">
         <?php include('./functions/footer.php') ?>
     </footer>
 
-
+        <!-- externes Seatpicker Script --> 
         <script type="text/javascript" src="./js/seatchart.js"></script>
         <?php 
-            // get reserved seats from db für einen Speziellen Film an einem bestimmten Datum zu einer bestimmten Uhrzeit  
-        
-            /// !!! hier könnte man mit AJAX 
+            //DB-Abfrage: Hole den  reserved_seats-String eines bestimmten Filmes, Datum und Uhrzeit            
             $f_ID_seat = $film['ID'];
             $result_user_data = mysqli_fetch_array(mysqli_query($con, "Select reserved_seats From kinoticketing.seat_picking Where Film_ID = $f_ID_seat And Date= '$date_film' And Time='$time_film'")); //'2021-03-18' '15:00-17:00'
                        
             if(isset($result_user_data)){
-                //echo "variable is definded";
-                $r_seats_str = $result_user_data['reserved_seats'];   
-                echo "Reservierte Sitze: ".$r_seats_str;      
+                $r_seats_str = $result_user_data['reserved_seats'];                   
             }
-
+            /*
             if(!isset($result_user_data)){
                 echo "variable is undefined";
-            }
-            $reserved_seats_db_arr = explode(',',$r_seats_str);         
+            }*/   
+            $reserved_seats_db_arr = explode(',',$r_seats_str);   
+               
         ?>
-        <script>
-     
 
-        </script>
         <script>            
-            // API Referenz des Seatpickers https://seatchart.js.org/api.html#Seatchart
-            console.log("hello: "+ document.getElementById("map-container"));
+
+           
             var js_array = [<?php echo '"'.implode('","',  $reserved_seats_db_arr ).'"' ?>];
             var max_sitze = 54;
             console.log("Prozent: " + (js_array.length/max_sitze)*100)
@@ -207,6 +190,7 @@ if(!isset($_COOKIE["username_cookie"])){
             var bar=setInterval(progressBar,80);
             
             console.log("js_array: " + js_array.length);
+                        // API Referenz des Seatpickers https://seatchart.js.org/api.html#Seatchart
             var options = {
                 // Reserved and disabled seats are indexed from left to right by starting from 0.  Given the seatmap as a 2D array and an index [R, C] the following values can obtained as follow:
                 // I = columns * R + C

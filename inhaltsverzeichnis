@@ -2,7 +2,9 @@ Slider:
     Referenz: https://www.codegrepper.com/code-examples/php/frameworks/symfony/dynamic+image+slider+using+twitter+bootstrap+php+with+mysql
     Datei: functions/slider-functions.php
     Kommentar: Referenz rausnehmen
-
+Film:
+    Get ID from URL
+        Referenz: https://www.geeksforgeeks.org/how-to-get-parameters-from-a-url-string-in-php/#:~:text=The%20parameters%20from%20a%20URL,a%20URL%20by%20parsing%20it.
 
 ------------------
 
@@ -11,9 +13,9 @@ Slider:
 
 
 Zu Prüfen
-    index.php: check
-    kinoprogramm.php: -
-    film.php: -
+    index.php: yes
+    kinoprogramm.php: yes
+    film.php: yes
     ticket_picking.php:-
     profil.php:-
     login.php:-
