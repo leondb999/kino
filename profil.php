@@ -35,6 +35,7 @@ if(!isset($_COOKIE["username_cookie"])){
   </head>
 
   <?php include('./functions/database_config.php') ?>
+
   <?php 
         // get User Data
         // WICHTIG es müssen Cookies verfügbar sein!, Wenn der Benutzer sie zwischenzeitlich löscht funktioniert das ganze nicht mehr. Dann müsste man immer prüfen, ob ein Cookie verfügbar ist und wenns nicht verfügbar ist wird man automatisch zur login page umgeleitet
@@ -60,12 +61,16 @@ if(!isset($_COOKIE["username_cookie"])){
 
   <body>
     <header>
-        <?php include('./functions/navbar.php') ?>
        
+        <!--<?php include('./functions/navbar.php') ?>-->
     </header>
 
     
     <main role="main" style="padding-top: 56px; padding-bottom: 30px">
+    <section>
+      <img src="create_png.php"></img>
+
+    </section>
     <section>
       <div class="container">        
           <?php echo "<h1 > Hallo ".$_COOKIE['username_cookie']."</h1>";?>          

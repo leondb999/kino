@@ -199,7 +199,7 @@ if(!isset($_COOKIE["username_cookie"])){
                 context.arc(cw,ch,80,start,diff+start,false);
                 context.stroke();
                 context.fillText("Ausgebucht:"+ al+'%',cw+2,ch+6);
-                if(al>=100){//(js_array.length/max_sitze)*100-2
+                if(al>=(js_array.length/max_sitze)*100-2){
                     clearTimeout(bar);
                 }                
                 al++;
