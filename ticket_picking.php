@@ -106,7 +106,7 @@
 
         <!-- Seatpicker, Legende, Selected-Tickets-Card -->
             <section>   
-                <div class="row content" style ="margin-bottom: 70px;">  
+                <div class="row content" style ="margin-bottom: 120px;">  
                     <!--Legende -->              
                     <div class="col-sm-auto col-xs-12">
                         <div id="legend-container" class=" d-flex justify-content-center align-items-center"></div> 
@@ -236,65 +236,48 @@
         </script>
         
         <script>
-           function getSelectedSeats(){
-               
-                var seats_json = sc.getCart();
-                var seat_data ="";
-                var selected_seats_index =[];
-                var selected_seats_name = [];
-                
+           function getSelectedSeats(){                                            
+                var selected_seats_index =[]; // Indexe der ausgewählten Sitze
+                var selected_seats_name = []; // Namen der  -"-
+                // durchläuft das options.types array in dem verschiedene Kategorien gespeichert sind. 
+                // so müssen in dem weiteren Code nicht explizit die Namen der Kategorien angegeben werden, sodass die Kategorien beliebig und ohne viel Aufwand geändert werden können                
                 for(var i = 0; i < options.types.length; i++){
-                    var seat_type =  options.types[i].type;
-                    seat_data += seat_type + " seats: " + sc.getCart()[seat_type] + "// Price pro Sitz: " +sc.getPrice(seat_type)+ "<br>";
-                    Array.prototype.push.apply(selected_seats_index, sc.getCart()[seat_type]);  
-                    if(selected_seats_index.length != 0){
-                        // add Sitz Name z.B: F( hinzu)
-                        
+                    var seat_type =  options.types[i].type;   // Sitz Kategorie                                 
+                    Array.prototype.push.apply(selected_seats_index, sc.getCart()[seat_type]);                   
+                    if(selected_seats_index.length !=0){                                               
                         for (var i = 0; i < selected_seats_index.length; i++){                                                      
-                            selected_seats_name.push(sc.get(selected_seats_index[i]).name);                            
+                            selected_seats_name.push(sc.get(selected_seats_index[i]).name);    // füge den Namen des Sitzes hinzu z.B. A5                          
                         }
                     }                                                               
                 }
-
-                console.log("seat_names: " + selected_seats_name.toString());
-               
-                seat_data += "Total Price: " + sc.getTotal() + options.cart["currency"] ;
-               // document.getElementById('selected-seats').innerHTML = seat_data + "<br> All seats: " + selected_seats_index + "<br> Seat Names: " +  selected_seats_name.toString();//+ "   Length All seats: " + selected_seats_index.length;
-                
                 return {
-                    selected_seats_index:    selected_seats_index.toString(),
-                    total_price : sc.getTotal(),
+                    selected_seats_index: selected_seats_index.toString(),
+                    total_price         : sc.getTotal(),
                     selected_seats_name : selected_seats_name.toString()
                 }
             }
         </script>
             
-        <script>
-           
-            // get dynamic variables from url in js
-            // Referenz stackoverflow: https://stackoverflow.com/questions/19491336/how-to-get-url-parameter-using-jquery-or-plain-javascript
+        <script>           
+            // URL                  Hole die Parameter aus der URL  Referenz stackoverflow: https://stackoverflow.com/questions/19491336/how-to-get-url-parameter-using-jquery-or-plain-javascript            
             $.urlParam = function(name){
                 var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
                 if (results==null) {
-                return null;
+                    return null;
                 }
                 return decodeURI(results[1]) || 0;
-            }
-           
-            console.log("Film ID (URL Parameter): " + $.urlParam('ID'));
-
+            }           
+            // Cookie 
             function getCookie(name) {
                 const value = `; ${document.cookie}`;
                 const parts = value.split(`; ${name}=`);
                 if (parts.length === 2) return parts.pop().split(';').shift();
                 }
             
-            $(document).ready(function(){
-               
+            // AJAX - Send selected Seat Data zu der DB
+            $(document).ready(function(){               
                 $("#seats_to_db_id").click(function(){   
-                    var r_date = $.urlParam('Date');
-                    console.log("date: " +r_date);
-                    //console.log("\ntime: " +r_time);
+                    var r_date = $.urlParam('Date');                   
                     var r_time = $.urlParam('Time');
                                        
                     var bestellungsdata = getSelectedSeats();                                                                  
@@ -303,9 +286,7 @@
                     var r_total_price = bestellungsdata.total_price;
                     var f_id = $.urlParam('ID');
                     var u_username = getCookie("username_cookie");
-                    console.log("getSelectedSeats: " + getSelectedSeats());
-                    
-                    //var email=$("#email").val();
+
                     $.ajax({
                         url:'ajax-insert-reserved-seats.php',
                         method:'POST',
@@ -319,12 +300,12 @@
                             time: r_time
                         },
                     success:function(data){
-                         
-                        // prüft, ob Sitze ausgewählt wurden, wenn die Stringlänge von selected_seats == 0 ist, dann wurde keiner ausgewählt, ansonsten schon 
-                        // \W*((?i)strlen==0:(?-i))\W*
-                        var selected_seats_length  = /[0-9]/.exec(data); console.log("regexp:" + selected_seats_length);
+                        // Wenn Str Länge von selected_seats == 0 wurde kein Sitz ausgewählt
+
+                        var selected_seats_length  = /[0-9]/.exec(data); console.log("regexp:" + selected_seats_length);  
+                        // holt sich die erste Zahl aus den Daten die von der ajax-insert-reserved-seats.php kommt
                         console.log("\n\n\nSelected Seats länge: " + selected_seats_length);
-                        console.log(data)
+                      
                         if( selected_seats_length != 0){
                             // Sitze wurden ausgewählt, Buchung erfolgreich
                             swal(
@@ -336,7 +317,7 @@
                                     }
                                 ).then((value) => {                               
                                     //window.location.reload(); //lade Seite neu                         
-                                    //location.assign('./profil.php'); //navigiere nach Kauf direkt zum Profil. Dort sieht der User nun das gekaufte Ticket 
+                                    location.assign('./profil.php'); //navigiere nach Kauf direkt zum Profil. Dort sieht der User nun das gekaufte Ticket 
                                 });
                             } else{
                                 // Es wurden keine Sitze ausgewählt. Besucher muss Sitz auswählen 

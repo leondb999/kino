@@ -7,7 +7,13 @@ Film:
         Referenz: https://www.geeksforgeeks.org/how-to-get-parameters-from-a-url-string-in-php/#:~:text=The%20parameters%20from%20a%20URL,a%20URL%20by%20parsing%20it.
 
 ------------------
-
+ticket_picking.php
+    url_Param: 
+        Referenz: https://stackoverflow.com/questions/19491336/how-to-get-url-parameter-using-jquery-or-plain-javascript 
+    Canvas:
+        Referenz: https://www.tothenew.com/blog/tutorial-to-create-a-circular-progress-bar-with-canvas/
+    Seatpicker: 
+        Referenz: https://seatchart.js.org/api.html#Seatchart
 
 
 
@@ -16,10 +22,12 @@ Zu Prüfen
     index.php: yes
     kinoprogramm.php: yes
     film.php: yes
-    ticket_picking.php:-
-    profil.php:-
+    ticket_picking.php: yes
+    ajax-insert-reserved-seats.php: yes
+    profil.php: yes
+    get_user_data_cookie.php
     login.php:-
     register.php:-
     logout.php:-
-    about.php:-
-    impressum.php:-
+    about.php: yes
+    impressum.php: yes

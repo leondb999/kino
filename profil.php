@@ -60,18 +60,14 @@ if(!isset($_COOKIE["username_cookie"])){
   ?>
 
   <body>
-    <header>
-       
-        <!--<?php include('./functions/navbar.php') ?>-->
+    <header>       
+        <?php include('./functions/navbar.php') ?>
     </header>
 
-    
     <main role="main" style="padding-top: 56px; padding-bottom: 30px">
-    <section>
-      <img src="create_png.php"></img>
 
-    </section>
     <section>
+      <!-- Username, SVG-->
       <div class="container">        
           <?php echo "<h1 > Hallo ".$_COOKIE['username_cookie']."</h1>";?>          
           <div id="svg_container"></div>          
@@ -82,32 +78,32 @@ if(!isset($_COOKIE["username_cookie"])){
         var rect = draw.rect(100,1005).attr({fill:'#a0d3de'});
     </script>
     
+    <!-- Überblück über gekaufte Karten -->
     <section class="py-2 m-10">
-      <div class="container" ><!--style="padding-top: 20px"-->
+      <div class="container">
         <h3 class="display-4">Gekaufte Karten</h3>
         <div class="row" style="padding-top: 20px">
+        <!-- Erzeuge per DB-Abfrage die Cards -->
           <?php foreach($result_warenkorb_films as $film): ?>
             <?php 
-              // get Image            
+              // DB-Abfrage: Film Img       
               $film_id_img = $film['Film_ID'];
               $result_image_path= mysqli_query($con,  "Select * from kinoticketing.film Where ID = '$film_id_img'");
               $film_image = mysqli_fetch_assoc($result_image_path);
               while($film_image1 = mysqli_fetch_assoc($result_image_path)){
                 echo "Image Path: ".$film_image1['Image_Slider_Path'] ;
               }                     
-              ?>                
+            ?>                
             <div class="col-xl-3 col-md-6 mb-4">
               <div class="card border-0 shadow">
                 <a href="./film.php?ID=<?php echo $film['Film_ID'] ?>"><img class="card-img-top" src="<?php echo $film_image['Image_Slider_Path']?>"></a>
                 <div class="card-body text-center">
+                <!-- Name, Date, Time, Seats, Price -->
                   <h5 class="card-title mb-0"><a href="./film.php?ID=<?php echo $film['Film_ID'] ?>"><?php echo $film['Film_Name']?></a></h5>
-
                   <div class="card-text text-black-50">Date: <?php echo $film['Date']?></div>
                   <div class="card-text text-black-50">Time: <?php echo $film['Time']?></div>
                   <div class="card-text text-black-50">Sitzplätze: <?php echo $film['Seat_Names']?></div>
-                  <div class="card-text text-black-50">Price: <?php echo $film['Total_Price']?>€</div>
-                 
-
+                  <div class="card-text text-black-50">Price: <?php echo $film['Total_Price']?>€</div>                 
                 </div> 
               </div>
             </div>
@@ -115,8 +111,7 @@ if(!isset($_COOKIE["username_cookie"])){
         </div>
       </div>
     </section>
-
-
+    
     </main>
     <footer class="py-3 bg-dark" style="color: grey">
       <?php include('./functions/footer.php') ?>
