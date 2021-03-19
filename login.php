@@ -29,13 +29,13 @@
         Dabei übermitteln die parametrisierten Anweisungen den eigentlichen SQL-Befehl von den Parametern getrennt an die Datenbank
         Erst das DBMS selbst führt beide zusammen und maskiert dabei dei entscheidenden Sonderzeichen automatisch
 
-      ---Erklärung prepared Statements:---
-      Ein kompiliertes Query-Template mit Parameterplatzhalter werden durch (prepare) aufgerufen und an PHP-Variablen gebunden (bind)
-      Durch (execute) werden die eigentlichen Abfragedaten zur Laufzeit übergeben.
-      --> Struktur & Daten der Abfrage getrennt --> keine SQL Injection möglich
+        ---Erklärung prepared Statements:---
+        Ein kompiliertes Query-Template mit Parameterplatzhalter werden durch (prepare) aufgerufen und an PHP-Variablen gebunden (bind)
+        Durch (execute) werden die eigentlichen Abfragedaten zur Laufzeit übergeben.
+        --> Struktur & Daten der Abfrage getrennt --> keine SQL Injection möglich
       */
     if(isset($_POST["submit"])){
-      require("mysql.php");
+      require("mysql.php"); // stellt eine DB-Verbindung durch PDO her
       
       $stmt = $mysql->prepare("Select * From users  Where Username = :user"); //Username überprüfen
       $stmt->bindParam(":user", $_POST["username"]);
@@ -95,8 +95,10 @@
       </div>
     </div> <!-- Container -->
   </main>
-    <footer class=" footer py-3 bg-dark" style="color: grey b;">
-      <?php include('./functions/footer.php') ?>
-    </footer>
+
+  <footer class=" footer py-3 bg-dark" style="color: grey b;">
+    <?php include('./functions/footer.php') ?>
+  </footer>
+
   </body>
 </html>

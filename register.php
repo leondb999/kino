@@ -17,92 +17,88 @@
     <link rel ="stylesheet"type="text/css" href="style.css">    
   </head>
   
-  <?php
-    if(isset($_POST["submit"])){
-      require("mysql.php");
-      $stmt = $mysql->prepare("Select * FROM users WHERE Username = :user"); //Username überprüfen
-      $stmt->bindParam(":user", $_POST["username"]);
-      $stmt->execute();
-      $count = $stmt->rowCount();
-      if($count == 0){
-        //Username ist frei
-        $stmt = $mysql->prepare("Select * FROM users WHERE EMail = :email"); //Username überprüfen
-        $stmt->bindParam(":email", $_POST["email"]);
+    <?php
+        if(isset($_POST["submit"])){
+        require("mysql.php"); // stelle DB-Verbindung durch einen PDO her (PDO = PHP Data Objects)
+        $stmt = $mysql->prepare("Select * FROM users WHERE Username = :user"); //Username überprüfen
+        $stmt->bindParam(":user", $_POST["username"]);
         $stmt->execute();
         $count = $stmt->rowCount();
         if($count == 0){
-          if($_POST["pw"] == $_POST["pw2"]){
-            //User anlegen
-            $stmt = $mysql->prepare("Insert INTO users (Username, Passwort, EMail) VALUES (:user, :pw, :email)");
-            $stmt->bindParam(":user", $_POST["username"]);
-            $hash = password_hash($_POST["pw"], PASSWORD_BCRYPT);
-            $stmt->bindParam(":pw", $hash);
+            //Username ist frei
+            $stmt = $mysql->prepare("Select * FROM users WHERE EMail = :email"); //Username überprüfen
             $stmt->bindParam(":email", $_POST["email"]);
             $stmt->execute();
-            echo "Dein Account wurde angelegt";
-          } else {
-            echo "Die Passwörter stimmen nicht überein";
-          }
+            $count = $stmt->rowCount();
+            if($count == 0){
+            if($_POST["pw"] == $_POST["pw2"]){
+                //User anlegen
+                $stmt = $mysql->prepare("Insert INTO users (Username, Passwort, EMail) VALUES (:user, :pw, :email)");
+                $stmt->bindParam(":user", $_POST["username"]);
+                $hash = password_hash($_POST["pw"], PASSWORD_BCRYPT);
+                $stmt->bindParam(":pw", $hash);
+                $stmt->bindParam(":email", $_POST["email"]);
+                $stmt->execute();
+                echo "Dein Account wurde angelegt";
+                header("Location: login.php");
+            } else {
+                echo "Die Passwörter stimmen nicht überein";
+            }
+            } else {
+            echo "Email bereits vergeben";
+            }
         } else {
-          echo "Email bereits vergeben";
+            echo "Der Username ist bereits vergeben";
         }
-      } else {
-        echo "Der Username ist bereits vergeben";
-      }
-    }
-     ?>
+        }
+    ?>
+
   <body>
-   
-    <section class="py-2 m-10">
-        <div class="container">
-            <h1>Account erstellen</h1>
-            <form action="register.php" method="post">
-            
-            <!--    <input type="text" name="username" placeholder="Username" required><br>-->
-                <input type="text" name="email" placeholder="Email" required><br>
-                <input type="password" name="pw" placeholder="Passwort" required><br>
-                <input type="password" name="pw2" placeholder="Passwort wiederholen" required><br>
-                <button type="submit" name="submit">Erstellen</button>
-            </form>
-            <br>
-            <a href="login.php">Hast du bereits einen Account?</a>
-        </div>
-    </section> 
+    <header>
+        <?php include('./functions/navbar.php') ?> 
+    </header>   
 
     <main role="main" style="padding-top: 60px; padding-bottom: 30px">
-        <div class="container">        
-            <div class="row">
-                <div class="col-md-9 col-lg-8 mx-auto">
-                <h3>Account erstellen</h3>
+        <section class="py-2 m-10">
+            <div class="container">        
+                <div class="row">
+                    <div class="col-md-9 col-lg-8 mx-auto">
+                    <h3>Account erstellen</h3>
 
-                <form action="register.php" method="post">
-                    <!-- Username Input-->
-                    <div class="form-label-group">
-                        <input type="text" id="input_Username" name="username" class="form-control" placeholder="Username" required autofocus><br>                
-                        <label for="input_Username">Username</label>
-                    </div>
-                    <div class="form-label-group">
-                        <input type="text" id="input_Email" name="email" placeholder="Email" required><br>
-                        <label for="input_Email">Username</label>
-                    </div>
-                    <!-- Password Input-->
-                    <div class="form-label-group">                  
-                        <input type="password"  name="pw" id="inputPassword" class="form-control" placeholder="Password" required>
-                        <label for="inputPassword">Password</label>
-                    </div>
+                    <form action="register.php" method="post">
+                        <!-- Username Input-->
+                        <div class="form-label-group">
+                            <input type="text" id="input_Username" name="username" class="form-control" placeholder="Username" required autofocus><br>                                       
+                        </div>
 
-                    <!-- Submit Button -->                  
-                    <button name="submit" class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Einloggen</button>
-                    
-                    <!--Register Navigation -->
-                    <div class="text-center">               
-                    <a href="register.php">Noch keinen Account?</a><br>
-                    </div>                    
-                </form>
+                        <!-- Email Input -->
+                        <div class="form-label-group">
+                            <input type="text" id="input_Email" name="email"  class="form-control"placeholder="Email" required><br>                       
+                        </div>
+
+                        <!-- Password Input-->
+                        <div class="form-label-group">                  
+                            <input type="password" id="inputPassword" name="pw"  class="form-control" placeholder="Password" required>                                               
+                        </div>
+                        
+                        <!-- Password wdh Input -->
+                        <div class="form-label-group">    
+                            <input type="password" id="inputPassword2" name="pw2" class="form-control" placeholder="Passwort wiederholen" required><br>
+                        </div>
+
+                        <!-- Submit Button -->                  
+                        <button name="submit" class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Registrieren</button>
+
+                        <div class="text-center">               
+                            <a href="login.php">Hast du bereits einen Account?</a><br>
+                        </div> 
+                    </form>
+                    </div>
                 </div>
-            </div>
-        </div> <!-- Container -->
+            </div> <!-- Container -->
+        </section>
     </main>
+
     <footer class=" footer py-3 bg-dark" style="color: grey b;">
       <?php include('./functions/footer.php') ?>
     </footer>

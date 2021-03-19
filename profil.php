@@ -62,7 +62,7 @@ if(!isset($_COOKIE["username_cookie"])){
         <?php include('./functions/navbar.php') ?>
     </header>
 
-    <main role="main" style="padding-top: 56px; padding-bottom: 30px">
+    <main role="main" style="padding-top: 56px; padding-bottom: 100px">
 
     <section>
       <!-- Username, SVG-->
@@ -111,7 +111,7 @@ if(!isset($_COOKIE["username_cookie"])){
     </section>
     
     </main>
-    <footer class="py-3 bg-dark" style="color: grey">
+    <footer class="footer py-3 bg-dark" style="color: grey">
       <?php include('./functions/footer.php') ?>
     </footer>
   </body>

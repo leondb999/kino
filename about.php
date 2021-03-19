@@ -21,7 +21,7 @@
 
     <main role="main" style="padding-top: 56px; padding-bottom: 30px">
     <div class="container">
-        <h1 class="display-4">Über uns: DHBW-Kino Mannheim</h1>
+        <h1 class="display-4">Über uns: DHBW-Kino Mannheim GmbH</h1>
         <br>
         <br>
         <div class="row">
@@ -109,7 +109,7 @@
     </div>
     </main>
 
-    <footer class="py-3 bg-dark" style="color: grey">
+    <footer class="footer py-3 bg-dark" style="color: grey">
         <?php include('./functions/footer.php') ?>
     </footer>
 

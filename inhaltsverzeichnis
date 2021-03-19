@@ -29,7 +29,7 @@ Zu Prüfen
     about.php: yes
     impressum.php: yes
 
-    login.php:-
+    login.php:
     register.php:-
     logout.php:-
 
