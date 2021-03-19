@@ -4,6 +4,8 @@
   <head>
     <meta charset="utf-8">
     <title>Registrieren</title>
+     <!-- Favicon -->
+     <link rel="icon" type="image/png" href="./images/favicon-film-310x310.png" sizes="32x32">
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
