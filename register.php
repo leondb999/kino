@@ -21,37 +21,37 @@
   
     <?php
         if(isset($_POST["submit"])){
-        require("mysql.php"); // stelle DB-Verbindung durch einen PDO her (PDO = PHP Data Objects)
-        $stmt = $mysql->prepare("Select * FROM users WHERE Username = :user"); //Username überprüfen
-        $stmt->bindParam(":user", $_POST["username"]);
-        $stmt->execute();
-        $count = $stmt->rowCount();
-        if($count == 0){
-            //Username ist frei
-            $stmt = $mysql->prepare("Select * FROM users WHERE EMail = :email"); //Username überprüfen
-            $stmt->bindParam(":email", $_POST["email"]);
+            require("mysql.php"); // stelle DB-Verbindung durch einen PDO her (PDO = PHP Data Objects)
+            $stmt = $mysql->prepare("Select * FROM users WHERE Username = :user"); //Username überprüfen
+            $stmt->bindParam(":user", $_POST["username"]);
             $stmt->execute();
             $count = $stmt->rowCount();
             if($count == 0){
-            if($_POST["pw"] == $_POST["pw2"]){
-                //User anlegen
-                $stmt = $mysql->prepare("Insert INTO users (Username, Passwort, EMail) VALUES (:user, :pw, :email)");
-                $stmt->bindParam(":user", $_POST["username"]);
-                $hash = password_hash($_POST["pw"], PASSWORD_BCRYPT);
-                $stmt->bindParam(":pw", $hash);
+                //Username ist frei
+                $stmt = $mysql->prepare("Select * FROM users WHERE EMail = :email"); //Username überprüfen
                 $stmt->bindParam(":email", $_POST["email"]);
                 $stmt->execute();
-                echo "Dein Account wurde angelegt";
-                header("Location: login.php");
+                $count = $stmt->rowCount();
+                if($count == 0){
+                if($_POST["pw"] == $_POST["pw2"]){
+                    //User anlegen
+                    $stmt = $mysql->prepare("Insert INTO users (Username, Passwort, EMail) VALUES (:user, :pw, :email)");
+                    $stmt->bindParam(":user", $_POST["username"]);
+                    $hash = password_hash($_POST["pw"], PASSWORD_BCRYPT);
+                    $stmt->bindParam(":pw", $hash);
+                    $stmt->bindParam(":email", $_POST["email"]);
+                    $stmt->execute();
+                    echo "Dein Account wurde angelegt";
+                    header("Location: login.php");
+                } else {
+                    echo "Die Passwörter stimmen nicht überein";
+                }
+                } else {
+                echo "Email bereits vergeben";
+                }
             } else {
-                echo "Die Passwörter stimmen nicht überein";
+                echo "Der Username ist bereits vergeben";
             }
-            } else {
-            echo "Email bereits vergeben";
-            }
-        } else {
-            echo "Der Username ist bereits vergeben";
-        }
         }
     ?>
 

@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <Title >Kino</Title>
+    <Title >DHBW-Kino Mannheim</Title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Favicon -->
