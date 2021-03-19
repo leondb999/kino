@@ -144,10 +144,9 @@
             if(!isset($result_user_data)){
                 echo "variable is undefined";
             }*/   
-            $reserved_seats_db_arr = explode(',',$r_seats_str);   
-               
-        ?>
-
+            $reserved_seats_db_arr = explode(',',$r_seats_str);                  
+        ?>   
+        
         <script>            
 
            

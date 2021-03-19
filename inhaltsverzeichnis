@@ -25,9 +25,12 @@ Zu Prüfen
     ticket_picking.php: yes
     ajax-insert-reserved-seats.php: yes
     profil.php: yes
-    get_user_data_cookie.php
+    get_user_data_cookie.php: yes
+    about.php: yes
+    impressum.php: yes
+
     login.php:-
     register.php:-
     logout.php:-
-    about.php: yes
-    impressum.php: yes
+
+Favicon einfügen
